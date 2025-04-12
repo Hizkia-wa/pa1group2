@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row">
             {{-- Sidebar --}}
-            @include('partials.sidebar')
+            @include('components.sidebar')
 
             {{-- Konten utama --}}
             <div class="col-md-9 py-4">
