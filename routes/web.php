@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminController;
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
@@ -19,5 +20,10 @@ Route::prefix('Admin')->group(function () {
     // Produk Terlaris
     Route::get('/products/bestproducts', [ProductController::class, 'bestProducts'])->name('products.best');
     Route::get('/products/bestproducts/create', [ProductController::class, 'createBestProduct'])->name('products.best.create');
+
+    Route::get('/change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.changePasswordForm');
+    Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+
+     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 

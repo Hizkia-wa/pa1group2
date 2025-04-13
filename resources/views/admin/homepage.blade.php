@@ -7,10 +7,15 @@
             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
                 <img src="https://i.pravatar.cc/30" alt="Admin" class="rounded-circle"> Admin
             </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Ubah Password</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
+           <div class="dropdown-menu">
+    <a class="dropdown-item" href="{{ route('admin.changePasswordForm') }}">Ubah Password</a>
+
+    <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="dropdown-item">Logout</button>
+    </form>
+</div>
+
         </div>
     </div>
 
