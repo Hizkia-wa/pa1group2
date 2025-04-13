@@ -2,22 +2,22 @@
 body {
     background-color: #ffcc00;
     font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Flex layout to make sidebar & content side by side */
+    
 }
 
 /* SIDEBAR */
 .sidebar {
-    height: 100vh;
     background-color: black;
     color: white;
     padding: 30px 20px;
-    border-radius: 20px;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
-    position: fixed; /* Keep the sidebar fixed on the left */
     width: 250px;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: width 0.3s ease;
+    min-height: 100vh;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar a {
@@ -68,23 +68,22 @@ body {
     color: #ffcc00;
 }
 
-/* DASHBOARD CARD */
-/* Dashboard container */
+/* DASHBOARD CONTAINER */
 .dashboard-container {
-    margin-left: 500px; /* Shift the content to the right */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px; 
-    padding: 20px;
-    transition: margin-left 0.3s ease; 
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px;
+    padding: 20px 40px 20px 80px; 
 }
 
-/* Card Styling */
+/* CARD STYLING */
 .dashboard-card {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
-    min-height: 300px; 
+    min-height: 280px; 
     width: 370px; 
     display: flex;
     flex-direction: column;
@@ -111,30 +110,35 @@ body {
     color: #000;
 }
 
-/* Admin dropdown */
+/* ADMIN DROPDOWN */
 .admin-dropdown {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     z-index: 2000;
 }
 
-/* RESPONSIVE DESIGN */
-
-/* For smaller screens, like mobile and tablets */
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 200px; /* Smaller sidebar width on mobile */
+    body {
+        flex-direction: column;
     }
-    
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        height: auto;
+    }
+
     .dashboard-container {
-        margin-left: 250px;
-        grid-template-columns: 1fr; 
-        padding: 10px; 
+        grid-template-columns: 1fr;
+        margin-left: 0;
+        padding: 10px;
     }
 
     .dashboard-card {
-        width: 100%; 
+        width: 100%;
     }
 
     .admin-dropdown {
@@ -143,19 +147,8 @@ body {
     }
 }
 
-/* For very small screens like mobile phones */
 @media (max-width: 480px) {
-    .sidebar {
-        width: 150px; 
-        padding: 20px 10px; 
-    }
-
     .dashboard-container {
-        margin-left: 180px; 
         grid-template-columns: 1fr; 
-    }
-
-    .dashboard-card {
-        width: 100%; 
     }
 }
