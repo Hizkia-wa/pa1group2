@@ -70,14 +70,13 @@ body {
 
 /* DASHBOARD CARD */
 /* Dashboard container */
-/* Center the dashboard cards and shift them to the right */
 .dashboard-container {
     margin-left: 500px; /* Shift the content to the right */
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
-    gap: 20px; /* Space between the cards */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
     padding: 20px;
-    transition: margin-left 0.3s ease; /* smooth transition for sidebar */
+    transition: margin-left 0.3s ease; 
 }
 
 /* Card Styling */
@@ -86,7 +85,7 @@ body {
     overflow: hidden;
     box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
     min-height: 300px; 
-    width: 350px; 
+    width: 370px; 
     display: flex;
     flex-direction: column;
 }
@@ -95,7 +94,7 @@ body {
     background-color: black;
     color: white;
     margin: 0;
-    padding: 15px;
+    padding: 22px;
     text-align: center;
     font-size: 1.1rem;
     font-weight: bold;
@@ -111,10 +110,52 @@ body {
     font-weight: bold;
     color: #000;
 }
-/* Position Admin dropdown in the top-right corner */
+
+/* Admin dropdown */
 .admin-dropdown {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 2000;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* For smaller screens, like mobile and tablets */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* Smaller sidebar width on mobile */
+    }
+    
+    .dashboard-container {
+        margin-left: 250px;
+        grid-template-columns: 1fr; 
+        padding: 10px; 
+    }
+
+    .dashboard-card {
+        width: 100%; 
+    }
+
+    .admin-dropdown {
+        top: 10px;
+        right: 10px; 
+    }
+}
+
+/* For very small screens like mobile phones */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 150px; 
+        padding: 20px 10px; 
+    }
+
+    .dashboard-container {
+        margin-left: 180px; 
+        grid-template-columns: 1fr; 
+    }
+
+    .dashboard-card {
+        width: 100%; 
+    }
 }
