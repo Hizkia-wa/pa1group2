@@ -20,11 +20,17 @@
                 <input type="text" name="Price" class="form-control">
             </div>
         </div>
+        <div class="col-md-6">
+            <label>Jumlah Stok:</label>
+            <input type="number" name="Quantity" class="form-control" min="0">
+        </div>
+
         <div class="row mb-2">
             <div class="col-md-6">
                 <label>Deskripsi:</label>
                 <input type="text" name="Description" class="form-control">
             </div>
+            <input type="hidden" name="is_best_seller" value="1">
             <div class="col-md-6">
                 <label>Kategori:</label>
                 <select name="Category" class="form-control">

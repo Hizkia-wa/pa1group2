@@ -31,7 +31,7 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('bestproducts.edit', $product->id) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline">
                         @csrf @method('DELETE')
                         <button class="btn btn-danger">Hapus</button>

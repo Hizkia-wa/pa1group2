@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductController extends Controller
 {
@@ -39,42 +40,42 @@ class ProductController extends Controller
         $request->validate([
             'ProductName' => 'required|string|max:255',
             'Price' => 'required|numeric',
+            'Quantity' => 'required|integer|min:0',
             'Category' => 'required|string',
             'Description' => 'nullable|string',
-            'ImageMain' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'ImageOthers.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-    
-        $images = [];
-    
+            'ImageMain' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'ImageOthers.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);        
+
+        $product = new Product();
+        $product->ProductName = $request->ProductName;
+        $product->Price = $request->Price;
+        $product->Quantity = $request->Quantity;
+        $product->Category = $request->Category;
+        $product->Description = $request->Description;
+
+        // Handle gambar
+        $imagePaths = [];
+
         if ($request->hasFile('ImageMain')) {
-            $mainImagePath = $request->file('ImageMain')->store('products', 'public');
-            $images[] = $mainImagePath;
+            $imagePaths[] = $request->file('ImageMain')->store('products', 'public');
         }
-    
+
         if ($request->hasFile('ImageOthers')) {
-            foreach ($request->file('ImageOthers') as $file) {
-                $images[] = $file->store('products', 'public');
+            foreach ($request->file('ImageOthers') as $image) {
+                $imagePaths[] = $image->store('products', 'public');
             }
         }
-    
-        // Cek apakah ini request dari route produk terlaris
-        $isBestSeller = str_contains(url()->previous(), 'bestproducts/create');
-    
-        Product::create([
-            'ProductName' => $request->ProductName,
-            'Price' => $request->Price,
-            'Quantity' => 1,
-            'Category' => $request->Category,
-            'Description' => $request->Description,
-            'Images' => json_encode($images),
-            'is_best_seller' => $isBestSeller,
-        ]);
-    
-        // Redirect ke halaman yang sesuai
-        return redirect()->route($isBestSeller ? 'products.best' : 'products.index')
-                         ->with('success', 'Produk berhasil ditambahkan.');
-    }    
+
+        $product->Images = json_encode($imagePaths);
+
+        // Tandai sebagai produk terlaris
+        $product->is_best_seller = $request->has('is_best_seller');
+
+        $product->save();
+
+        return redirect()->route('products.best')->with('success', 'Produk terlaris berhasil ditambahkan!');
+    }
 
     public function show($id)
     {
@@ -85,7 +86,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.edit', compact('product'));
+        return view('admin.editproduct', compact('product'));
     }
 
     public function update(Request $request, $id)
@@ -119,7 +120,11 @@ class ProductController extends Controller
             'Images' => json_encode($images),
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui.');
+        if ($product->is_best_seller) {
+            return redirect()->route('products.best')->with('success', 'Produk terlaris berhasil diperbarui!');
+        } else {
+            return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
+        }
     }
 
     public function destroy($id)
@@ -145,4 +150,19 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return view('admin.detailproduct', compact('product'));
     }
+
+    public function riwayat()
+    {
+        $deletedProducts = Product::onlyTrashed()->get();
+        return view('admin.riwayatproduct', compact('deletedProducts'));
+    }
+
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id);
+        $product->restore();
+
+        return redirect()->route('products.riwayat')->with('success', 'Produk berhasil dipulihkan.');
+    }
+    
 }

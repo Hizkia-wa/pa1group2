@@ -37,6 +37,10 @@
                 <input type="text" name="Price" class="form-control">
             </div>
             <div class="col-md-6">
+                <label>Jumlah Stok:</label>
+                <input type="number" name="Quantity" class="form-control" min="0" required>
+            </div>
+            <div class="col-md-6">
                 <label>Gambar Lainnya:</label>
                 <input type="file" name="ImageOthers[]" class="form-control" multiple>
             </div>

@@ -17,13 +17,14 @@ Route::prefix('Admin')->group(function () {
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('/product/detail/{id}', [ProductController::class, 'showDetail'])->name('product.detail');
-    // Produk Terlaris
+    Route::get('/products/riwayat', [ProductController::class, 'riwayat'])->name('products.riwayat');
+Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
     Route::get('/products/bestproducts', [ProductController::class, 'bestProducts'])->name('products.best');
     Route::get('/products/bestproducts/create', [ProductController::class, 'createBestProduct'])->name('products.best.create');
-
+    Route::get('/bestproducts/{id}/edit', [ProductController::class, 'edit'])->name('bestproducts.edit');
+    Route::put('/bestproducts/{id}', [ProductController::class, 'update'])->name('bestproducts.update');
     Route::get('/change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.changePasswordForm');
     Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
-
-     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 
