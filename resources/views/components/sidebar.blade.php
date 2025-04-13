@@ -8,9 +8,9 @@
         </div>
 
         <div class="nav flex-column gap-3 fs-5">
-            <a href="#" class="nav-link active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-            <a href="#" class="nav-link"><i class="bi bi-box-seam me-2"></i>Produk</a>
-            <a href="#" class="nav-link"><i class="bi bi-chat-left-dots me-2"></i>Ulasan</a>
+            <a href="#" class="nav-link" id="dashboard-link"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+            <a href="#" class="nav-link" id="product-link"><i class="bi bi-box-seam me-2"></i>Produk</a>
+            <a href="#" class="nav-link" id="review-link"><i class="bi bi-chat-left-dots me-2"></i>Ulasan</a>
 
             <div class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="bi bi-clock-history me-2"></i>Riwayat</a>
@@ -26,3 +26,16 @@
         <small>&copy; 2025 Gita Ulos</small>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarLinks = document.querySelectorAll('.sidebar .nav-link');
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                sidebarLinks.forEach(link => link.classList.remove('active'));
+
+                this.classList.add('active');
+            });
+        });
+    });
+</script>

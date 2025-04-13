@@ -42,7 +42,7 @@ body {
 
 .sidebar .active {
     background-color: white;
-    color: black !important;
+    color:  #ffcc00 !important;
     font-weight: bold;
 }
 
