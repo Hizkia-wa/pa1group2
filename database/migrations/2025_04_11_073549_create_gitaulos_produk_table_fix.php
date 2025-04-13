@@ -37,6 +37,7 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->string('Category');
             $table->text('Description')->nullable();
             $table->longText('Images')->nullable(); // Menyimpan multiple image (format JSON, dsb)
+            $table->boolean('is_best_seller')->default(false); // Produk terlaris atau tidak
             $table->timestamps();
             $table->softDeletes();
         });

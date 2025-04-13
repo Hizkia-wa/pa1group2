@@ -4,8 +4,8 @@
 <div class="container">
     <div class="mb-4">
         <a href="{{ route('products.index') }}" class="btn btn-dark">Produk Kita</a>
-        <a href="{{ route('products.best') }}" class="btn btn-dark">Produk Laris</a>
-        <a href="{{ route('products.create') }}" class="btn btn-dark">Tambah Produk</a>
+        <a href="{{ route('products.best') }}" class="btn btn-dark active">Produk Laris</a>
+        <a href="{{ route('products.best.create') }}" class="btn btn-dark">Tambah Produk</a>
     </div>
 
     <table class="table table-bordered bg-white">
@@ -25,12 +25,9 @@
                 <td>{{ $product->ProductName }}</td>
                 <td>{{ $product->Category }}</td>
                 <td>
-                    @php
-                        $images = json_decode($product->Images, true);
-                    @endphp
-
-                    @if (!empty($images) && isset($images[0]))
-                        <img src="{{ asset('storage/' . $images[0]) }}" width="150" alt="Product Image">
+                    @php $images = json_decode($product->Images, true); @endphp
+                    @if(!empty($images))
+                        <img src="{{ asset('storage/' . $images[0]) }}" width="60" alt="Gambar">
                     @endif
                 </td>
                 <td>
