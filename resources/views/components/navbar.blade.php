@@ -20,7 +20,7 @@
                     <a class="nav-link" href="#">Ulasan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ulos Kita</a>
+                    <a href="{{ route('uloskita') }}" class="nav-link {{ request()->routeIs('uloskita') ? 'active' : '' }}">Ulos Kita</a>
                 </li>
             </ul>
             <div>
