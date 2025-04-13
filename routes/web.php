@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReviewController;
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
@@ -28,3 +29,8 @@ Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->nam
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 
+Route::prefix('user')->group(function () {
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('user.reviews');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('user.reviews.store');
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('user.reviews.destroy');
+});
