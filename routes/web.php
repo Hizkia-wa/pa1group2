@@ -36,24 +36,8 @@ Route::prefix('user')->group(function () {
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('user.reviews.destroy');
 });
 
-// Route::prefix('admin')->group(function () {
-//     Route::resource('produk', ProdukController::class);
-// });
 
-// Tambahkan route ini ke file web.php yang sudah ada
-Route::get('/profilumkm', function () {
-    return view('users.profilumkm');
-})->name('profil.umkm');
-
-
-
-Route::get('/uloskita', function () {
-    return view('users.uloskita');
-})->name('uloskita');
-
-
-// Route untuk halaman daftar ulos
+Route::get('/profilumkm', function () {return view('users.profilumkm');})->name('profil.umkm');
+Route::get('/uloskita', function () {return view('users.uloskita');})->name('uloskita');
 Route::get('/uloskita', [UloskitaController::class, 'index'])->name('uloskita');
-
-// Route untuk halaman detail ulos
 Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->name('uloskita.detail');
