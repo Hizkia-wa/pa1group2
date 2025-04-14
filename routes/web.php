@@ -40,6 +40,10 @@ Route::prefix('user')->group(function () {
     Route::get('/reviews', [ReviewController::class, 'index'])->name('user.reviews');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('user.reviews.store');
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('user.reviews.destroy');
+
+     // 🔽 Tambahkan route detail produk user di sini:
+    Route::get('/produk/detail/{id}', [ProductController::class, 'showUserDetail'])->name('user.product.detail');
+    Route::get('/user/produk/detail/{id}', [ProductController::class, 'showDetailUser'])->name('user.product.detail');
 });
 
 Route::get('/profilumkm', function () {

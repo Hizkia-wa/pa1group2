@@ -164,5 +164,12 @@ class ProductController extends Controller
 
         return redirect()->route('products.riwayat')->with('success', 'Produk berhasil dipulihkan.');
     }
+
+    public function showUserDetail($id)
+    {
+        $product = Product::findOrFail($id); // Ambil data berdasarkan ID
+        return view('users.detailproduct', compact('product'));
+    }
+
     
 }
