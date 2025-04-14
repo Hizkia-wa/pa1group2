@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\users\UloskitaController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UloskitaController; // Jangan lupa ini ya
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
@@ -40,24 +42,19 @@ Route::prefix('user')->group(function () {
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('user.reviews.destroy');
 });
 
-// Route::prefix('admin')->group(function () {
-//     Route::resource('produk', ProdukController::class);
-// });
-
-// Tambahkan route ini ke file web.php yang sudah ada
 Route::get('/profilumkm', function () {
     return view('users.profilumkm');
 })->name('profil.umkm');
 
-
-
-Route::get('/uloskita', function () {
-    return view('users.uloskita');
-})->name('uloskita');
-
-
-// Route untuk halaman daftar ulos
 Route::get('/uloskita', [UloskitaController::class, 'index'])->name('uloskita');
 
 // Route untuk halaman detail ulos
 Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->name('uloskita.detail');
+
+// Route untuk halaman registrasi
+Route::post('/register', [UserController::class, 'register'])->name('register.submit');
+Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register.form');
+
+// Route login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
