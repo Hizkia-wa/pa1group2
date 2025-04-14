@@ -40,9 +40,6 @@ Route::prefix('user')->group(function () {
 //     Route::resource('produk', ProdukController::class);
 // });
 
-
-Route::get('/admin/produk', [ProdukController::class, 'index']);
-
 // Tambahkan route ini ke file web.php yang sudah ada
 Route::get('/profilumkm', function () {
     return view('users.profilumkm');
