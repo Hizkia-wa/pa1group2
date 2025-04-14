@@ -52,4 +52,25 @@
     </div>
 
 
+
+    <div class="vision-mission-section">
+        <h2 class="section-title">Visi & Misi Gita Ulos</h2>
+        <div class="vision-mission-content">
+            <div class="vision-box">
+                <h3>Visi</h3>
+                <p>Menjadi pusat pelestarian dan pengembangan Ulos Batak yang diakui secara nasional dan internasional, serta menjadi jembatan penghubung antara warisan budaya tradisional dengan generasi modern.</p>
+            </div>
+            <div class="mission-box">
+                <h3>Misi</h3>
+                <ul>
+                    <li>Melestarikan teknik tradisional pembuatan Ulos melalui pelatihan dan dokumentasi.</li>
+                    <li>Memberdayakan para penenun lokal, khususnya perempuan di daerah Danau Toba.</li>
+                    <li>Mengembangkan desain Ulos yang kontemporer tanpa menghilangkan nilai filosofis dan kultural.</li>
+                    <li>Mengedukasi masyarakat luas tentang makna dan nilai sejarah di balik setiap motif Ulos.</li>
+                    <li>Memperluas pasar Ulos ke tingkat nasional dan internasional melalui platform digital.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 @endsection

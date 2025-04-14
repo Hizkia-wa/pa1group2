@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap');
 
-/* General styling */
+
 body {
     font-family: 'Poppins', sans-serif;
     color: #333;
@@ -533,5 +533,121 @@ body {
         margin-bottom: 15px;
     }
 }
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+.breadcrumb-item a {
+    color: #6c757d;
+    text-decoration: none;
+}
+.breadcrumb-item.active {
+    color: #000;
+}
 
+/* Product Detail Section */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+.card-img-top {
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0;
+}
+.img-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+.badge.bg-primary {
+    background-color: #007bff !important;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+}
+h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.text-muted.small {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Size and Quantity */
+.form-label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+    font-size: 0.9rem;
+    padding: 0.3rem 1rem;
+}
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+#jumlah {
+    width: 60px;
+    font-size: 1rem;
+    border: 1px solid #6c757d;
+}
+
+/* WhatsApp Button */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    width: 100%;
+    text-align: center;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* SKU and Category */
+.row p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.row p strong {
+    font-weight: bold;
+}
+
+/* Product Advantages */
+.mt-5 h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.mt-5 ul {
+    padding-left: 1.5rem;
+}
+.mt-5 ul li {
+    font-size: 1rem;
+    line-height: 1.8;
+}
 
