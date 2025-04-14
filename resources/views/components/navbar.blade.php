@@ -11,7 +11,7 @@
                     <a class="nav-link" href="#">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Produk</a>
+                    <a class="nav-link" href="{{ route ('produk.index') }}">Produk</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Profil</a>
