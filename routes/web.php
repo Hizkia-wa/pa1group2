@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\ProdukController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\users\UloskitaController;
@@ -28,7 +28,6 @@ Route::prefix('Admin')->group(function () {
     Route::get('/change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.changePasswordForm');
     Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-    Route::resource('produk', ProdukController::class);
 });
 
 Route::prefix('user')->group(function () {

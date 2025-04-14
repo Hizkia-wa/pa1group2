@@ -8,8 +8,8 @@
         </div>
 
         <div class="nav flex-column gap-3 fs-5">
-            <a href="#" class="nav-link" id="dashboard-link"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-            <a href="{{ route ('produk.index') }}" class="nav-link" id="product-link"><i class="bi bi-box-seam me-2"></i>Produk</a>
+            <a href="{{ route ('admin.homepage') }}" class="nav-link" id="product-link"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+            <a href="{{ route ('products.index') }}" class="nav-link" id="product-link"><i class="bi bi-box-seam me-2"></i>Produk</a>
             <a href="#" class="nav-link" id="review-link"><i class="bi bi-chat-left-dots me-2"></i>Ulasan</a>
 
             <div class="dropdown">
