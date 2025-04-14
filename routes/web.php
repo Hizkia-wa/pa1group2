@@ -28,6 +28,10 @@ Route::prefix('Admin')->group(function () {
     Route::get('/change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.changePasswordForm');
     Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('/reviews', [ReviewController::class, 'adminIndex'])->name('admin.reviews');
+    Route::delete('/reviews/{id}/hide', [ReviewController::class, 'destroy'])->name('admin.reviews.hide');
+    Route::get('/riwayat-ulasan', [ReviewController::class, 'trashed'])->name('admin.reviews.trashed');
+    Route::post('/riwayat-ulasan/{id}/restore', [ReviewController::class, 'restore'])->name('admin.reviews.restore');
 });
 
 Route::prefix('user')->group(function () {
