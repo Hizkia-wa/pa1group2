@@ -333,98 +333,8 @@ body {
     line-height: 1.4;
 }
 
-/* Style untuk section Jenis Ulos */
-.ulos-section {
-    padding: 60px 0;
-    background-color: #f8f8f8;
-}
 
-.ulos-section h2 {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: #333;
-}
 
-.ulos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
-
-.ulos-card {
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.ulos-card:hover {
-    transform: translateY(-5px);
-}
-
-.ulos-card-content {
-    padding: 20px;
-}
-
-.ulos-card-header {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 15px;
-}
-
-.ulos-image {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    margin-right: 15px;
-    border: 1px solid #eee;
-}
-
-.ulos-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 8px;
-}
-
-.ulos-tag {
-    display: inline-block;
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 3px;
-    color: white;
-}
-
-.tag-deskripsi {
-    background-color: #333;
-}
-
-.tag-kegunaan {
-    background-color: #3490dc;
-}
-
-.tag-pembuatan {
-    background-color: #9561e2;
-}
-
-.ulos-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0;
-    color: #333;
-}
-
-.ulos-description {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.6;
-}
 
 /* Footer styles */
 .site-footer {
@@ -649,5 +559,108 @@ p {
 .mt-5 ul li {
     font-size: 1rem;
     line-height: 1.8;
+}
+
+
+.hero-section {
+    background-image: url('/img/ulos/ulos-atakanta.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 0;
+}
+
+.hero-overlay {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 40px 20px;
+    border-radius: 5px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.subtitle-section {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+
+/* Enhanced card styling */
+.ulos-card {
+    margin-bottom: 25px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: none;
+}
+
+.ulos-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.ulos-image-container {
+    padding: 15px;
+}
+
+.ulos-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.ulos-content {
+    padding: 15px;
+}
+
+/* Simplified ulos title styling */
+.ulos-title-container {
+    margin-bottom: 12px;
+}
+
+.ulos-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.ulos-title-link {
+    text-decoration: none;
+    color: #2c3e50;
+    transition: color 0.3s ease;
+}
+
+.ulos-title-link:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.ulos-description {
+    font-size: 0.95rem;
+    color: #5d6778;
+    line-height: 1.5;
+    text-decoration: none; 
+}
+
+.ulos-explore-btn {
+    color: #3498db;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ulos-explore-btn:hover {
+    color: #2980b9;
+    text-decoration: underline;
 }
 
