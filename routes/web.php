@@ -6,7 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\users\UloskitaController; // Jangan lupa ini ya
+use App\Http\Controllers\users\UloskitaController; 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
@@ -56,9 +57,13 @@ Route::get('/uloskita', [UloskitaController::class, 'index'])->name('uloskita');
 Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->name('uloskita.detail');
 
 // Route untuk halaman registrasi
-Route::post('/register', [UserController::class, 'register'])->name('register.submit');
-Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register.form');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
-// Route login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
