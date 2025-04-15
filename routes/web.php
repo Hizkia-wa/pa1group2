@@ -6,7 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UloskitaController; // Jangan lupa ini ya
+use App\Http\Controllers\users\UloskitaController; // Jangan lupa ini ya
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
