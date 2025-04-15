@@ -167,26 +167,41 @@
     <div class="right-side">
       <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo">
       <div class="form-box">
-        <h2>Login</h2>
-        <p>Silahkan Login terlebih dahulu sebelum melakukan pemesanan</p>
-        <form method="POST" action="{{ route('login') }}">
-          @csrf
-          <div class="form-group">
-            <i class="fas fa-user"></i>
-            <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
-          </div>
-          <div class="form-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="password" placeholder="Sandi" required>
-          </div>
-          <button type="submit" class="btn-login">Login</button>
-        </form>
-        <div class="extra-links">
-          Belum punya akun? <a href="{{ route('register') }}">Register</a> |
-          <a href="{{ route('password.request') }}">Lupa password?</a>
-        </div>
-      </div>
+  <h2>Login</h2>
+  <p>Silahkan Login terlebih dahulu sebelum melakukan pemesanan</p>
+
+  {{-- Flash Message --}}
+  @if (session('success'))
+    <div class="alert alert-success text-center">
+      {{ session('success') }}
     </div>
+  @endif
+
+  {{-- Validation Error --}}
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+
+  <form method="POST" action="{{ route('login') }}">
+    @csrf
+    <div class="form-group">
+      <i class="fas fa-user"></i>
+      <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
+    </div>
+    <div class="form-group">
+      <i class="fas fa-lock"></i>
+      <input type="password" name="password" placeholder="Sandi" required>
+    </div>
+    <button type="submit" class="btn-login">Login</button>
+  </form>
+  <div class="extra-links">
+    Belum punya akun? <a href="{{ route('register') }}">Register</a> |
+    <a href="{{ route('password.request') }}">Lupa password?</a>
   </div>
-</body>
-</html>
+</div>

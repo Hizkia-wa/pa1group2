@@ -8,6 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+
+    <style>
+        /* Tambahkan ini untuk latar belakang putih */
+        body {
+            background-color: #ffffff; /* Latar belakang putih */
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">

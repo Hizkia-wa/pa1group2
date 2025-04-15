@@ -191,12 +191,12 @@
           </div>
           <div class="form-group">
             <input id="password-confirm" type="password" name="password_confirmation" required placeholder="Masukkan Ulang Password">
+            <div class="login-link">
+          Sudah punya akun? <a href="{{ route('login') }}">Login</a>
+        </div>
           </div>
           <button type="submit" class="btn btn-primary">Registrasi</button>
         </form>
-        <div class="login-link">
-          Sudah punya akun? <a href="{{ route('login') }}">Login</a>
-        </div>
       </div>
     </div>
   </div>

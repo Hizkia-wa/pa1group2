@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\users\UloskitaController; 
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
+
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
@@ -56,12 +58,18 @@ Route::get('/uloskita', [UloskitaController::class, 'index'])->name('uloskita');
 // Route untuk halaman detail ulos
 Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->name('uloskita.detail');
 
-// Route untuk halaman registrasi
+/// Tampilkan form register
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+// Proses form register
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.submit');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.submit');
+
+// Route login
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
     ->name('password.request');
