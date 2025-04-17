@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container-fluid p-0">
-    <!-- Hero Section -->
+
     <div class="text-center hero-section">
         <div class="hero-overlay">
             <h1 class="display-4 mb-4">Menghidupkan Kembali Pesona Ulos Batak dengan Sentuhan Keahlian Turun-temurun</h1>
         </div>
     </div>
     
-    <!-- Subtitle Section -->
+
     <div class="container-fluid text-center subtitle-section">
         <h2 class="mb-0">Jenis Jenis Ulos Dan Kegunaannya</h2>
     </div>
