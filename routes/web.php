@@ -39,6 +39,9 @@ Route::prefix('Admin')->group(function () {
     Route::get('/riwayat-ulasan', [ReviewController::class, 'trashed'])->name('admin.reviews.trashed');
     Route::post('/riwayat-ulasan/{id}/restore', [ReviewController::class, 'restore'])->name('admin.reviews.restore');
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+    Route::get('/orders/selesai', [OrderController::class, 'selesai'])->name('admin.orders.selesai');
+    Route::get('/orders/batal', [OrderController::class, 'ordersBatal'])->name('admin.orders.batal');
 });
 
 Route::prefix('user')->group(function () {

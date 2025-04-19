@@ -63,7 +63,7 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->string('PostalCode');
             $table->string('Size');
             $table->integer('Quantity');
-            $table->enum('OrderStatus', ['pending', 'confirmed', 'shipped', 'completed', 'cancelled'])->default('pending');
+            $table->enum('OrderStatus', ['Diproses', 'Selesai', 'Batal'])->default('Diproses');
             $table->timestamps();
             $table->softDeletes();
         

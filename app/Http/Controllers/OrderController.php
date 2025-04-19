@@ -9,9 +9,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::all();
-        return view('admin.Orders', compact('orders'));
+        $orders = Order::whereNotIn('OrderStatus', ['Selesai', 'Batal'])->get();
+        return view('admin.orders', compact('orders'));
     }
+    
         public function store(Request $request)
     {
         $request->validate([
@@ -47,5 +48,26 @@ class OrderController extends Controller
     {
         $orders = Order::onlyTrashed()->get();
         return view('admin.riwayatorder', compact('orders'));
+    }
+
+    public function selesai()
+    {
+        $orders = Order::where('OrderStatus', 'Selesai')->get();
+        return view('admin.ordersselesai', compact('orders'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->OrderStatus = $request->status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
+    }
+
+    public function ordersBatal()
+    {
+        $orders = Order::where('OrderStatus', 'Batal')->get();
+        return view('admin.ordersbatal', compact('orders'));
     }
 }
