@@ -200,4 +200,10 @@ class ProductController extends Controller
         return view('users.detailproduct', compact('product'));
     
     }
+
+    public function showUserCatalog()
+    {
+        $products = Product::whereNull('deleted_at')->get();
+        return view('users.productcatalog', compact('products'));
+    }
 }

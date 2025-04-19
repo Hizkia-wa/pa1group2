@@ -51,14 +51,25 @@ class CreateGitaUlosProdukTableFix extends Migration
         });
 
         // Tabel Orders
-        Schema::create('Orders', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ProductId')->constrained('products')->onDelete('cascade');
-            $table->foreignId('CustomerId')->constrained('customers')->onDelete('cascade');
-            $table->enum('OrderStatus', ['pending', 'paid', 'shipped', 'completed', 'cancelled']);
+            $table->unsignedBigInteger('ProductId');
+            $table->string('CustomerName');
+            $table->string('Email');
+            $table->string('Phone');
+            $table->string('City');
+            $table->string('District');
+            $table->string('Address');
+            $table->string('PostalCode');
+            $table->string('Size');
             $table->integer('Quantity');
+            $table->enum('OrderStatus', ['pending', 'confirmed', 'shipped', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
+            $table->softDeletes();
+        
+            $table->foreign('ProductId')->references('id')->on('products')->onDelete('cascade');
         });
+        
 
         // Tabel Reviews
         Schema::create('Reviews', function (Blueprint $table) {

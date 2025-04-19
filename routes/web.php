@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\users\UloskitaController; 
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -37,16 +38,17 @@ Route::prefix('Admin')->group(function () {
     Route::delete('/reviews/{id}/hide', [ReviewController::class, 'destroy'])->name('admin.reviews.hide');
     Route::get('/riwayat-ulasan', [ReviewController::class, 'trashed'])->name('admin.reviews.trashed');
     Route::post('/riwayat-ulasan/{id}/restore', [ReviewController::class, 'restore'])->name('admin.reviews.restore');
+    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
 });
 
 Route::prefix('user')->group(function () {
     Route::get('/reviews', [ReviewController::class, 'index'])->name('user.reviews');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('user.reviews.store');
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('user.reviews.destroy');
-
-     // 🔽 Tambahkan route detail produk user di sini:
-    Route::get('/produk/detail/{id}', [ProductController::class, 'showUserDetail'])->name('user.product.detail');
-    Route::get('/user/produk/detail/{id}', [ProductController::class, 'showDetailUser'])->name('user.product.detail');
+    Route::post('/produk/order', [OrderController::class, 'store'])->name('user.product.order');
+    Route::get('/admin/orders/riwayat', [OrderController::class, 'riwayat'])->name('orders.riwayat');
+    Route::get('/produk', [ProductController::class, 'showUserCatalog'])->name('user.product.catalog');
+    Route::get('/produk/{id}', [ProductController::class, 'showUserDetail'])->name('user.product.detail');
 });
 
 Route::get('/profilumkm', function () {
