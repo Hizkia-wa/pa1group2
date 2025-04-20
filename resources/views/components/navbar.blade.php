@@ -22,7 +22,9 @@
             </ul>
             <div>
                 <a class="btn btn-outline-dark me-2" href="#">Login</a>
-                <a class="btn" href="#"><i class="bi bi-cart"></i></a>
+                <a class="btn" href="{{ route('user.cart.index') }}">
+                    <i class="bi bi-cart"></i>
+                </a>
             </div>
         </div>
     </div>

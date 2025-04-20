@@ -17,55 +17,49 @@
                 <th>Nama</th>
                 <th>No Telepon</th>
                 <th>Alamat Email</th>
-                <th>Jumlah Pesan</th>
-                <th>Ukuran</th>
+                <th>Alamat</th>
+                <th>Jumlah Produk</th>
                 <th>Aksi</th>
                 <th>Status Pesanan</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($orders as $index => $order)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $order->CustomerName }}</td>
-                <td>{{ $order->Phone }}</td>
-                <td>{{ $order->Email }}</td>
-                <td>{{ $order->Quantity }}</td>
-                <td>{{ $order->Size }}</td>
-                <td>
-                    <a class="btn btn-warning">Detail</a>
-                </td>
-                <td>
-                <div class="dropdown">
-                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        Konfirmasi
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="status" value="Diproses">
-                                <button type="submit" class="dropdown-item text-primary fw-bold">Diproses</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="status" value="Selesai">
-                                <button type="submit" class="dropdown-item text-success fw-bold">Selesai</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="status" value="Batal">
-                                <button type="submit" class="dropdown-item text-danger fw-bold">Batal</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                </td>
-            </tr>
+            @php $no = 1; @endphp
+            @foreach ($orders as $key => $group)
+                @php
+                    $first = $group->first();
+                    $totalQty = $group->sum('Quantity');
+                    [$name, $email, $phone, $date] = explode('|', $key);
+                @endphp
+                <tr>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $name }}</td>
+                    <td>{{ $phone }}</td>
+                    <td>{{ $email }}</td>
+                    <td>{{ $first->Address }}, {{ $first->District }}, {{ $first->City }}, {{ $first->PostalCode }}</td>
+                    <td>{{ $totalQty }}</td>
+                    <td>
+                        <a href="#" class="btn btn-warning">Detail</a>
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                Konfirmasi
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach ($group as $order)
+                                    <li>
+                                        <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="status" value="Diproses">
+                                            <button type="submit" class="dropdown-item text-primary fw-bold">Diproses (ID {{ $order->id }})</button>
+                                        </form>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

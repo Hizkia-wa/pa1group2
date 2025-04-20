@@ -8,10 +8,16 @@ use App\Models\Order;
 class OrderController extends Controller
 {
     public function index()
-    {
-        $orders = Order::whereNotIn('OrderStatus', ['Selesai', 'Batal'])->get();
-        return view('admin.orders', compact('orders'));
-    }
+{
+    $orders = Order::whereNotIn('OrderStatus', ['Selesai', 'Batal'])
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->groupBy(function ($item) {
+            return $item->CustomerName . '|' . $item->Email . '|' . $item->Phone . '|' . $item->created_at->format('Y-m-d');
+        });
+
+    return view('admin.orders', compact('orders'));
+}
     
         public function store(Request $request)
     {

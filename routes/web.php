@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
@@ -52,6 +53,11 @@ Route::prefix('user')->group(function () {
     Route::get('/admin/orders/riwayat', [OrderController::class, 'riwayat'])->name('orders.riwayat');
     Route::get('/produk', [ProductController::class, 'showUserCatalog'])->name('user.product.catalog');
     Route::get('/produk/{id}', [ProductController::class, 'showUserDetail'])->name('user.product.detail');
+    Route::get('/keranjang', [CartController::class, 'index'])->name('user.cart.index');
+    Route::post('/keranjang/tambah', [CartController::class, 'addToCart'])->name('user.cart.add');
+    Route::post('/keranjang/hapus/{id}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
+    Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
+    Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
 });
 
 Route::get('/profilumkm', function () {
@@ -67,8 +73,8 @@ Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 // Proses form register
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.submit');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.submit');
+// Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.submit');
+// Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.submit');
 
 // Route login
 Route::get('/login', function () {
