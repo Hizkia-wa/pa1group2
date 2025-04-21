@@ -26,6 +26,7 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->text('Address')->nullable();
             $table->date('Birthday')->nullable();
             $table->timestamps();
+            
         });
 
         // Tabel Products
