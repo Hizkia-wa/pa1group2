@@ -1,4 +1,4 @@
-@extends('layouts.User')
+@extends('layouts.customer')
 
 @section('content')
 <div class="container py-5">
@@ -53,7 +53,7 @@
 
                     <div class="mt-auto d-flex gap-2">
                         <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary btn-sm w-100">Beli</a>
-                        <form class="add-to-cart-form w-100">
+                        <form action="{{ route('user.cart.add') }}" method="POST" class="add-to-cart-form w-100">
                             @csrf
                             <input type="hidden" name="id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" value="1">
