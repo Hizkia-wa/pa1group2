@@ -196,7 +196,12 @@
                 <input type="number" name="Quantity" value="1" min="1" required>
             </div>
 
-            <button type="submit" class="btn-submit"><i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp</button>
+            <button type="button" class="btn-submit" id="waButton" data-admin="6282274398996">
+        <i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp
+        </button>
+
+
+
 
             <div class="product-meta">
                 <div>SKU: REUH-4234-UU</div>
@@ -205,4 +210,43 @@
         </form>
     </div>
 </div>
+<script>
+document.getElementById('waButton').addEventListener('click', function () {
+    const name = document.querySelector('[name="name"]').value;
+    const email = document.querySelector('[name="email"]').value;
+    const phone = document.querySelector('[name="phone"]').value;
+    const city = document.querySelector('[name="city"]').value;
+    const district = document.querySelector('[name="district"]').value;
+    const address = document.querySelector('[name="address"]').value;
+    const postal = document.querySelector('[name="postal_code"]').value;
+    const quantity = document.querySelector('[name="Quantity"]').value;
+    const size = document.querySelector('input[name="size"]:checked')?.value;
+
+    const product = "{{ $product->ProductName }}";
+    const price = "{{ number_format($product->Price, 0, ',', '.') }}";
+    const category = "{{ $product->Category }}";
+
+    const message = `Halo Admin, saya ingin memesan produk:
+
+📦 *${product}*
+📁 Kategori: ${category}
+💵 Harga: Rp ${price}
+
+👤 Nama: ${name}
+📱 Telepon: ${phone}
+📧 Email: ${email}
+🏠 Alamat: ${address}, ${district}, ${city}, ${postal}
+📐 Ukuran: ${size}
+🔢 Jumlah: ${quantity}
+
+Mohon segera diproses ya 🙏`;
+
+  const nomorAdmin = document.getElementById('waButton').dataset.admin;
+    const link = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
+    window.open(link, '_blank'); // buka di tab baru
+});
+</script>
+
+
+
 @endsection
