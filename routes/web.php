@@ -11,7 +11,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\users\UloskitaController; 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\CustomLoginController;
+use App\Http\Controllers\HomeController;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route untuk halaman dashboard admin
 Route::get('Admin/homepage', function () {
