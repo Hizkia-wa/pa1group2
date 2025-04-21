@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+@vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta charset="UTF-8">
     <title>Gita Ulos - @yield('title')</title>
 
@@ -13,9 +14,9 @@
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 </head> 
 
-@yield('scripts')
-<body>
 
+<body>
+    @yield('scripts')
     @include('components.navbar')
 
     <main class="container py-4">
@@ -48,5 +49,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </body>
 </html>
