@@ -16,7 +16,6 @@
 
 
 <body>
-    @yield('scripts')
     @include('components.navbar')
 
     <main class="container py-4">
@@ -49,7 +48,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
 
+
+    @yield('scripts')
 </body>
 </html>
