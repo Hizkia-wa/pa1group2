@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Gita Ulos</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e0e6ad68.js" crossorigin="anonymous"></script>
   <style>
     * {
       margin: 0;
@@ -14,74 +15,96 @@
     }
 
     html, body {
-      margin: 0;
-      padding: 0;
       width: 100%;
       height: 100%;
-      overflow-x: hidden;
       font-family: 'Poppins', sans-serif;
+      background-color: #F3E9DC;
     }
 
     .container {
       display: flex;
-      width: 100%;
-      height: 100%;
-      min-height: 100vh;
-      max-height: 100vh;
+      height: 100vh;
       overflow: hidden;
-      box-shadow: none;
-      border-radius: 0;
     }
 
     .left-side {
-      background-color: #C3F3E7;
-      padding: 5vw;
       flex: 1;
+      background: linear-gradient(to bottom right, #F3E9DC, #EBD5B3);
+      padding: 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      color: #6B4226;
+    }
+
+    .left-side h1 {
+      font-size: 30px;
+      font-weight: 900;
+      margin-bottom: 15px;
+    }
+
+    .left-side p {
+      font-size: 15px;
+      margin-bottom: 25px;
+      max-width: 90%;
+      color: #5a3820;
+    }
+
+    .left-side img {
+      max-width: 70%;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .right-side {
-      background-color: black;
-      color: #fff;
       flex: 1;
-      padding: 5vw;
+      background-color: #6B4226;
+      color: white;
+      padding: 40px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
 
     .logo {
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
       margin-bottom: 20px;
+      border-radius: 50%;
+      border: 3px solid #DAA520;
+      overflow: hidden;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .form-box {
       width: 100%;
-      max-width: 360px;
-      background: transparent;
+      max-width: 350px;
     }
 
     .form-box h2 {
-      font-size: 28px;
-      font-weight: 700;
       text-align: center;
-      margin-bottom: 10px;
+      font-size: 32px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      color: #DAA520;
     }
 
     .form-box p {
       text-align: center;
       font-size: 14px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       position: relative;
     }
 
@@ -89,10 +112,10 @@
       width: 100%;
       padding: 12px 40px 12px 45px;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       background-color: #fff;
       font-size: 14px;
-      color: #000;
+      color: #2C3E50;
     }
 
     .form-group i {
@@ -101,35 +124,39 @@
       left: 15px;
       transform: translateY(-50%);
       font-size: 18px;
-      color: #000;
+      color: #6B4226;
     }
 
     .btn-login {
       width: 100%;
-      background-color: #0b5ed7;
+      background-color: #DAA520;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 12px;
-      color: #fff;
       font-weight: bold;
       font-size: 16px;
+      color: white;
       transition: background 0.3s;
     }
 
     .btn-login:hover {
-      background-color: #073e91;
+      background-color: #b48a1b;
     }
 
     .extra-links {
       font-size: 13px;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .extra-links a {
-      color: #fff;
+      color: #FFD700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .extra-links a:hover {
       text-decoration: underline;
-      margin: 0 5px;
     }
 
     @media (max-width: 768px) {
@@ -145,7 +172,6 @@
       }
     }
   </style>
-  <script src="https://kit.fontawesome.com/a2e0e6ad68.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="container">
@@ -155,10 +181,12 @@
       <img src="{{ asset('img/rumah.jpeg') }}" alt="Rumah Adat">
     </div>
     <div class="right-side">
-      <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo">
+      <div class="logo">
+        <img src="{{ asset('img/logo.png') }}" alt="Logo Gita Ulos">
+      </div>
       <div class="form-box">
         <h2>Login</h2>
-        <p>Silahkan Login terlebih dahulu sebelum melakukan pemesanan</p>
+        <p>Silakan login terlebih dahulu sebelum melakukan pemesanan</p>
 
         {{-- Flash Message --}}
         @if (session('success'))

@@ -13,17 +13,18 @@
   box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-}
-
-body {
-  margin: 0;
-  padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #f8f9fa;
+  background-color: #F3E9DC;
 }
 
 .container {
@@ -31,12 +32,10 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 .left-side {
-  background-color: #d1f3f0;
+  background: linear-gradient(to bottom right, #F3E9DC, #EBD5B3);
   padding: 40px;
   flex: 1;
   text-align: center;
@@ -44,28 +43,30 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #6B4226;
 }
 
 .left-side h1 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 900;
   margin-bottom: 15px;
-  color: #000;
 }
 
 .left-side p {
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 30px;
+  font-size: 15px;
+  margin-bottom: 25px;
   max-width: 90%;
+  color: #5a3820;
 }
 
 .left-side img {
-  max-width: 65%;
+  max-width: 70%;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .right-side {
-  background-color: #000;
+  background-color: #6B4226;
   color: white;
   padding: 40px;
   flex: 1;
@@ -73,7 +74,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 0;
 }
 
 .logo-container {
@@ -85,7 +85,7 @@ body {
   height: 90px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid white;
+  border: 3px solid #DAA520;
 }
 
 .logo img {
@@ -101,10 +101,10 @@ body {
 
 .register-form h2 {
   text-align: center;
-  font-size: 36px;
-  margin-bottom: 30px;
-  font-weight: 600;
-  letter-spacing: 2px;
+  font-size: 32px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #DAA520;
 }
 
 .form-group {
@@ -117,7 +117,7 @@ body {
   border: none;
   border-radius: 10px;
   background-color: #fff;
-  color: #000;
+  color: #2C3E50;
   font-size: 14px;
 }
 
@@ -127,11 +127,11 @@ body {
 
 .form-group input:focus {
   outline: none;
-  border: 2px solid #007bff;
+  border: 2px solid #DAA520;
 }
 
 .btn-primary {
-  background-color: #0d6efd;
+  background-color: #DAA520;
   border: none;
   width: 100%;
   padding: 12px;
@@ -139,10 +139,11 @@ body {
   border-radius: 12px;
   font-size: 16px;
   color: white;
+  transition: background 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #084eb1;
+  background-color: #b48a1b;
 }
 
 .login-link {
@@ -152,7 +153,7 @@ body {
 }
 
 .login-link a {
-  color: #00e676;
+  color: #FFD700;
   font-weight: bold;
   text-decoration: none;
 }
@@ -165,13 +166,14 @@ body {
   .container {
     flex-direction: column;
   }
-  
+
   .left-side, .right-side {
     width: 100%;
     height: auto;
     min-height: 50vh;
   }
 }
+
   </style>
 </head>
 <body>
