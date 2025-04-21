@@ -79,7 +79,5 @@ Route::get('/login/custom', [CustomLoginController::class, 'showLoginForm'])->na
 // Route untuk proses login (POST)
 Route::post('/login/custom', [CustomLoginController::class, 'login'])->name('login.custom.submit');
 
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
-    ->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-    ->name('password.email');
+Route::get('/lupa-password', [CustomLoginController::class, 'showForgotPasswordForm'])->name('forgot.password');
+Route::post('/lupa-password', [CustomLoginController::class, 'handleForgotPassword'])->name('forgot.password.send');

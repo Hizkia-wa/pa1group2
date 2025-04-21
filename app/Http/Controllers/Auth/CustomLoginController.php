@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Customer;
@@ -93,5 +95,56 @@ class CustomLoginController extends Controller
         return $status === Password::RESET_LINK_SENT
             ? back()->with('status', __($status))
             : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function showForgotPasswordForm(): View
+    {
+        return view('auth.lupapassword');
+    }
+
+    public function handleForgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $email = $request->email;
+        $attempts = Cache::get("forgot_attempts_$email", 0);
+        $locked = Cache::get("forgot_locked_$email");
+
+        if ($locked) {
+            return redirect()->back()->with('error', 'Email anda salah, coba setelah 1 jam')->with('locked', true);
+        }
+
+        $customer = Customer::where('Email', $email)->first();
+
+        if (!$customer) {
+            $attempts++;
+            Cache::put("forgot_attempts_$email", $attempts, 3600); // simpan 1 jam
+
+            if ($attempts >= 2) {
+                Cache::put("forgot_locked_$email", true, now()->addHour());
+            }
+
+            return redirect()->back()->with('error', 'Email anda salah');
+        }
+
+        // Buat password baru
+        $newPassword = substr(str_shuffle('abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'), 0, 8);
+
+        // Simpan password baru ke DB
+        $customer->Password = Hash::make($newPassword);
+        $customer->save();
+
+        // Kirim via email
+        Mail::raw("Password baru Anda adalah: $newPassword", function ($message) use ($email) {
+            $message->to($email)->subject('Reset Password - Gita Ulos');
+        });
+
+        // Reset percobaan
+        Cache::forget("forgot_attempts_$email");
+        Cache::forget("forgot_locked_$email");
+
+        return redirect()->back()->with('success', 'Password baru berhasil dikirim ke email Anda.');
     }
 }

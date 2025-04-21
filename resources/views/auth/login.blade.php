@@ -199,7 +199,7 @@
         </form>
         <div class="extra-links">
           Belum punya akun? <a href="{{ route('register') }}">Register</a> |
-          <a href="{{ route('password.request') }}">Lupa password?</a>
+          <a href="{{ route('forgot.password') }}">Lupa password?</a>
         </div>
       </div>
     </div>
