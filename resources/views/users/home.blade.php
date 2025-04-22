@@ -4,13 +4,14 @@
 <div class="container-fluid p-0">
     <!-- Hero Section -->
     <div class="hero-section text-center py-5 bg-light">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
-            <p class="lead">Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditemun dengan keahlian dan tradisi turun-temurun.</p>
-            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary mt-3">Lihat Koleksi</a>
+    <div class="container">
+        <div class="hero-content">
+            <!-- Removed the h1 and p text -->
+            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary mt-5">Lihat Koleksi</a>
             <a href="{{ route('uloskita') }}" class="btn btn-outline-secondary mt-3 ms-2">Tentang Ulos</a>
         </div>
     </div>
+</div>
 
     <!-- Featured Products Section -->
     <div class="container my-5">
@@ -44,8 +45,8 @@
         </div>
     </div>
 
-    <!-- Culture Section with Image -->
-    <div class="container my-5">
+ <!-- Culture Section with Image -->
+ <div class="container my-5">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <h2>Warisan Budaya yang Ditenun dengan Cinta</h2>
@@ -298,9 +299,44 @@
 }
 
 .hero-section {
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ asset('img/ulos/backgroundhome.png') }}');
+    background: url("{{ asset('img/ulos/background.png') }}");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    width: 100%; 
+    height: 400px; 
+    object-fit: cover; 
+    filter: none; 
+    position: relative;
+}
+.hero-section {
+    background: url("{{ asset('img/ulos/background.png') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    width: 100%; 
+    height: 400px; 
+    object-fit: cover; 
+    filter: none; 
+    position: relative;
+}
+
+.hero-content {
+    transform: none;
+    bottom: auto;
+    left: auto;
+    text-align: center;
+    margin-top: 260px; 
 }
 </style>
 
