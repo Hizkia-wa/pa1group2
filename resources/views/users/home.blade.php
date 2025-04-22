@@ -251,7 +251,7 @@
 
 <style>
     :root {
-  --primary-color: #6a1b9a;
+  --primary-color: blue;
   --secondary-color: #8e24aa;
   --accent-color: #ffc107; /* Warning/accent yellow */
   --text-color: #212121;
@@ -439,9 +439,9 @@
 }
 
 @keyframes processHighlight {
-    0% { box-shadow: 0 0 0 0 #6a1b9a(106, 27, 154, 0.7); }
+    0% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0.7); }
     70% { box-shadow: 0 0 0 15px rgba(106, 27, 154, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(13, 180, 136, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0); }
 }
 
 /* Hero section styling */
@@ -449,6 +449,150 @@
     background: url("{{ asset('img/ulos/background.png') }}");
     background-size: cover;
     background-position: center;
+<<<<<<< HEAD
+    padding: 5rem 0;
+    color: white;
+}
+
+/* Horizontal scroll for products */
+.products-scroll-container,
+.reviews-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    position: relative;
+    padding: 10px 0;
+}
+
+.products-scroll-container::-webkit-scrollbar,
+.reviews-scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.products-scroll-wrapper,
+.reviews-scroll-wrapper {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease;
+    padding: 0 10px;
+}
+
+.product-card-wrapper,
+.review-card-wrapper {
+    flex: 0 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.product-card-wrapper {
+    width: 250px;
+}
+
+.review-card-wrapper {
+    width: calc(100% / 3 - 20px); /* Show 3 testimonials per view */
+}
+
+/* Navigation buttons */
+.scroll-nav {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.scroll-btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    opacity: 0.7;
+}
+
+.scroll-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.scroll-btn.scroll-left,
+.scroll-btn.reviews-scroll-left {
+    left: -20px;
+}
+
+.scroll-btn.scroll-right,
+.scroll-btn.reviews-scroll-right {
+    right: -20px;
+}
+
+/* Scroll indicator */
+.scroll-indicator,
+.reviews-scroll-indicator {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.scroll-dots,
+.reviews-scroll-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    width: 16px;
+    border-radius: 4px;
+    background-color: var(--primary-color, #6a1b9a);
+}
+
+/* Mobile optimization */
+@media (max-width: 992px) {
+    .review-card-wrapper {
+        width: calc(50% - 20px); /* Show 2 testimonials per view on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card-wrapper {
+        width: 200px;
+    }
+    
+    .review-card-wrapper {
+        width: 80%; /* Show 1 testimonial per view on mobile */
+    }
+    
+    .products-scroll-container,
+    .reviews-scroll-container {
+        padding: 0;
+        margin: 0 -15px;
+        width: calc(100% + 30px);
+    }
+    
+    .products-scroll-wrapper,
+    .reviews-scroll-wrapper {
+        padding: 0 15px;
+    }
+=======
     background-repeat: no-repeat;
     padding: 100px 0;
     text-align: center;
@@ -484,6 +628,7 @@
     left: auto;
     text-align: center;
     margin-top: 260px; 
+>>>>>>> e0da65818ee452ed2902aa4aa66001b150a22590
 }
 </style>
 
