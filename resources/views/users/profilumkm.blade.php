@@ -73,6 +73,39 @@
         </div>
     </div>
 
+
+    <div class="container my-5">
+      <div class="row">
+          <div class="col-md-6">
+              <h3>Lokasi & Kontak Kami</h3>
+              <div class="map-container">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.1268481704317!2d98.6734735!3d3.5889271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312f94c65f63dd%3A0xf9a21acec1195170!2sMedan%2C%20Kota%20Medan%2C%20Sumatera%20Utara!5e0!3m2!1sid!2sid!4v1650123456789!5m2!1sid!2sid" 
+                      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title mb-4">Telepon & WhatsApp</h5>
+                      <p><i class="bi bi-telephone me-2"></i> +62 812 3456 7890</p>
+                      
+                      <h5 class="card-title mb-4 mt-4">Email</h5>
+                      <p><i class="bi bi-envelope me-2"></i> info@gitaulos.com</p>
+                      
+                      <h5 class="card-title mb-4 mt-4">Jam Buka</h5>
+                      <p>
+                          Senin - Jumat: 08:00 - 17:00<br>
+                          Sabtu: 09:00 - 15:00<br>
+                          Minggu: Tutup
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
 <style>
 
 

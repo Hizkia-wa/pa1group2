@@ -18,7 +18,7 @@
                         @elseif ($i - $averageRating < 1)
                             <i class="bi bi-star-half text-warning"></i>
                         @else
-                            <i class="bi bi-star text-warning"></i>
+                            <i class="bi bi-star-fill text-secondary"></i>
                         @endif
                     @endfor
                 </h2>
@@ -49,12 +49,12 @@
 
                     <div class="mb-3">
                         <label class="form-label">Tambahkan Rating</label>
-                        <div id="starRating">
+                        <div id="starRating" class="d-flex">
                             @for ($i = 1; $i <= 5; $i++)
-                                <i class="bi bi-star star-rating" data-value="{{ $i }}"></i>
+                                <i class="bi bi-star-fill star-rating text-secondary" data-value="{{ $i }}"></i>
                             @endfor
                         </div>
-                        <input type="hidden" name="Rating" id="ratingInput" required>
+                        <input type="hidden" name="Rating" id="ratingInput">
                     </div>
 
                     <div class="mb-3">
@@ -90,7 +90,7 @@
                             <h6 class="fw-bold mb-1">{{ $review->ReviewerName }}</h6>
                             <div class="mb-1">
                                 @for ($i = 1; $i <= 5; $i++)
-                                    <i class="bi {{ $i <= $review->Rating ? 'bi-star-fill' : 'bi-star' }} text-warning"></i>
+                                    <i class="bi bi-star-fill {{ $i <= $review->Rating ? 'text-warning' : 'text-secondary' }}"></i>
                                 @endfor
                             </div>
                         </div>
@@ -117,6 +117,7 @@
     .star-rating {
         font-size: 1.5rem;
         cursor: pointer;
+        margin-right: 0.25rem;
     }
 </style>
 
@@ -126,21 +127,50 @@
     document.addEventListener("DOMContentLoaded", function () {
         const stars = document.querySelectorAll('.star-rating');
         const ratingInput = document.getElementById('ratingInput');
+        let currentRating = 0;
 
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                const rating = this.getAttribute('data-value');
-                ratingInput.value = rating;
-
-                stars.forEach(s => {
-                    s.classList.remove('text-warning');
-                    if (s.getAttribute('data-value') <= rating) {
-                        s.classList.add('text-warning');
-                    }
-                });
+        // Fungsi untuk mengatur tampilan bintang sesuai rating
+        function updateStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('text-secondary');
+                    star.classList.add('text-warning');
+                } else {
+                    star.classList.remove('text-warning');
+                    star.classList.add('text-secondary');
+                }
             });
+        }
+
+        // Event untuk klik bintang
+        stars.forEach((star, index) => {
+            star.addEventListener('click', function() {
+                const value = parseInt(this.getAttribute('data-value'));
+                
+                // Toggle rating - jika sudah dipilih, batalkan pilihan
+                if (currentRating === value) {
+                    currentRating = 0;
+                    ratingInput.value = '';
+                } else {
+                    currentRating = value;
+                    ratingInput.value = value;
+                }
+                
+                updateStars(currentRating);
+            });
+            
+            // Event untuk hover bintang
+            star.addEventListener('mouseenter', function() {
+                const value = parseInt(this.getAttribute('data-value'));
+                // Tampilkan preview rating saat hover
+                updateStars(value);
+            });
+        });
+        
+        // Kembalikan tampilan ke rating yang dipilih saat mouse keluar
+        document.getElementById('starRating').addEventListener('mouseleave', function() {
+            updateStars(currentRating);
         });
     });
 </script>
 @endsection
-
