@@ -15,9 +15,6 @@
                 <li class="nav-item">
                     <a class="btn position-relative" href="{{ route('user.cart.index') }}">
                         <i class="bi bi-cart fs-5 text-dark"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-batik animate__animated animate__rubberBand">
-                            3
-                        </span>
                     </a>
                 </li>
 
@@ -26,10 +23,13 @@
                     <a href="{{ route('uloskita') }}" class="nav-link nav-cute {{ request()->routeIs('uloskita') ? 'active' : '' }}"> Ulos Kita</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('user.reviews') }}" class="nav-link nav-cute {{ request()->routeIs('user.reviews') ? 'active' : '' }}">💬 Ulasan</a>
+                    <a href="{{ route('user.reviews') }}" class="nav-link nav-cute {{ request()->routeIs('user.reviews') ? 'active' : '' }}">Ulasan</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('profil.umkm') }}" class="nav-link nav-cute {{ request()->routeIs('profil.umkm') ? 'active' : '' }}">📜 Profil</a>
+                    <a href="{{ route('profil.umkm') }}" class="nav-link nav-cute {{ request()->routeIs('profil.umkm') ? 'active' : '' }}">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user.product.catalog') }}" class="nav-link nav-cute {{ request()->routeIs('user.product.catalog') ? 'active' : '' }}">Produk</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('home') }}" class="nav-link nav-cute {{ request()->routeIs('home') ? 'active' : '' }}"> Beranda</a>
@@ -51,12 +51,9 @@
 }
 
 .glowing-brand {
-    font-family: 'Great Vibes', cursive;
+
     font-size: 2rem;
-    color: var(--coklat-tua);
-    text-shadow: 1px 1px 5px rgba(139, 94, 60, 0.3);
     letter-spacing: 1px;
-    transition: transform 0.3s ease;
 }
 .glowing-brand:hover {
     transform: scale(1.05);

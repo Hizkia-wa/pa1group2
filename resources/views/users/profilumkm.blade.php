@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="owner-image">
-                <img src="/img/owner-photo.jpg" alt="Pemilik Gita Ulos">
+                <img src="img/background.png" alt="Pemilik Gita Ulos">
             </div>
         </div>
     </div>

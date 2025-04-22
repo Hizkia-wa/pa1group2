@@ -80,7 +80,7 @@
                 <div class="card-body d-flex">
                     {{-- Foto Profil --}}
                     <div class="me-3 d-flex align-items-start">
-                        <img src="{{ asset('images/default-profile.png') }}" alt="Foto Profil" class="rounded-circle" width="50" height="50">
+                        <img src="{{ asset('img/default-profile.png') }}" alt="Foto Profil" class="rounded-circle" width="50" height="50">
                     </div>
 
                     {{-- Konten Utama --}}
