@@ -167,7 +167,7 @@
             });
         });
         
-        // Kembalikan tampilan ke rating yang dipilih saat mouse keluar
+
         document.getElementById('starRating').addEventListener('mouseleave', function() {
             updateStars(currentRating);
         });
