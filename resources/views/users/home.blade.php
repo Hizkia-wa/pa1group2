@@ -12,35 +12,65 @@
         </div>
     </div>
 
-    <!-- Featured Products Section -->
+    <!-- Featured Products Section with Horizontal Scroll -->
     <div class="container my-5">
         <h2 class="text-center mb-4">Ulos Pilihan Terbaik</h2>
-        <p class="text-center mb-5">Karya seni tradisional Batak pilihan dengan keahlian tinggi, memadukan budaya Indonesia yang kaya.</p>
+        <p class="text-center mb-4">Karya seni tradisional Batak pilihan dengan keahlian tinggi, memadukan budaya Indonesia yang kaya.</p>
         
-        <div class="row">
-            @forelse($bestSellerProducts as $product)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    @if($product->ImageMain)
-                    <img src="{{ asset('storage/' . $product->ImageMain) }}" class="card-img-top" alt="{{ $product->ProductName }}" loading="lazy">
-                    @else
-                    <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top" alt="No Image Available" loading="lazy">
-                    @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $product->ProductName }}</h5>
-                        <p class="card-text small">{{ Str::limit($product->Description, 50) }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold text-danger">Rp {{ number_format($product->Price, 0, ',', '.') }}</span>
-                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-sm btn-primary">Keranjang</a>
+        <div class="position-relative">
+            <div class="scroll-nav d-md-block d-none">
+                <button class="scroll-btn scroll-left" aria-label="Scroll left">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="scroll-btn scroll-right" aria-label="Scroll right">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="products-scroll-container">
+                <div class="products-scroll-wrapper">
+                    @forelse($bestSellerProducts as $product)
+                    <div class="product-card-wrapper">
+                        <div class="card product-card">
+                            @php
+                                $images = json_decode($product->Images, true);
+                                $mainImage = !empty($images) ? $images[0] : null;
+                            @endphp
+                            
+                            <div class="product-image-container">
+                                @if($mainImage)
+                                <img src="{{ asset('storage/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
+                                @else
+                                <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top product-image" alt="No Image Available" loading="lazy">
+                                @endif
+                            </div>
+                            
+                            <div class="card-body p-3">
+                                <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5>
+                                <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
+                                <div class="mt-2">
+                                    <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
+                                    <div class="d-flex product-buttons">
+                                        <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                                        <a href="#" class="btn btn-outline-secondary keranjang-btn">
+                                            <i class="bi bi-cart-plus"></i> Keranjang
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    @empty
+                    <div class="col-12 text-center">
+                        <p>Tidak ada produk terlaris saat ini</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
-            @empty
-            <div class="col-12 text-center">
-                <p>Belum ada produk unggulan saat ini.</p>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-dots"></div>
             </div>
-            @endforelse
         </div>
     </div>
 
@@ -54,8 +84,10 @@
                 <a href="{{ route('uloskita') }}" class="btn btn-primary">Baca Selengkapnya</a>
             </div>
             <div class="col-md-6">
-                <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid rounded" alt="Pengrajin Ulos" loading="lazy">
-            </div>
+                <div class="col-md-6 d-flex justify-content-center">
+                    <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid custom-culture-image" alt="Pengrajin Ulos" loading="lazy">
+                </div>
+                            </div>
         </div>
     </div>
 
@@ -102,61 +134,87 @@
         </div>
     </div>
 
-    <!-- Customer Reviews -->
+    <!-- Customer Reviews with Horizontal Scroll -->
     <div class="container my-5">
         <h2 class="text-center mb-4">Apa Kata Pelanggan Gita Ulos?</h2>
         
-        <div class="row">
-            @forelse($testimonials as $review)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="d-flex mb-3 align-items-center">
-                            <div class="avatar me-3 bg-light rounded-circle text-center" style="width: 50px; height: 50px; line-height: 50px;">
-                                <i class="bi bi-person"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">{{ $review->ReviewerName }}</h6>
-                                <div class="text-warning">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= $review->Rating)
-                                            <i class="bi bi-star-fill"></i>
-                                        @else
-                                            <i class="bi bi-star"></i>
-                                        @endif
-                                    @endfor
+        <div class="position-relative">
+            <div class="scroll-nav d-md-block d-none">
+                <button class="scroll-btn scroll-left reviews-scroll-left" aria-label="Scroll left">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="scroll-btn scroll-right reviews-scroll-right" aria-label="Scroll right">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="reviews-scroll-container">
+                <div class="reviews-scroll-wrapper">
+                    @forelse($testimonials as $review)
+                    <div class="review-card-wrapper">
+                        <div class="card testimonial-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex mb-3 align-items-center">
+                                    <div class="avatar me-3 bg-light rounded-circle text-center" style="width: 50px; height: 50px; line-height: 50px;">
+                                        <i class="bi bi-person"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">{{ $review->ReviewerName }}</h6>
+                                        <div class="text-warning">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= $review->Rating)
+                                                    <i class="bi bi-star-fill"></i>
+                                                @else
+                                                    <i class="bi bi-star"></i>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <small class="text-muted">{{ $review->created_at->format('d M Y') }}</small>
+                                    </div>
                                 </div>
-                                <small class="text-muted">{{ $review->created_at->format('d M Y') }}</small>
+                                <p class="card-text testimonial-text">{{ $review->Comment }}</p>
+
                             </div>
                         </div>
-                        <p class="card-text">{{ Str::limit($review->Comment, 150) }}</p>
                     </div>
+
+
+                    @empty
+                    <div class="col-12 text-center">
+                        <p>Belum ada ulasan saat ini.</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
-            @empty
-            <div class="col-12 text-center">
-                <p>Belum ada ulasan saat ini.</p>
+            
+            <div class="scroll-indicator reviews-scroll-indicator">
+                <div class="scroll-dots reviews-scroll-dots"></div>
             </div>
-            @endforelse
         </div>
     </div>
 
     <!-- FAQ Section -->
-    <div class="container my-5">
-        <h2 class="text-center mb-4">Apakah ada pertanyaan seputar produk kami?</h2>
-        <p class="text-center mb-4">Tim kami siap membantu. Anda dapat menghubungi kami terkait semua kebutuhan. Kami juga menerima pesanan khusus dengan desain ulos tersendiri.</p>
-        
+    <div class="custom-contact-box my-5 p-4 p-md-5">
         <div class="row align-items-center">
+            <!-- Kolom Kiri -->
             <div class="col-md-8">
-                <a href="https://wa.me/+628123456789" class="btn btn-success btn-lg">
-                    <i class="bi bi-whatsapp me-2"></i> Hubungi Kami Melalui WhatsApp
+                <h3 class="fw-bold mb-3">Apakah ada pertanyaan seputar produk kami?</h3>
+                <p class="mb-4">
+                    Tim kami siap membantu Anda dalam memilih Ulos terbaik sesuai kebutuhan. Kami juga menerima pesanan khusus dengan desain atau ukuran tertentu.
+                </p>
+                <a href="https://wa.me/+628123456789" class="btn btn-success btn-sm rounded-pill px-4 py-2">
+                    <i class="bi bi-whatsapp me-2"></i> Hubungi kami Melalui Via Whatsapp
                 </a>
             </div>
-            <div class="col-md-4">
-                <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" class="img-fluid rounded" alt="Contoh Ulos" loading="lazy">
+    
+            <!-- Kolom Kanan -->
+            <div class="col-md-4 text-center text-md-end mt-4 mt-md-0">
+                <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" class="img-fluid rounded-4 shadow-sm custom-contact-img" alt="Contoh Ulos">
             </div>
         </div>
     </div>
+    
+    
 
     <!-- Location & Contact -->
     <div class="container my-5">
@@ -191,6 +249,23 @@
 </div>
 
 <style>
+    :root {
+  --primary-color: blue;
+  --secondary-color: #8e24aa;
+  --accent-color: #ffc107; /* Warning/accent yellow */
+  --text-color: #212121;
+  --text-secondary: #666;
+  --text-light: #ffffff;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+  --light-gray: #f3f4f6;
+  --lighter-gray: #f9f9f9;
+  --border-color: #eaeaea;
+  --shadow-light: rgba(0, 0, 0, 0.05);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+}
+
+
 .page-loader {
     position: fixed;
     top: 0;
@@ -252,18 +327,100 @@
         cursor: auto;
     }
 }
+.custom-culture-image {
+    max-width: 500%; 
+    max-height: 500%;           
+    border-radius: 50px;      
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    margin-right: -100%;         
+}
 
-.card.active {
-    z-index: 2;
+/* Product card redesign */
+.product-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    height: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.product-image-container {
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
     transform: scale(1.05);
-    transition: transform 0.3s ease;
 }
 
-.card.faded {
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+.product-desc {
+    height: 40px;
+    overflow: hidden;
+    color: #666;
 }
 
+.product-buttons {
+    gap: 5px;
+}
+
+.keranjang-btn {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Testimonial card redesign */
+.testimonial-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    height: 100%;
+}
+
+.testimonial-text {
+    max-height: none;
+    overflow: visible;
+}
+
+.custom-wa-img {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.custom-contact-box {
+    background-color: #f3f4f6; /* abu muda */
+    border-radius: 20px;
+}
+
+.custom-contact-img {
+    max-width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* Process section styling */
 .process-circle {
     width: 60px;
     height: 60px;
@@ -286,21 +443,153 @@
     100% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0); }
 }
 
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.animate-on-scroll.animated {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* Hero section styling */
 .hero-section {
     background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ asset('img/ulos/backgroundhome.png') }}');
     background-size: cover;
     background-position: center;
+    padding: 5rem 0;
+    color: white;
+}
+
+/* Horizontal scroll for products */
+.products-scroll-container,
+.reviews-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    position: relative;
+    padding: 10px 0;
+}
+
+.products-scroll-container::-webkit-scrollbar,
+.reviews-scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.products-scroll-wrapper,
+.reviews-scroll-wrapper {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease;
+    padding: 0 10px;
+}
+
+.product-card-wrapper,
+.review-card-wrapper {
+    flex: 0 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.product-card-wrapper {
+    width: 250px;
+}
+
+.review-card-wrapper {
+    width: calc(100% / 3 - 20px); /* Show 3 testimonials per view */
+}
+
+/* Navigation buttons */
+.scroll-nav {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.scroll-btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    opacity: 0.7;
+}
+
+.scroll-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.scroll-btn.scroll-left,
+.scroll-btn.reviews-scroll-left {
+    left: -20px;
+}
+
+.scroll-btn.scroll-right,
+.scroll-btn.reviews-scroll-right {
+    right: -20px;
+}
+
+/* Scroll indicator */
+.scroll-indicator,
+.reviews-scroll-indicator {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.scroll-dots,
+.reviews-scroll-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    width: 16px;
+    border-radius: 4px;
+    background-color: var(--primary-color, #6a1b9a);
+}
+
+/* Mobile optimization */
+@media (max-width: 992px) {
+    .review-card-wrapper {
+        width: calc(50% - 20px); /* Show 2 testimonials per view on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card-wrapper {
+        width: 200px;
+    }
+    
+    .review-card-wrapper {
+        width: 80%; /* Show 1 testimonial per view on mobile */
+    }
+    
+    .products-scroll-container,
+    .reviews-scroll-container {
+        padding: 0;
+        margin: 0 -15px;
+        width: calc(100% + 30px);
+    }
+    
+    .products-scroll-wrapper,
+    .reviews-scroll-wrapper {
+        padding: 0 15px;
+    }
 }
 </style>
 
@@ -324,76 +613,167 @@ document.addEventListener('DOMContentLoaded', function() {
         section.style.animationDelay = `${index * 0.1}s`;
     });
 
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+    // Horizontal scroll functionality for products
+    setupHorizontalScroll(
+        '.products-scroll-container',
+        '.products-scroll-wrapper',
+        '.product-card-wrapper',
+        '.scroll-left',
+        '.scroll-right',
+        '.scroll-dots'
+    );
+    
+    // Horizontal scroll functionality for reviews
+    setupHorizontalScroll(
+        '.reviews-scroll-container',
+        '.reviews-scroll-wrapper',
+        '.review-card-wrapper',
+        '.reviews-scroll-left',
+        '.reviews-scroll-right',
+        '.reviews-scroll-dots'
+    );
+    
+    function setupHorizontalScroll(containerSelector, wrapperSelector, itemSelector, leftBtnSelector, rightBtnSelector, dotsContainerSelector) {
+        const container = document.querySelector(containerSelector);
+        const wrapper = document.querySelector(wrapperSelector);
+        const items = document.querySelectorAll(itemSelector);
+        const leftBtn = document.querySelector(leftBtnSelector);
+        const rightBtn = document.querySelector(rightBtnSelector);
+        const dotsContainer = document.querySelector(dotsContainerSelector);
+        
+        if (!container || !wrapper || items.length === 0) return;
+        
+        // Calculate total pages
+        const containerWidth = container.clientWidth;
+        const itemWidth = items[0].offsetWidth;
+        const gap = 20; // From CSS gap
+        let itemsPerPage;
+        
+        // Adjust items per page based on container width
+        if (containerWidth >= 992) {
+            // For testimonials, show 3 per page on desktop
+            itemsPerPage = containerSelector.includes('reviews') ? 3 : Math.floor(containerWidth / (itemWidth + gap));
+        } else if (containerWidth >= 768) {
+            // For testimonials, show 2 per page on tablets
+            itemsPerPage = containerSelector.includes('reviews') ? 2 : Math.floor(containerWidth / (itemWidth + gap));
+        } else {
+            // For testimonials, show 1 per page on mobile
+            itemsPerPage = containerSelector.includes('reviews') ? 1 : Math.floor(containerWidth / (itemWidth + gap));
+        }
+        
+        const totalPages = Math.ceil(items.length / itemsPerPage);
+        
+        // Clear existing dots
+        dotsContainer.innerHTML = '';
+        
+        // Create dots for pagination
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dotsContainer.appendChild(dot);
             
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+            dot.addEventListener('click', () => {
+                scrollToPage(i);
+            });
+        }
+        
+        // Current page index
+        let currentPage = 0;
+        
+        // Navigation buttons
+        if (leftBtn) {
+            leftBtn.addEventListener('click', () => {
+                if (currentPage > 0) {
+                    scrollToPage(currentPage - 1);
+                }
+            });
+        }
+        
+        if (rightBtn) {
+            rightBtn.addEventListener('click', () => {
+                if (currentPage < totalPages - 1) {
+                    scrollToPage(currentPage + 1);
+                }
+            });
+        }
+        
+        // Scroll to specific page
+        function scrollToPage(pageIndex) {
+            currentPage = pageIndex;
+            const scrollAmount = pageIndex * (itemsPerPage * (itemWidth + gap));
+            container.scrollTo({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+            
+            // Update dots
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === pageIndex);
+            });
+            
+            // Update button states
+            if (leftBtn) leftBtn.style.opacity = pageIndex === 0 ? '0.3' : '0.7';
+            if (rightBtn) rightBtn.style.opacity = pageIndex === totalPages - 1 ? '0.3' : '0.7';
+        }
+        
+        // Scroll event listener for syncing UI with manual scrolling
+        container.addEventListener('scroll', () => {
+            const scrollPosition = container.scrollLeft;
+            const pageWidth = itemsPerPage * (itemWidth + gap);
+            const newPage = Math.round(scrollPosition / pageWidth);
+            
+            if (newPage !== currentPage && newPage >= 0 && newPage < totalPages) {
+                currentPage = newPage;
+                
+                // Update dots
+                const dots = dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentPage);
                 });
+                
+                // Update button states
+                if (leftBtn) leftBtn.style.opacity = currentPage === 0 ? '0.3' : '0.7';
+                if (rightBtn) rightBtn.style.opacity = currentPage === totalPages - 1 ? '0.3' : '0.7';
             }
         });
-    });
-
-    // Product card effects
-    const productCards = document.querySelectorAll('.card');
-    productCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.classList.add('active');
-            productCards.forEach(other => {
-                if (other !== this) {
-                    other.classList.add('faded');
-                }
-            });
+        
+        // Initial button states
+        if (leftBtn) leftBtn.style.opacity = '0.3';
+        if (rightBtn && totalPages <= 1) rightBtn.style.opacity = '0.3';
+        
+        // Touch slide functionality
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            container.style.cursor = 'grabbing';
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+            e.preventDefault();
         });
         
-        card.addEventListener('mouseleave', function() {
-            this.classList.remove('active');
-            productCards.forEach(other => {
-                other.classList.remove('faded');
-            });
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.style.cursor = 'grab';
         });
-    });
-
-    // Parallax effect
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        window.addEventListener('scroll', function() {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition < 600) {
-                const offset = scrollPosition * 0.4;
-                heroSection.style.backgroundPositionY = `${offset}px`;
-            }
-        });
-    }
-
-    // Intersection Observer
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    if ('IntersectionObserver' in window) {
-        const animationObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    animationObserver.unobserve(entry.target);
-                }
-            });
-        }, {threshold: 0.15, rootMargin: '0px 0px -100px 0px'});
         
-        animatedElements.forEach(element => {
-            animationObserver.observe(element);
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.style.cursor = 'grab';
         });
-    } else {
-        animatedElements.forEach(element => {
-            element.classList.add('animated');
+        
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 2; // Adjust scrolling speed
+            container.scrollLeft = scrollLeft - walk;
         });
     }
-
+    
     // Process section animation
     const processSection = document.querySelector('.process-section');
     if (processSection) {
@@ -435,31 +815,162 @@ document.addEventListener('DOMContentLoaded', function() {
                 activeIndex = (activeIndex + 1) % processItems.length;
                 highlightProcess(activeIndex);
             }, 3000);
-        });
-    }
-
-    // Custom cursor
-    if (window.innerWidth > 768) {
-        const customCursor = document.createElement('div');
-        customCursor.className = 'custom-cursor';
-        document.body.appendChild(customCursor);
-        
-        const interactiveElements = document.querySelectorAll('a, button, .card, .process-item');
-        
-        interactiveElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                customCursor.classList.add('expanded');
+            });
+        }
+    
+        // Custom cursor
+        if (window.innerWidth > 768) {
+            const customCursor = document.createElement('div');
+            customCursor.className = 'custom-cursor';
+            document.body.appendChild(customCursor);
+            
+            const interactiveElements = document.querySelectorAll('a, button, .card, .process-item');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    customCursor.classList.add('expanded');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    customCursor.classList.remove('expanded');
+                });
             });
             
-            element.addEventListener('mouseleave', () => {
-                customCursor.classList.remove('expanded');
+            document.addEventListener('mousemove', (e) => {
+                customCursor.style.left = `${e.clientX}px`;
+                customCursor.style.top = `${e.clientY}px`;
             });
-        });
+        }
         
-        document.addEventListener('mousemove', (e) => {
-            customCursor.style.left = `${e.clientX}px`;
-            customCursor.style.top = `${e.clientY}px`;
-        });
+        // Horizontal scroll functionality for products
+        setupHorizontalScroll(
+            '.products-scroll-container',
+            '.products-scroll-wrapper',
+            '.product-card-wrapper',
+            '.scroll-left',
+            '.scroll-right',
+            '.scroll-dots'
+        );
+        
+        // Horizontal scroll functionality for reviews
+        setupHorizontalScroll(
+            '.reviews-scroll-container',
+            '.reviews-scroll-wrapper',
+            '.review-card-wrapper',
+            '.reviews-scroll-left',
+            '.reviews-scroll-right',
+            '.reviews-scroll-dots'
+        );
+        
+        function setupHorizontalScroll(containerSelector, wrapperSelector, itemSelector, leftBtnSelector, rightBtnSelector, dotsContainerSelector) {
+            const container = document.querySelector(containerSelector);
+            const wrapper = document.querySelector(wrapperSelector);
+            const items = document.querySelectorAll(itemSelector);
+            const leftBtn = document.querySelector(leftBtnSelector);
+            const rightBtn = document.querySelector(rightBtnSelector);
+            const dotsContainer = document.querySelector(dotsContainerSelector);
+            
+            if (!container || !wrapper || items.length === 0) return;
+            
+            // Calculate total pages
+            const containerWidth = container.clientWidth;
+            const itemWidth = items[0].clientWidth;
+            const gap = 20; // From CSS gap
+            const itemsPerPage = Math.floor(containerWidth / (itemWidth + gap));
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+            
+            // Create dots for pagination
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dotsContainer.appendChild(dot);
+                
+                dot.addEventListener('click', () => {
+                    scrollToPage(i);
+                });
+            }
+            
+            // Current page index
+            let currentPage = 0;
+            
+            // Navigation buttons
+            if (leftBtn) {
+                leftBtn.addEventListener('click', () => {
+                    if (currentPage > 0) {
+                        scrollToPage(currentPage - 1);
+                    }
+                });
+            }
+            
+            if (rightBtn) {
+                rightBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages - 1) {
+                        scrollToPage(currentPage + 1);
+                    }
+                });
+            }
+            
+            // Scroll to specific page
+            function scrollToPage(pageIndex) {
+                currentPage = pageIndex;
+                const scrollAmount = pageIndex * (containerWidth - gap);
+                container.scrollTo({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+                
+                // Update dots
+                const dots = dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === pageIndex);
+                });
+                
+                // Update button states
+                if (leftBtn) leftBtn.style.opacity = pageIndex === 0 ? '0.3' : '0.7';
+                if (rightBtn) rightBtn.style.opacity = pageIndex === totalPages - 1 ? '0.3' : '0.7';
+            }
+            
+            // Scroll event listener for syncing UI with manual scrolling
+            container.addEventListener('scroll', () => {
+                const scrollPosition = container.scrollLeft;
+                const pageWidth = containerWidth - gap;
+                const newPage = Math.round(scrollPosition / pageWidth);
+                
+                if (newPage !== currentPage) {
+                    currentPage = newPage;
+                    
+                    // Update dots
+                    const dots = dotsContainer.querySelectorAll('.dot');
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentPage);
+                    });
+                    
+                    // Update button states
+                    if (leftBtn) leftBtn.style.opacity = currentPage === 0 ? '0.3' : '0.7';
+                    if (rightBtn) rightBtn.style.opacity = currentPage === totalPages - 1 ? '0.3' : '0.7';
+                }
+            });
+            
+            // Initial button states
+            if (leftBtn) leftBtn.style.opacity = '0.3';
+            if (rightBtn && totalPages <= 1) rightBtn.style.opacity = '0.3';
+            
+            // Touch slide functionality
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                container.classList.add('active');
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+                container.classList.remove('active');
+            });
     }
 });
 </script>

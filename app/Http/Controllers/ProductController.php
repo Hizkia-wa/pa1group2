@@ -46,34 +46,34 @@ class ProductController extends Controller
             'ImageMain' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'ImageOthers.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);        
-
+    
         $product = new Product();
         $product->ProductName = $request->ProductName;
         $product->Price = $request->Price;
         $product->Quantity = $request->Quantity;
         $product->Category = $request->Category;
         $product->Description = $request->Description;
-
-        // Handle gambar
-        $imagePaths = [];
-
+    
+        // Handle gambar utama
         if ($request->hasFile('ImageMain')) {
-            $imagePaths[] = $request->file('ImageMain')->store('products', 'public');
+            $product->ImageMain = $request->file('ImageMain')->store('products', 'public');
         }
-
+    
+        // Handle gambar lainnya
+        $imagePaths = [];
         if ($request->hasFile('ImageOthers')) {
             foreach ($request->file('ImageOthers') as $image) {
                 $imagePaths[] = $image->store('products', 'public');
             }
         }
-
+    
         $product->Images = json_encode($imagePaths);
-
+    
         // Tandai sebagai produk terlaris
         $product->is_best_seller = $request->has('is_best_seller');
-
+    
         $product->save();
-
+    
         return redirect()->route('products.best')->with('success', 'Produk terlaris berhasil ditambahkan!');
     }
 
@@ -102,8 +102,16 @@ class ProductController extends Controller
 
         $images = json_decode($product->Images, true) ?? [];
 
+        
         if ($request->hasFile('ImageMain')) {
-            $images[] = $request->file('ImageMain')->store('products', 'public');
+            // Buat nama file unik
+            $imageName = time() . '_' . $request->file('ImageMain')->getClientOriginalName();
+            
+            // Simpan file ke folder public
+            $request->file('ImageMain')->move(public_path('images/products'), $imageName);
+            
+            // Simpan path relatif ke database
+            $product->image_path = 'images/products/' . $imageName;
         }
 
         if ($request->hasFile('ImageOthers')) {
