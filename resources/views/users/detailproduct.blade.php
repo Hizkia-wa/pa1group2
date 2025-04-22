@@ -134,119 +134,142 @@
         </ul>
     </div>
 
-    <!-- Form Pemesanan -->
-    <div class="order-form">
-        <form action="{{ route('user.product.order') }}" method="POST">
-            @csrf
-            <input type="hidden" name="ProductId" value="{{ $product->id }}">
+<!-- Form Pemesanan -->
+<div class="order-form">
+    <form id="orderForm" method="POST">
+        @csrf
+        <input type="hidden" name="ProductId" value="{{ $product->id }}">
 
-            <h5>Form Pemesanan</h5>
+        <h5>Form Pemesanan</h5>
 
-            <div class="form-group">
-                <label>Nama</label>
-                <input type="text" name="name" required>
+        <div class="form-group">
+            <label>Nama</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Telepon</label>
+            <input type="text" name="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label>Kabupaten/Kota</label>
+            <input type="text" name="city" required>
+        </div>
+
+        <div class="form-group">
+            <label>Kecamatan</label>
+            <input type="text" name="district" required>
+        </div>
+
+        <div class="form-group">
+            <label>Jalan</label>
+            <input type="text" name="address" required>
+        </div>
+
+        <div class="form-group">
+            <label>Kode Pos</label>
+            <input type="text" name="postal_code" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ukuran</label>
+            <div class="size-options">
+                <input type="radio" id="size1" name="size" value="200 x 50 cm" checked>
+                <label for="size1">200 x 50 cm</label>
+
+                <input type="radio" id="size2" name="size" value="300 x 50 cm">
+                <label for="size2">300 x 50 cm</label>
+
+                <input type="radio" id="size3" name="size" value="200 x 60 cm">
+                <label for="size3">200 x 60 cm</label>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" required>
-            </div>
+        <div class="form-group">
+            <label>Jumlah</label>
+            <input type="number" name="Quantity" value="1" min="1" required>
+        </div>
 
-            <div class="form-group">
-                <label>Telepon</label>
-                <input type="text" name="phone" required>
-            </div>
-
-            <div class="form-group">
-                <label>Kabupaten/Kota</label>
-                <input type="text" name="city" required>
-            </div>
-
-            <div class="form-group">
-                <label>Kecamatan</label>
-                <input type="text" name="district" required>
-            </div>
-
-            <div class="form-group">
-                <label>Jalan</label>
-                <input type="text" name="address" required>
-            </div>
-
-            <div class="form-group">
-                <label>Kode Pos</label>
-                <input type="text" name="postal_code" required>
-            </div>
-
-            <div class="form-group">
-                <label>Ukuran</label>
-                <div class="size-options">
-                    <input type="radio" id="size1" name="size" value="200 x 50 cm" checked>
-                    <label for="size1">200 x 50 cm</label>
-
-                    <input type="radio" id="size2" name="size" value="300 x 50 cm">
-                    <label for="size2">300 x 50 cm</label>
-
-                    <input type="radio" id="size3" name="size" value="200 x 60 cm">
-                    <label for="size3">200 x 60 cm</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Jumlah</label>
-                <input type="number" name="Quantity" value="1" min="1" required>
-            </div>
-
-            <button type="button" class="btn-submit" id="waButton" data-admin="6282274398996">
-        <i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp
+        <button type="button" class="btn-submit" id="waButton" data-admin="6282274398996">
+            <i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp
         </button>
 
-
-
-
-            <div class="product-meta">
-                <div>SKU: REUH-4234-UU</div>
-                <div>Kategori: {{ $product->Category }}</div>
-            </div>
-        </form>
-    </div>
+        <div class="product-meta">
+            <div>SKU: REUH-4234-UU</div>
+            <div>Kategori: {{ $product->Category }}</div>
+        </div>
+    </form>
 </div>
+
+
 <script>
 document.getElementById('waButton').addEventListener('click', function () {
-    const name = document.querySelector('[name="name"]').value;
-    const email = document.querySelector('[name="email"]').value;
-    const phone = document.querySelector('[name="phone"]').value;
-    const city = document.querySelector('[name="city"]').value;
-    const district = document.querySelector('[name="district"]').value;
-    const address = document.querySelector('[name="address"]').value;
-    const postal = document.querySelector('[name="postal_code"]').value;
-    const quantity = document.querySelector('[name="Quantity"]').value;
-    const size = document.querySelector('input[name="size"]:checked')?.value;
+    const form = document.getElementById('orderForm');
+    const formData = {
+        _token: '{{ csrf_token() }}',
+        ProductId: '{{ $product->id }}',
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        city: form.city.value,
+        district: form.district.value,
+        address: form.address.value,
+        postal_code: form.postal_code.value,
+        size: form.size.value,
+        Quantity: form.Quantity.value
+    };
 
-    const product = "{{ $product->ProductName }}";
-    const price = "{{ number_format($product->Price, 0, ',', '.') }}";
-    const category = "{{ $product->Category }}";
+    // Kirim data ke backend Laravel untuk disimpan ke database
+    fetch("{{ route('user.product.order') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": formData._token
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Gagal kirim data");
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const order = data.order; // Data pesanan yang disimpan di database
+            const message = `Halo Admin, saya ingin memesan produk:
 
-    const message = `Halo Admin, saya ingin memesan produk:
+📦 *{{ $product->ProductName }}*
+📁 Kategori: {{ $product->Category }}
+💵 Harga: Rp {{ number_format($product->Price, 0, ',', '.') }}
 
-📦 *${product}*
-📁 Kategori: ${category}
-💵 Harga: Rp ${price}
-
-👤 Nama: ${name}
-📱 Telepon: ${phone}
-📧 Email: ${email}
-🏠 Alamat: ${address}, ${district}, ${city}, ${postal}
-📐 Ukuran: ${size}
-🔢 Jumlah: ${quantity}
+👤 Nama: ${formData.name}
+📱 Telepon: ${formData.phone}
+📧 Email: ${formData.email}
+🏠 Alamat: ${formData.address}, ${formData.district}, ${formData.city}, ${formData.postal_code}
+📐 Ukuran: ${formData.size}
+🔢 Jumlah: ${formData.Quantity}
 
 Mohon segera diproses ya 🙏`;
 
-  const nomorAdmin = document.getElementById('waButton').dataset.admin;
-    const link = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
-    window.open(link, '_blank'); // buka di tab baru
+            // Link WhatsApp
+            const nomorAdmin = document.getElementById('waButton').dataset.admin;
+            const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
+            window.open(waLink, '_blank'); // Buka WhatsApp di tab baru
+        } else {
+            alert("Terjadi kesalahan, coba lagi.");
+        }
+    })
+    .catch(err => {
+        alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
+        console.error(err);
+    });
 });
 </script>
-
 
 
 @endsection

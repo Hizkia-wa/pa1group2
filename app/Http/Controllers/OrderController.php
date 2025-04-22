@@ -19,8 +19,10 @@ class OrderController extends Controller
     return view('admin.orders', compact('orders'));
 }
     
-        public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    try {
+        // Validasi input yang diterima
         $request->validate([
             'ProductId' => 'required|exists:products,id',
             'name' => 'required|string|max:100',
@@ -34,7 +36,8 @@ class OrderController extends Controller
             'Quantity' => 'required|integer|min:1',
         ]);
 
-        Order::create([
+        // Simpan pesanan ke database
+        $order = Order::create([
             'ProductId' => $request->ProductId,
             'CustomerName' => $request->name,
             'Email' => $request->email,
@@ -45,10 +48,22 @@ class OrderController extends Controller
             'PostalCode' => $request->postal_code,
             'Size' => $request->size,
             'Quantity' => $request->Quantity,
+            'OrderStatus' => 'Diproses', // Status default
         ]);
 
-        return redirect()->back()->with('success', 'Pesanan Anda telah berhasil dikirim!');
+        // Mengembalikan respons sukses
+        return response()->json([
+            'success' => true,
+            'order' => $order,  // Mengirimkan data pesanan yang baru dibuat
+        ]);
+    } catch (\Exception $e) {
+        // Jika terjadi error, tangkap dan kembalikan error
+        return response()->json([
+            'success' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+        ], 500);
     }
+}
 
     public function riwayat()
     {

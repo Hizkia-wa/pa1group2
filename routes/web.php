@@ -62,6 +62,8 @@ Route::prefix('user')->group(function () {
     Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
 });
 
+Route::post('/user/produk/order', [OrderController::class, 'store'])->name('user.product.order');
+
 Route::get('/profilumkm', function () {
     return view('users.profilumkm');
 })->name('profil.umkm');
