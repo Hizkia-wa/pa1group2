@@ -1,3 +1,4 @@
+{{-- LANGKAH 3: Perbarui tampilan productcatalog.blade.php --}}
 @extends('layouts.user')
 
 @section('content')
@@ -6,7 +7,7 @@
         Temukan koleksi Ulos berkualitas tinggi dari <br> berbagai daerah Toba
     </h2>
 
-    {{-- Search & Filter --}}
+    {{-- Form Pencarian & Filter --}}
     <form method="GET" action="{{ route('user.product.catalog') }}" class="row g-3 align-items-center mb-4">
         <div class="col-md-6">
             <div class="input-group">
@@ -18,10 +19,12 @@
         </div>
         <div class="col-md-3">
             <select name="category" class="form-select">
-                <option value="">Kategori</option>
-                <option value="Pernikahan" {{ request('category') == 'Pernikahan' ? 'selected' : '' }}>Ulos Pernikahan</option>
-                <option value="Dukacita" {{ request('category') == 'Dukacita' ? 'selected' : '' }}>Ulos Dukacita</option>
-                <option value="Lahiran" {{ request('category') == 'Lahiran' ? 'selected' : '' }}>Ulos Lahiran</option>
+                <option value="">Semua Kategori</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
+                        {{ $category }}
+                    </option>
+                @endforeach
             </select>
         </div>
         <div class="col-md-3">
@@ -35,31 +38,47 @@
         </div>
     </form>
 
+    {{-- Hasil Pencarian --}}
+    @if(request('search') || request('category') || request('sort'))
+    <div class="alert alert-info mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                Menampilkan hasil {{ $products->count() }} dari {{ $products->total() }} produk
+                @if(request('search')) untuk pencarian "{{ request('search') }}" @endif
+                @if(request('category')) dalam kategori "{{ request('category') }}" @endif
+            </div>
+            <a href="{{ route('user.product.catalog') }}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-x-circle"></i> Reset Filter
+            </a>
+        </div>
+    </div>
+    @endif
+
     {{-- Produk --}}
     <div class="row">
         @forelse ($products as $product)
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div class="card shadow-sm">
+            <div class="product-card">
                 @php
                     $images = json_decode($product->Images, true);
                     $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
                 @endphp
-                <img src="{{ $imagePath }}" class="card-img-top" alt="{{ $product->ProductName }}">
+                <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
 
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5>
-                    <p class="card-text fw-bold">Rp. {{ number_format($product->Price, 0, ',', '.') }}</p>
-                    <p class="card-text small text-muted">{{ Str::limit($product->Description, 50) }}</p>
+                <div class="product-info">
+                    <h5 class="product-title">{{ $product->ProductName }}</h5>
+                    <p class="product-desc">{{ Str::limit($product->Description, 40) }}</p>
+                    <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
-                    <div class="mt-auto d-flex gap-2">
-                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary btn-sm w-100">Beli</a>
-                        <form action="{{ route('user.cart.add') }}" method="POST" class="add-to-cart-form w-100">
+                    <div class="product-actions">
+                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn-buy">Beli</a>
+                        <form action="{{ route('user.cart.add') }}" method="POST" class="form-cart">
                             @csrf
                             <input type="hidden" name="id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" value="1">
                             <input type="hidden" name="size" value="200 x 50 cm">
-                            <button type="submit" class="btn btn-outline-primary btn-sm w-100">
-                                <i class="bi bi-cart-plus"></i> + Keranjang
+                            <button type="submit" class="btn-cart">
+                                <i class="bi bi-cart-plus"></i> Keranjang
                             </button>
                         </form>
                     </div>
@@ -67,68 +86,138 @@
             </div>
         </div>
         @empty
-        <p class="text-center">Produk tidak ditemukan.</p>
+        <div class="col-12 text-center py-4">
+            <div class="alert alert-secondary">
+                <i class="bi bi-search-heart fs-3 d-block mb-3"></i>
+                <h5>Produk tidak ditemukan</h5>
+                <p class="mb-0">Maaf, produk yang Anda cari tidak tersedia saat ini.</p>
+            </div>
+        </div>
         @endforelse
+    </div>
+
+    {{-- Pagination --}}
+    <div class="d-flex justify-content-center mt-4">
+        {{ $products->appends(request()->query())->links() }}
     </div>
 </div>
 @endsection
+
+{{-- CSS untuk Styling --}}
 <style>
-    /* Menetapkan ukuran tetap dan responsif pada card */
-    .card {
-        width: 100%;  /* Memastikan card memenuhi lebar kolom */
-        height: 250px; /* Menetapkan tinggi card menjadi lebih kecil */
+    /* Modern Card Design */
+    .product-card {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        background: white;
+        transition: transform 0.2s;
         display: flex;
         flex-direction: column;
-        border: 1px solid #ddd; /* Border tipis untuk memisahkan card */
+        position: relative;
     }
 
-    /* Gambar pada card */
-    .card-img-top {
-        height: 120px;  /* Menetapkan tinggi gambar lebih kecil */
-        width: 100%; /* Gambar mengisi lebar card */
-        object-fit: cover; /* Menjaga gambar tetap proporsional */
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     }
 
-    /* Menyesuaikan body card supaya tidak tumpang tindih */
-    .card-body {
+    .product-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .product-info {
+        padding: 12px 15px;
+        display: flex;
+        flex-direction: column;
         flex-grow: 1;
-        padding: 10px; /* Memberikan padding agar lebih rapi */
+    }
+
+    .product-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: #333;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .product-desc {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 8px;
+        line-height: 1.3;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .product-price {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ff4d4d;
+        margin-bottom: 16px;
+        margin-top: auto;
+    }
+
+    .product-actions {
         display: flex;
-        flex-direction: column;
+        gap: 8px;
+        margin-top: auto;
     }
 
-    /* Menjaga jarak antara elemen di dalam card */
-    .card-title {
-        font-size: 1rem;
-        margin-bottom: 5px;
+    .btn-buy, .btn-cart {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    .card-text {
-        margin-bottom: 10px;
-        flex-grow: 1; /* Membuat deskripsi tidak tumpang tindih */
+    .btn-buy {
+        background-color: #2563eb; /* Primary blue */
+        color: white;
+        text-decoration: none;
     }
 
-    .card-body .d-flex.gap-2 {
-        gap: 5px; /* Menambahkan jarak antar tombol */
+    .btn-buy:hover {
+        background-color: #1d4ed8;
     }
 
-    /* Ukuran tombol yang lebih kecil */
-    .btn {
-        padding: 8px;
-        font-size: 12px; /* Ukuran tombol lebih kecil */
+    .btn-cart {
+        background-color: white;
+        color: #2563eb;
+        border: 1px solid #2563eb;
+        gap: 4px;
     }
 
-    /* Menyelaraskan tombol "Beli" dan "Keranjang" agar sejajar */
-    .card-body .d-flex {
-        justify-content: space-between; /* Menyebar tombol beli dan keranjang */
+    .btn-cart:hover {
+        background-color: #f0f7ff;
+    }
+    
+    .form-cart {
+        width: 100%;
+        display: flex;
     }
 
-    /* Navbar sticky */
-    .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: rgba(255, 255, 255, 0.9); /* Navbar transparan */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan navbar */
+    /* Tambahan untuk Alert Hasil Pencarian */
+    .alert-info {
+        background-color: #f0f7ff;
+        border-color: #d1e6ff;
+        color: #0059b3;
     }
 </style>

@@ -209,9 +209,60 @@ class ProductController extends Controller
     
     }
 
-    public function showUserCatalog()
+    public function showUserCatalog(Request $request)
     {
-        $products = Product::whereNull('deleted_at')->get();
-        return view('users.productcatalog', compact('products'));
+        // Mulai dengan query dasar
+        $query = Product::whereNull('deleted_at');
+        
+        // Terapkan filter pencarian
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('ProductName', 'like', "%{$search}%")
+                  ->orWhere('Description', 'like', "%{$search}%")
+                  ->orWhere('Category', 'like', "%{$search}%");
+            });
+        }
+        
+        // Terapkan filter kategori
+        if ($request->has('category') && !empty($request->category)) {
+            $query->where('Category', $request->category);
+        }
+        
+        // Terapkan pengurutan
+        if ($request->has('sort') && !empty($request->sort)) {
+            switch ($request->sort) {
+                case 'low':
+                    $query->orderBy('Price', 'asc');
+                    break;
+                case 'high':
+                    $query->orderBy('Price', 'desc');
+                    break;
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'oldest':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                default:
+                    $query->orderBy('id', 'desc');
+                    break;
+            }
+        } else {
+            // Pengurutan default
+            $query->orderBy('id', 'desc');
+        }
+        
+        // Dapatkan produk dengan paginasi
+        $products = $query->paginate(12);
+        
+        // Ambil semua kategori untuk dropdown filter
+        $categories = Product::whereNull('deleted_at')
+                    ->select('Category')
+                    ->distinct()
+                    ->pluck('Category');
+        
+        // Kirim parameter pencarian kembali ke tampilan untuk mempertahankan status
+        return view('users.productcatalog', compact('products', 'categories'));
     }
 }
