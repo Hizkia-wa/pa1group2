@@ -3,6 +3,22 @@
 @section('title', 'Ulasan')
 
 @section('content')
+<div class="review-header mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="review-title">Ulasan Pelanggan</h1>
+                <div class="review-decoration">
+                    <span class="line-left"></span>
+                    <i class="bi bi-chat-quote"></i>
+                    <span class="line-right"></span>
+                </div>
+                <p class="review-tagline">Bagikan pengalaman Anda dengan ulos kami! Tulis ulasan untuk membantu kami meningkatkan kualitas dan menginspirasi pembeli lain.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-4">
     <div class="row g-4">
 
@@ -110,14 +126,119 @@
         @endforeach
     </div>
 </div>
-@endsection
 
 @section('scripts')
 <style>
+    /* Header styling */
+    .review-header {
+        background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+        padding: 50px 0;
+        margin-top: -25px;
+        position: relative;
+        border-bottom: 1px solid rgba(255, 152, 0, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .review-title {
+        color: #ff9800;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .review-tagline {
+        color: #e0e0e0;
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+    
+    .review-decoration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    
+    .line-left, .line-right {
+        height: 2px;
+        width: 100px;
+        background: linear-gradient(90deg, transparent, #ff9800);
+        display: inline-block;
+    }
+    
+    .line-right {
+        background: linear-gradient(90deg, #ff9800, transparent);
+    }
+    
+    .review-decoration i {
+        font-size: 1.5rem;
+        color: #ff9800;
+        margin: 0 15px;
+    }
+    
+    /* Animation for the header */
+    .review-title, .review-decoration, .review-tagline {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .review-decoration {
+        animation-delay: 0.2s;
+    }
+    
+    .review-tagline {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Star rating styling */
     .star-rating {
         font-size: 1.5rem;
         cursor: pointer;
         margin-right: 0.25rem;
+        transition: all 0.2s ease;
+    }
+    
+    .star-rating:hover {
+        transform: scale(1.2);
+    }
+    
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .btn-primary {
+        background-color: #ff9800;
+        border-color: #ff9800;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #f57c00;
+        border-color: #f57c00;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
     }
 </style>
 
@@ -129,7 +250,6 @@
         const ratingInput = document.getElementById('ratingInput');
         let currentRating = 0;
 
-        // Fungsi untuk mengatur tampilan bintang sesuai rating
         function updateStars(rating) {
             stars.forEach((star, index) => {
                 if (index < rating) {
@@ -142,7 +262,6 @@
             });
         }
 
-        // Event untuk klik bintang
         stars.forEach((star, index) => {
             star.addEventListener('click', function() {
                 const value = parseInt(this.getAttribute('data-value'));
@@ -159,7 +278,6 @@
                 updateStars(currentRating);
             });
             
-            // Event untuk hover bintang
             star.addEventListener('mouseenter', function() {
                 const value = parseInt(this.getAttribute('data-value'));
                 // Tampilkan preview rating saat hover
@@ -167,10 +285,11 @@
             });
         });
         
-        // Kembalikan tampilan ke rating yang dipilih saat mouse keluar
         document.getElementById('starRating').addEventListener('mouseleave', function() {
             updateStars(currentRating);
         });
     });
 </script>
 @endsection
+@endsection
+
