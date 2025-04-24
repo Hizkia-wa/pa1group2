@@ -34,7 +34,7 @@ class UloskitaController extends Controller
                 'name' => 'Ulos Manggiring',
                 'slug' => 'manggiring',
                 'short_description' => 'Ulos Manggiring dikenal sebagai simbol perlindungan dan keberkahan.',
-                'image' => 'ulos-manggiring.jpg',
+                'image' => 'ulos-atakanta.jpg',
                 'description' => 'Ulos Manggiring memiliki motif yang kaya dengan simbol-simbol yang melambangkan perlindungan dan keberkahan. Kain ini sering memiliki kombinasi warna cerah seperti merah dan kuning.',
                 'kegunaan' => 'Ulos ini biasanya diberikan kepada anak atau cucu sebagai simbol doa untuk kehidupan yang penuh berkat dan perlindungan dari leluhur.',
                 'pembuatan' => 'Proses pembuatan Ulos Manggiring melibatkan tenunan manual dengan detail motif yang rumit, sering kali memakan waktu berminggu-minggu.'
@@ -43,7 +43,7 @@ class UloskitaController extends Controller
                 'name' => 'Ulos Sadum',
                 'slug' => 'sadum',
                 'short_description' => 'Ulos Sadum dikenal dengan warna-warnanya yang cerah dan meriah.',
-                'image' => 'ulos-sadum.jpg',
+                'image' => 'ulos-atakanta.jpg',
                 'description' => 'Ulos Sadum memiliki ciri khas warna-warna cerah seperti merah, kuning, dan hijau dengan motif yang lebih bebas dan meriah dibandingkan ulos lainnya. Kain ini sering dihiasi dengan benang emas atau perak.',
                 'kegunaan' => 'Ulos Sadum digunakan dalam acara-acara adat yang penuh sukacita, seperti pesta pernikahan atau kelahiran, dan sering diberikan sebagai hadiah kepada tamu penting.',
                 'pembuatan' => 'Pembuatan Ulos Sadum membutuhkan keterampilan khusus untuk menggabungkan warna-warna cerah dan benang logam, dengan proses tenun yang cermat.'
@@ -52,17 +52,17 @@ class UloskitaController extends Controller
                 'name' => 'Ulos Bintang Maratur',
                 'slug' => 'bintang-maratur',
                 'short_description' => 'Ulos Bintang Maratur melambangkan harmoni dan tatanan hidup.',
-                'image' => 'ulos-bintang-maratur.jpg',
+               'image' => 'ulos-atakanta.jpg',
                 'description' => 'Ulos Bintang Maratur memiliki motif bintang yang teratur, melambangkan harmoni dan tatanan dalam kehidupan masyarakat Batak. Warna utamanya biasanya merah, hitam, dan putih.',
                 'kegunaan' => 'Ulos ini sering digunakan dalam upacara adat untuk menyampaikan pesan harmoni dan doa agar kehidupan berjalan dengan teratur dan seimbang.',
                 'pembuatan' => 'Proses tenun Ulos Bintang Maratur membutuhkan ketelitian untuk membentuk motif bintang yang simetris, sering kali menggunakan alat tenun tradisional.'
             ],
-            // Tambahan jenis ulos lainnya
+         
             [
                 'name' => 'Ulos Sibolang',
                 'slug' => 'sibolang',
                 'short_description' => 'Ulos Sibolang adalah ulos yang dikenal dengan motif garisnya yang khas.',
-                'image' => 'ulos-sibolang.jpg',
+                'image' => 'ulos-atakanta.jpg',
                 'description' => 'Ulos Sibolang memiliki motif dominan berupa garis tebal (bolang) yang memanjang pada permukaan kain. Biasanya berwarna merah tua, hitam, dan putih dengan aksen benang emas.',
                 'kegunaan' => 'Ulos Sibolang digunakan dalam upacara kematian, terutama untuk menyelimuti jenazah atau diberikan kepada keluarga yang berduka sebagai simbol penghormatan terakhir.',
                 'pembuatan' => 'Pembuatan Ulos Sibolang menggunakan teknik tenun tradisional dengan fokus pada pembentukan garis-garis tebal yang menjadi ciri khasnya. Proses ini membutuhkan ketepatan dalam menghitung benang dan konsistensi tekanan.'
@@ -71,7 +71,7 @@ class UloskitaController extends Controller
                 'name' => 'Ulos Ragi Hotang',
                 'slug' => 'ragi-hotang',
                 'short_description' => 'Ulos Ragi Hotang melambangkan kekuatan dan keteguhan seperti rotan.',
-                'image' => 'ulos-ragi-hotang.jpg',
+               'image' => 'ulos-atakanta.jpg',
                 'description' => 'Ulos Ragi Hotang memiliki motif yang terinspirasi dari rotan (hotang), yang melambangkan kekuatan dan keteguhan. Motifnya berupa garis-garis yang saling bersilangan membentuk pola tertentu.',
                 'kegunaan' => 'Ulos ini biasanya digunakan dalam upacara adat yang membutuhkan simbol kekuatan, seperti upacara memasuki rumah baru atau pengukuhan pangkat adat.',
                 'pembuatan' => 'Proses pembuatan Ulos Ragi Hotang memerlukan keahlian dalam menenun pola bersilangan yang teratur dan rapi, dengan teknik khusus untuk menghasilkan tekstur yang khas.'

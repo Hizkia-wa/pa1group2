@@ -27,7 +27,7 @@
             </p>
         </div>
         <div class="family-image">
-            <img src="/img/family-photo.jpg" alt="Keluarga Gita Ulos">
+            <img src="img/ulos/partonun.jpeg" alt="Keluarga Gita Ulos">
         </div>
     </div>
 
@@ -110,22 +110,21 @@
 
 
 :root {
-  --primary-color: #6a1b9a;
-  --secondary-color: #8e24aa;
-  --accent-color: #ffc107; /* Warning/accent yellow */
-  --text-color: #212121;
-  --text-secondary: #666;
-  --text-light: #ffffff;
-  --danger-color: #dc3545;
-  --success-color: #28a745;
-  --light-gray: #f3f4f6;
-  --lighter-gray: #f9f9f9;
-  --border-color: #eaeaea;
-  --shadow-light: rgba(0, 0, 0, 0.05);
-  --shadow-medium: rgba(0, 0, 0, 0.1);
+    --primary-color: #7B2CBF;
+    --primary-light: #9D4EDD;
+    --primary-dark: #5A189A;
+    --secondary-color: #FF9E00;
+    --secondary-light: #FFB700;
+    --secondary-dark: #DB8400;
+    --text-color:#333333;
+    --text-light: #666666;
+    --background-light: #F9F7FE;
+    --white: #FFFFFF;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+    --gradient-overlay: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
 }
 
-/* General Styles */
 body {
   font-family: 'Poppins', sans-serif;
   color: var(--text-color);
@@ -138,15 +137,33 @@ body {
   padding: 0 20px;
 }
 
-/* Heading styles - all headings black */
+
 h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
   color: var(--text-color);
   font-weight: 700;
+  color: black;
+    font-size: 3rem;
+    margin-bottom: 20px
+}
+.hero-content h1 {
+    color: black;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+ 
 }
 
+.hero-content p {
+    color: black;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+   
+    
+}
 /* Hero Section */
 .hero-section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/hero-background.jpg');
+  background: url("{{ asset('img/ulos/backgroundhome.png') }}");
   background-size: cover;
   background-position: center;
   color: var(--text-light);
@@ -160,7 +177,7 @@ h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 20px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 4px black(0, 0, 0, 0.2);
 }
 
 .subtitle {
@@ -175,10 +192,11 @@ h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
+  
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
+  background-color: #FF9E00;
   color: white;
   padding: 12px 24px;
   border-radius: 30px;
@@ -196,7 +214,7 @@ h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
 }
 
 .btn-secondary {
-  background-color: transparent;
+  background-color: black;
   color: white;
   padding: 12px 24px;
   border-radius: 30px;
@@ -207,7 +225,7 @@ h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(195, 64, 17, 0.2);
   transform: translateY(-2px);
 }
 
@@ -511,9 +529,9 @@ h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
 }
 
 @keyframes processHighlight {
-  0% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0.7); }
-  70% { box-shadow: 0 0 0 15px rgba(106, 27, 154, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0); }
+  0% { box-shadow: 0 0 0 0 black; }
+  70% { box-shadow: 0 0 0 15px black}
+  100% { box-shadow: 0 0 0 0 }
 }
 
 /* Contact Section */

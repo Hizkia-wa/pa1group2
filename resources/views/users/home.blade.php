@@ -253,7 +253,7 @@
     :root {
   --primary-color: blue;
   --secondary-color: #8e24aa;
-  --accent-color: #ffc107; /* Warning/accent yellow */
+  --accent-color: #ffc107; 
   --text-color: #212121;
   --text-secondary: #666;
   --text-light: #ffffff;
