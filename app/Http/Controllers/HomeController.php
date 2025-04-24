@@ -18,7 +18,7 @@ class HomeController extends Controller
         
         // Fetch latest testimonials/reviews (limited to 6)
         $testimonials = Review::orderBy('created_at', 'desc')
-                            ->take(20)
+                            ->take(10)
                             ->get();
         
                             return view('users.home', compact('bestSellerProducts', 'testimonials'));
