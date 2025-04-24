@@ -74,7 +74,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-danger">Tambah</button>
-        <a href="{{ route('products.index') }}" class="btn btn-dark">Kembali</a>
+        <a href="{{ route('products.best') }}" class="btn btn-dark">Kembali</a>
     </form>
 </div>
 
