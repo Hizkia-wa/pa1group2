@@ -42,7 +42,7 @@ class CustomLoginController extends Controller
         $customer = Customer::where('Email', $email)->first();
         if ($customer && Hash::check($password, $customer->Password)) {
             Auth::guard('web')->login($customer);
-            return redirect()->route('user.dashboard');
+            return redirect()->route('home');
         }
     
         return back()->with('error', 'Email atau password salah');

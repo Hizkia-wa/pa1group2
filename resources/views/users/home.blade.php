@@ -1,20 +1,20 @@
 @extends('layouts.User')
 
 @section('content')
-<div class="container-fluid p-0">
-  
-    <div class="hero-section text-center py-5 bg-light">
-    <div class="container">
-        <div class="hero-content">
-          
-            
-            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary mt-5">Lihat Koleksi</a>
-            <a href="{{ route('uloskita') }}" class="btn btn-outline-secondary mt-3 ms-2">Tentang Ulos</a>
+
+<div class="hero-header">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
+        <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
+        <div class="hero-buttons">
+            <a href="#koleksi" class="btn btn-primary">Lihat Koleksi</a>
+            <a href="#tentang" class="btn btn-secondary">Tentang Ulos</a>
         </div>
-    </div>
+</div>
 </div>
 
-    <!-- Featured Products Section with Horizontal Scroll -->
+
     <div class="container my-5">
         <h2 class="text-center mb-4">Ulos Pilihan Terbaik</h2>
         <p class="text-center mb-4">Karya seni tradisional Batak pilihan dengan keahlian tinggi, memadukan budaya Indonesia yang kaya.</p>
@@ -266,6 +266,18 @@
   --shadow-light: rgba(0, 0, 0, 0.05);
   --shadow-medium: rgba(0, 0, 0, 0.1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .page-loader {
