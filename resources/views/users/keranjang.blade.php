@@ -87,7 +87,7 @@
             {{-- Checkbox tersembunyi yang diisi via JS saat submit --}}
             <div id="selectedItemsWrapper"></div>
 
-            <button type="submit" class="btn btn-success w-100 mb-3">
+            <button type="button" class="btn btn-success w-100 mb-3" id="waButton" data-admin="6282274398996">
                 <i class="bi bi-whatsapp"></i> Pesan Melalui WA
             </button>
 
@@ -130,6 +130,63 @@
         });
     });
 
-    window.onload = updateQuantity;
+    // Proses WhatsApp setelah form di-submit
+    document.getElementById('waButton').addEventListener('click', function () {
+        const form = document.getElementById('checkoutForm');
+        const formData = {
+            _token: '{{ csrf_token() }}',
+            CustomerName: form.CustomerName.value,
+            Email: form.Email.value,
+            Phone: form.Phone.value,
+            City: form.City.value,
+            District: form.District.value,
+            Street: form.Street.value,
+            PostalCode: form.PostalCode.value,
+            totalQuantity: form.totalQuantity.value
+        };
+
+        // Kirim data ke backend Laravel untuk disimpan ke database
+        fetch("{{ route('user.cart.checkout') }}", {
+            method: "POST",
+            headers: {  
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": formData._token
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal kirim data");
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                const message = `Halo Admin, saya ingin memesan produk:
+
+🛒 *Keranjang Belanja*
+
+📦 Produk: ${data.products.map(item => `${item.name} (${item.size}) x ${item.quantity}`).join(', ')}
+💵 Total: Rp ${data.totalPrice}
+
+👤 Nama: ${formData.CustomerName}
+📱 Telepon: ${formData.Phone}
+📧 Email: ${formData.Email}
+🏠 Alamat: ${formData.Street}, ${formData.District}, ${formData.City}, ${formData.PostalCode}
+🔢 Jumlah: ${formData.totalQuantity}
+
+Mohon segera diproses ya 🙏`;
+
+                // Link WhatsApp
+                const nomorAdmin = document.getElementById('waButton').dataset.admin;
+                const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
+                window.open(waLink, '_blank'); // Buka WhatsApp di tab baru
+            } else {
+                alert("Terjadi kesalahan, coba lagi.");
+            }
+        })
+        .catch(err => {
+            alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
+            console.error(err);
+        });
+    });
 </script>
 @endsection
