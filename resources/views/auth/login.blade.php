@@ -178,11 +178,11 @@
     <div class="left-side">
       <h1>SELAMAT DATANG DI<br>GITA ULOS</h1>
       <p>Sebuah website penjualan ulos batak dengan<br>bahan ulos terbaik dengan produksi asli warga lokal</p>
-      <img src="{{ asset('img/rumah.jpeg') }}" alt="Rumah Adat">
+      <img src="{{ asset('img/ulos/logogita.png') }}" alt="Rumah Adat" class="rumah-adat">
     </div>
     <div class="right-side">
       <div class="logo">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo Gita Ulos">
+        <img src="{{ asset('img/ulos/logogita.png') }}" alt="Rumah Adat" class="rumah-adat">
       </div>
       <div class="form-box">
         <h2>Login</h2>

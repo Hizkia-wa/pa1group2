@@ -273,7 +273,7 @@
 }
 
 .ulos-card-title {
-    color: var(--primary-dark);
+    color: black;
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 15px;
@@ -480,10 +480,12 @@
     
     .hero-content h1 {
         font-size: 1.8rem;
+        color: black;
     }
     
     .section-title {
         font-size: 1.5rem;
+        color: black;
     }
     
     .section-decoration {
