@@ -8,8 +8,8 @@
         <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons">
-            <a href="#koleksi" class="btn btn-primary">Lihat Koleksi</a>
-            <a href="#tentang" class="btn btn-secondary">Tentang Ulos</a>
+            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi</a>
+            <a href="{{ route('uloskita') }}" class="btn btn-secondary">Tentang Ulos</a>
         </div>
 </div>
 </div>

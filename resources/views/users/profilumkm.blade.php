@@ -8,12 +8,12 @@
             Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.
         </p>
         <div class="hero-buttons">
-            <a href="#" class="btn-primary">Lihat Koleksi <span class="arrow">→</span></a>
-            <a href="#" class="btn-secondary">Tentang Ulos</a>
+            <a href="#sejarahumkm" class="btn-primary">Sejarah <span class="arrow">→</span></a>
+            <a href="#UMKMnya" class="btn-secondary">Pemilik</a>
         </div>
     </div>
 
-    <div class="history-section">
+    <div class="history-section" id="sejarahumkm">
         <h2 class="section-title">Sejarah Berdirinya Toko Gita Ulos</h2>
         <div class="history-content">
             <p>
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="owners-section">
+    <div class="owners-section" id="UMKMnya">
         <h2 class="section-title">Pemilik Gita Ulos</h2>
         <div class="owner-content">
             <div class="owner-text">
