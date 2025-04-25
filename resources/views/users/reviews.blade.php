@@ -129,32 +129,61 @@
 
 @section('scripts')
 <style>
-    /* Header styling */
-    .review-header {
-        background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
-        padding: 50px 0;
-        margin-top: -25px;
-        position: relative;
-        border-bottom: 1px solid rgba(255, 152, 0, 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
+   
+   .review-header {
+    background: url("{{ asset('img/ulos/backgroundhome.png') }}") center/cover no-repeat fixed;
+    padding: 80px 0; 
+    margin-top: -25px;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 152, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.review-header {
+    background: url("{{ asset('img/ulos/backgroundhome.png') }}")
+    padding: px 0;
+    background-size: cover;
+    margin-top: 25px;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 152, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+.review-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    z-index: 1;
+}
+
+/* Memastikan semua konten header berada di atas overlay */
+.review-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+.review-title {
+    color: #ff9800;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+}
+
+.review-tagline {
+    color: black;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
     
-    .review-title {
-        color: #ff9800;
-        font-weight: 700;
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    .review-tagline {
-        color: #e0e0e0;
-        font-size: 1.1rem;
-        max-width: 800px;
-        margin: 0 auto;
-        line-height: 1.7;
-    }
+}
     
     .review-decoration {
         display: flex;
@@ -180,7 +209,7 @@
         margin: 0 15px;
     }
     
-    /* Animation for the header */
+   
     .review-title, .review-decoration, .review-tagline {
         animation: fadeInUp 0.8s ease-out forwards;
     }
