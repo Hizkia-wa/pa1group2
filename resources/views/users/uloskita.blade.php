@@ -504,12 +504,12 @@
 }
 </style>
 
-<!-- Font Awesome for icons -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Smooth scroll for navigation links
+       
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
