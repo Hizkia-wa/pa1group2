@@ -16,7 +16,7 @@
         </a>
         <a href="{{ route('products.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.create') ? 'active' : '' }}">
             <i class="fas fa-plus"></i> Tambah Produk
-            @if(request()->routeIs('products.create'))
+            @if(request()->routeIs('products.best.create'))
                 <span class="active-indicator"></span>
             @endif
         </a>
