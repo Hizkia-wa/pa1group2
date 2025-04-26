@@ -3,12 +3,14 @@
 @section('content')
 
 <div class="hero-header">
-    <div class="hero-overlay"></div>
+<div class="hero-image-container">
+    <img src="{{ asset('img/background.png') }}" alt="Gambar Budaya Batak" class="hero-image">
+</div>
     <div class="hero-content">
         <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons">
-            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi</a>
+            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi <span class="arrow">→</span></a>
             <a href="{{ route('uloskita') }}" class="btn btn-secondary">Tentang Ulos</a>
         </div>
 </div>
@@ -267,19 +269,6 @@
   --shadow-medium: rgba(0, 0, 0, 0.1);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .page-loader {
     position: fixed;
     top: 0;
@@ -290,8 +279,8 @@
     z-index: 9999;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: opacity 0.5s ease;
+    gap: 8px; 
+    text-decoration: none;
 }
 
 .page-loader.loaded {
@@ -457,6 +446,21 @@
     100% { box-shadow: 0 0 0 0 rgba(106, 27, 154, 0); }
 }
 
+.hero-image-container {
+    text-align: center;
+    margin-top: 10px; 
+    margin-bottom:10px; 
+}
+
+.hero-image {
+    max-width: 1500px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
 /* Hero section styling */
 .hero-section {
     background: url("{{ asset('img/ulos/background.png') }}");
@@ -618,31 +622,42 @@
     filter: none; 
     position: relative;
 }
-.hero-section {
-    background: url("{{ asset('img/ulos/background.png') }}");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 100px 0;
-    text-align: center;
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-    width: 100%; 
-    height: 400px; 
-    object-fit: cover; 
-    filter: none; 
-    position: relative;
-}
 
 .hero-content {
     transform: none;
     bottom: auto;
     left: auto;
     text-align: center;
-    margin-top: 260px; 
+    margin-top: 20px; 
 >>>>>>> e0da65818ee452ed2902aa4aa66001b150a22590
 }
+.btn-primary {
+        background-color: #8B0000; /* Merah Batak */
+        border: none;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #a30000; /* Lebih terang saat hover */
+    }
+
+    .btn-secondary {
+        background-color: #333333; /* Hitam soft */
+        border: none;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #555555; /* Abu gelap saat hover */
+    }
 </style>
 
 <script>
