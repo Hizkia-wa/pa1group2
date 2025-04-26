@@ -16,9 +16,8 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route untuk halaman dashboard admin
-Route::get('Admin/homepage', function () {
-    return view('admin.homepage');
-})->name('admin.homepage');
+Route::get('/Admin/homepage', [AdminController::class, 'dashboard'])->name('admin.homepage');
+
 
 Route::prefix('Admin')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');

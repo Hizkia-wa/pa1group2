@@ -55,10 +55,12 @@
                                 <div class="mt-2">
                                     <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
                                     <div class="d-flex product-buttons">
-                                        <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
-                                        <a href="#" class="btn btn-outline-secondary keranjang-btn">
-                                            <i class="bi bi-cart-plus"></i> Keranjang
-                                        </a>
+                                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                                        <form action="{{ route('user.cart.add') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit">Tambah ke Keranjang</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

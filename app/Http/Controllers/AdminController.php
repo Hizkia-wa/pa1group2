@@ -6,8 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\Review;
+
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $jumlahProduk = Product::count();
+        $jumlahCustomer = Customer::count();
+        $jumlahOrder = Order::count();
+        $jumlahReview = Review::count();
+
+        return view('admin.homepage', compact('jumlahProduk', 'jumlahCustomer', 'jumlahOrder', 'jumlahReview'));
+    }
+
+
     public function showChangePasswordForm()
     {
         return view('admin.change-password');
