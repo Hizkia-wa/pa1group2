@@ -39,6 +39,8 @@
                 </form>
             </div>
 
+
+
             {{-- Tombol Hapus --}}
             <form action="{{ route('user.cart.remove', $item['id']) }}" method="POST" class="ms-3">
                 @csrf
@@ -99,7 +101,6 @@
     </div>
 </div>
 
-{{-- Script --}}
 <script>
     function updateQuantity() {
         let total = 0;
@@ -113,11 +114,7 @@
         document.getElementById('totalQuantity').value = total;
     }
 
-    document.querySelectorAll('.cart-checkbox').forEach(cb => {
-        cb.addEventListener('change', updateQuantity);
-    });
-
-    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+    function prepareSelectedItems() {
         const selected = document.querySelectorAll('.cart-checkbox:checked');
         const wrapper = document.getElementById('selectedItemsWrapper');
         wrapper.innerHTML = '';
@@ -128,65 +125,69 @@
             input.value = cb.value;
             wrapper.appendChild(input);
         });
+    }
+
+    document.querySelectorAll('.cart-checkbox').forEach(cb => {
+        cb.addEventListener('change', updateQuantity);
     });
 
-    // Proses WhatsApp setelah form di-submit
+    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+        prepareSelectedItems();
+    });
+
     document.getElementById('waButton').addEventListener('click', function () {
         const form = document.getElementById('checkoutForm');
-        const formData = {
-            _token: '{{ csrf_token() }}',
-            CustomerName: form.CustomerName.value,
-            Email: form.Email.value,
-            Phone: form.Phone.value,
-            City: form.City.value,
-            District: form.District.value,
-            Street: form.Street.value,
-            PostalCode: form.PostalCode.value,
-            totalQuantity: form.totalQuantity.value
-        };
+        const selected = document.querySelectorAll('.cart-checkbox:checked');
 
-        // Kirim data ke backend Laravel untuk disimpan ke database
+        if (selected.length === 0) {
+            alert('Pilih minimal 1 produk untuk checkout.');
+            return;
+        }
+
+        prepareSelectedItems(); // siapkan selected[] di form
+
+        const formData = new FormData(form);
+
         fetch("{{ route('user.cart.checkout') }}", {
             method: "POST",
-            headers: {  
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": formData._token
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            body: JSON.stringify(formData)
+            body: formData
         })
         .then(response => {
-            if (!response.ok) throw new Error("Gagal kirim data");
+            if (!response.ok) throw new Error("Gagal mengirim data.");
             return response.json();
         })
         .then(data => {
             if (data.success) {
                 const message = `Halo Admin, saya ingin memesan produk:
 
-🛒 *Keranjang Belanja*
+🛒 *Keranjang Belanja*:
+${data.products.map(item => `- ${item.name} (${item.size}) x${item.quantity}`).join('\n')}
 
-📦 Produk: ${data.products.map(item => `${item.name} (${item.size}) x ${item.quantity}`).join(', ')}
-💵 Total: Rp ${data.totalPrice}
+💵 *Total Harga*: Rp ${data.totalPrice.toLocaleString('id-ID')}
 
-👤 Nama: ${formData.CustomerName}
-📱 Telepon: ${formData.Phone}
-📧 Email: ${formData.Email}
-🏠 Alamat: ${formData.Street}, ${formData.District}, ${formData.City}, ${formData.PostalCode}
-🔢 Jumlah: ${formData.totalQuantity}
+👤 *Nama*: ${formData.get('CustomerName')}
+📱 *Telepon*: ${formData.get('Phone')}
+📧 *Email*: ${formData.get('Email')}
+🏠 *Alamat*: ${formData.get('Street')}, ${formData.get('District')}, ${formData.get('City')} - ${formData.get('PostalCode')}
+🔢 *Jumlah*: ${formData.get('totalQuantity')}
 
 Mohon segera diproses ya 🙏`;
 
-                // Link WhatsApp
                 const nomorAdmin = document.getElementById('waButton').dataset.admin;
                 const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
-                window.open(waLink, '_blank'); // Buka WhatsApp di tab baru
+                window.open(waLink, '_blank');
             } else {
-                alert("Terjadi kesalahan, coba lagi.");
+                alert('Gagal checkout. Coba lagi.');
             }
         })
-        .catch(err => {
-            alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
-            console.error(err);
+        .catch(error => {
+            console.error(error);
+            alert('Terjadi kesalahan saat memproses checkout.');
         });
     });
 </script>
+
 @endsection
