@@ -7,7 +7,7 @@
     <img src="{{ asset('img/background.png') }}" alt="Gambar Budaya Batak" class="hero-image">
 </div>
     <div class="hero-content">
-
+       
         <div class="hero-buttons">
             <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi <span class="arrow">→</span></a>
             <a href="{{ route('uloskita') }}" class="btn btn-secondary">Tentang Ulos</a>
