@@ -7,8 +7,6 @@
     <img src="{{ asset('img/background.png') }}" alt="Gambar Budaya Batak" class="hero-image">
 </div>
     <div class="hero-content">
-        <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
-        <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons">
             <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi <span class="arrow">→</span></a>
             <a href="{{ route('uloskita') }}" class="btn btn-secondary">Tentang Ulos</a>
@@ -55,11 +53,13 @@
                                 <div class="mt-2">
                                     <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
                                     <div class="d-flex product-buttons">
-                                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary1 flex-grow-1 me-2">Beli</a>
                                         <form action="{{ route('user.cart.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <button type="submit">Tambah ke Keranjang</button>
+                                            <button type="submit" class="btn-cart">
+                                                <i class="bi bi-cart-plus"></i> Keranjang
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@
                 <p class="mb-4">
                     Tim kami siap membantu Anda dalam memilih Ulos terbaik sesuai kebutuhan. Kami juga menerima pesanan khusus dengan desain atau ukuran tertentu.
                 </p>
-                <a href="https://wa.me/+628123456789" class="btn btn-success btn-sm rounded-pill px-4 py-2">
+                <a href="https://wa.me/+6282274398996" class="btn btn-success btn-sm rounded-pill px-4 py-2">
                     <i class="bi bi-whatsapp me-2"></i> Hubungi kami Melalui Via Whatsapp
                 </a>
             </div>
@@ -255,6 +255,23 @@
 </div>
 
 <style>
+    .btn-cart {
+        background-color: white;
+        color: #2563eb;
+        border: 1px solid #2563eb;
+        gap: 4px;
+        height: 40px;
+    }
+
+    .btn-cart:hover {
+        background-color: #f0f7ff;
+    }
+    
+    .form-cart {
+        width: 100%;
+        display: flex;
+    }
+
     :root {
   --primary-color: blue;
   --secondary-color: #8e24aa;
@@ -645,6 +662,21 @@
 
     .btn-primary:hover {
         background-color: #a30000; /* Lebih terang saat hover */
+    }
+
+    .btn-primary1 {
+        background-color: blue; /* Merah Batak */
+        border: none;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 15px;
+        height: 40px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary1:hover {
+        background-color: blue; /* Lebih terang saat hover */
     }
 
     .btn-secondary {
