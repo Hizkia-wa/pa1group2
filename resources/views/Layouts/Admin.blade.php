@@ -8,28 +8,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-
+    
     <style>
         /* Tambahkan ini untuk latar belakang putih */
         body {
             background-color: #ffffff; /* Latar belakang putih */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Style untuk footer */
+        .footer {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            margin-top: auto;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer p {
+            margin-bottom: 0;
+        }
+        
+        /* Menyesuaikan padding konten utama */
+        .main-content {
+            flex: 1;
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid d-flex flex-column min-vh-100">
+        <div class="row flex-grow-1">
             {{-- Sidebar --}}
             @include('components.sidebar')
-
+            
             {{-- Konten utama --}}
-            <div class="col-md-9 py-4">
+            <div class="col-md-9 py-4 main-content">
                 @yield('content')
             </div>
         </div>
+        
+        {{-- Footer --}}
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>&copy; {{ date('Y') }} Gita Ulos. Hak Cipta Dilindungi.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

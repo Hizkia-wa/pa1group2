@@ -7,6 +7,7 @@
     <img src="{{ asset('img/background.png') }}" alt="Gambar Budaya Batak" class="hero-image">
 </div>
     <div class="hero-content">
+
         <div class="hero-buttons">
             <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi <span class="arrow">→</span></a>
             <a href="{{ route('uloskita') }}" class="btn btn-secondary">Tentang Ulos</a>
@@ -651,7 +652,7 @@
 >>>>>>> e0da65818ee452ed2902aa4aa66001b150a22590
 }
 .btn-primary {
-        background-color: #8B0000; /* Merah Batak */
+        background-color: #8B0000; * Merah Batak */
         border: none;
         color: #ffffff;
         padding: 10px 20px;
@@ -661,7 +662,7 @@
     }
 
     .btn-primary:hover {
-        background-color: #a30000; /* Lebih terang saat hover */
+        background-color: #a30000; 
     }
 
     .btn-primary1 {
@@ -676,11 +677,10 @@
     }
 
     .btn-primary1:hover {
-        background-color: blue; /* Lebih terang saat hover */
+        background-color: blue; 
     }
-
     .btn-secondary {
-        background-color: #333333; /* Hitam soft */
+        background-color: #333333; 
         border: none;
         color: #ffffff;
         padding: 10px 20px;
@@ -690,7 +690,13 @@
     }
 
     .btn-secondary:hover {
-        background-color: #555555; /* Abu gelap saat hover */
+        background-color: #555555; 
+    }
+
+
+    .hero-buttons {
+        margin-left: 36%;
+        margin-bottom: 10%;
     }
 </style>
 

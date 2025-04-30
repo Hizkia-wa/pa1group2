@@ -24,9 +24,7 @@
         </div>
     </div>
 
-    <div class="text-center mt-5">
-        <small>&copy; 2025 Gita Ulos</small>
-    </div>
+  
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
