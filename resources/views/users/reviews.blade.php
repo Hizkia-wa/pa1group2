@@ -255,7 +255,7 @@
     }
     
     .btn-primary {
-        background-color: #ff9800;
+        background-color: #8B0000;;
         border-color: #ff9800;
         padding: 8px 20px;
         border-radius: 30px;

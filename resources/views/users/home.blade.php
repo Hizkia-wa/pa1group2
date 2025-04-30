@@ -8,10 +8,7 @@
 </div>
     <div class="hero-content">
        
-        <div class="hero-buttons">
-            <a href="{{ route('user.product.catalog') }}" class="btn btn-primary">Lihat Koleksi <span class="arrow">→</span></a>
-            <a href="{{ route('uloskita') }}" class="btn btn-secondary">Tentang Ulos</a>
-        </div>
+        
 </div>
 </div>
 
@@ -264,9 +261,7 @@
         height: 40px;
     }
 
-    .btn-cart:hover {
-        background-color: #f0f7ff;
-    }
+  
     
     .form-cart {
         width: 100%;
@@ -358,7 +353,7 @@
     margin-right: -100%;         
 }
 
-/* Product card redesign */
+
 .product-card {
     border-radius: 8px;
     overflow: hidden;
@@ -412,7 +407,6 @@
     justify-content: center;
 }
 
-/* Testimonial card redesign */
 .testimonial-card {
     border-radius: 8px;
     overflow: hidden;
@@ -433,7 +427,7 @@
 }
 
 .custom-contact-box {
-    background-color: #f3f4f6; /* abu muda */
+    background-color: #f3f4f6; 
     border-radius: 20px;
 }
 
@@ -443,7 +437,7 @@
     object-fit: cover;
 }
 
-/* Process section styling */
+
 .process-circle {
     width: 60px;
     height: 60px;
@@ -481,17 +475,16 @@
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Hero section styling */
+
 .hero-section {
     background: url("{{ asset('img/ulos/background.png') }}");
     background-size: cover;
     background-position: center;
-<<<<<<< HEAD
     padding: 5rem 0;
     color: white;
 }
 
-/* Horizontal scroll for products */
+
 .products-scroll-container,
 .reviews-scroll-container {
     width: 100%;
@@ -505,7 +498,7 @@
 
 .products-scroll-container::-webkit-scrollbar,
 .reviews-scroll-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none; 
 }
 
 .products-scroll-wrapper,
@@ -527,10 +520,10 @@
 }
 
 .review-card-wrapper {
-    width: calc(100% / 3 - 20px); /* Show 3 testimonials per view */
+    width: calc(100% / 3 - 20px); 
 }
 
-/* Navigation buttons */
+
 .scroll-nav {
     position: absolute;
     width: 100%;
@@ -573,7 +566,7 @@
     right: -20px;
 }
 
-/* Scroll indicator */
+
 .scroll-indicator,
 .reviews-scroll-indicator {
     width: 100%;
@@ -602,10 +595,10 @@
     background-color: var(--primary-color, #6a1b9a);
 }
 
-/* Mobile optimization */
+
 @media (max-width: 992px) {
     .review-card-wrapper {
-        width: calc(50% - 20px); /* Show 2 testimonials per view on tablets */
+        width: calc(50% - 20px);
     }
 }
 
@@ -615,7 +608,7 @@
     }
     
     .review-card-wrapper {
-        width: 80%; /* Show 1 testimonial per view on mobile */
+        width: 80%; 
     }
     
     .products-scroll-container,
@@ -629,7 +622,7 @@
     .reviews-scroll-wrapper {
         padding: 0 15px;
     }
-=======
+
     background-repeat: no-repeat;
     padding: 100px 0;
     text-align: center;
@@ -649,12 +642,12 @@
     left: auto;
     text-align: center;
     margin-top: 20px; 
->>>>>>> e0da65818ee452ed2902aa4aa66001b150a22590
+
 }
 .btn-primary {
-        background-color: #8B0000; * Merah Batak */
+        background-color: #8B0000; 
         border: none;
-        color: #ffffff;
+        
         padding: 10px 20px;
         border-radius: 30px;
         font-weight: bold;
@@ -666,37 +659,14 @@
     }
 
     .btn-primary1 {
-        background-color: blue; /* Merah Batak */
-        border: none;
-        color: #ffffff;
-        padding: 10px 20px;
-        border-radius: 15px;
-        height: 40px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
+        background-color: #2563eb; 
+        color: white;
+        text-decoration: none;
     }
-
-    .btn-primary1:hover {
-        background-color: blue; 
-    }
-    .btn-secondary {
-        background-color: #333333; 
-        border: none;
-        color: #ffffff;
-        padding: 10px 20px;
-        border-radius: 30px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-secondary:hover {
-        background-color: #555555; 
-    }
-
 
     .hero-buttons {
-        margin-left: 36%;
-        margin-bottom: 10%;
+        margin-left: 3%;
+   
     }
 </style>
 

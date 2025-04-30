@@ -146,10 +146,10 @@
 }
 
 .btn-primary {
-    background-color: var(--secondary-color);
+    background-color: #8B0000;;
     color: var(--white);
     border: none;
-    box-shadow: 0 4px 15px rgba(255, 158, 0, 0.3);
+    box-shadow: 0 4px 15px #8B0000;(255, 158, 0, 0.3);
 }
 
 .btn-primary:hover {
@@ -445,6 +445,7 @@
     .hero-buttons {
         flex-direction: column;
         gap: 15px;
+        
     }
     
     .btn {

@@ -189,7 +189,7 @@
     }
 
     .btn-buy {
-        background-color: #2563eb; /* Primary blue */
+        background-color: #2563eb; 
         color: white;
         text-decoration: none;
     }
