@@ -123,6 +123,9 @@
         <h3 class="mt-3">{{ $product->ProductName }}</h3>
         <p style="color: red; font-size: 1.2rem;">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
+        <p style="color: red; font-size: 1.2rem;">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
+        <p><strong>Stok:</strong> <span id="product-stock">{{ $product->Quantity }}</span></p>
+
         <h4>Deskripsi Produk</h4>
         <p>{{ $product->Description }}</p>
 
@@ -240,7 +243,9 @@ document.getElementById('waButton').addEventListener('click', function () {
     })
     .then(data => {
         if (data.success) {
-            const order = data.order; // Data pesanan yang disimpan di database
+            const order = data.order;
+            document.getElementById('product-stock').innerText = data.newStock;
+            form.reset();// Data pesanan yang disimpan di database
             const message = `Halo Admin, saya ingin memesan produk:
 
 📦 *{{ $product->ProductName }}*

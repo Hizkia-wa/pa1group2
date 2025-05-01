@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use App\Models\Admin;
@@ -102,49 +104,75 @@ class CustomLoginController extends Controller
         return view('auth.lupapassword');
     }
 
+    public function showOTPForm()
+    {
+        return view('auth.formotp'); // Pastikan kamu memiliki file otp.blade.php
+    }
+
     public function handleForgotPassword(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email'
-        ]);
-
+        $request->validate(['email' => 'required|email']);
         $email = $request->email;
-        $attempts = Cache::get("forgot_attempts_$email", 0);
-        $locked = Cache::get("forgot_locked_$email");
+        $customer = Customer::where('Email', $email)->first();
+        
+        if (!$customer) {
+            return back()->with('error', 'Email tidak ditemukan');
+        }
+    
+        $otp = random_int(100000, 999999); // OTP 6 digit
+    
+        DB::table('password_resets')->updateOrInsert(
+            ['email' => $email],
+            ['otp' => $otp, 'created_at' => now()]
+        );
+    
+        // Kirim ke email
+        Mail::raw("Kode OTP Anda untuk reset password adalah: $otp", function ($message) use ($email) {
+            $message->to($email)->subject('Kode OTP Reset Password');
+        });
+    
+        // Set session email untuk digunakan di halaman OTP
+        return redirect()->route('otp.form')->with('email', $email);
+    }    
 
-        if ($locked) {
-            return redirect()->back()->with('error', 'Email anda salah, coba setelah 1 jam')->with('locked', true);
+    public function verifyOTP(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|numeric',
+        ]);
+    
+        $email = $request->email;
+        $otp = $request->otp;
+    
+        // Cek apakah OTP sesuai dengan yang ada di database
+        $record = DB::table('password_resets')->where('email', $email)->first();
+    
+        if (!$record || $record->otp != $otp) {
+            return back()->with('error', 'Kode OTP tidak valid');
+        }
+    
+        // OTP valid, arahkan ke halaman reset password
+        return redirect()->route('reset.password.form')->with('reset_email', $email);
+    }    
+
+    public function submitNewPassword(Request $request)
+    {
+        $request->validate(['password' => 'required|min:6']);
+        $email = session('reset_email');
+
+        if (!$email) {
+            return redirect()->route('forgot.password')->with('error', 'Akses tidak sah');
         }
 
         $customer = Customer::where('Email', $email)->first();
-
-        if (!$customer) {
-            $attempts++;
-            Cache::put("forgot_attempts_$email", $attempts, 3600); // simpan 1 jam
-
-            if ($attempts >= 2) {
-                Cache::put("forgot_locked_$email", true, now()->addHour());
-            }
-
-            return redirect()->back()->with('error', 'Email anda salah');
-        }
-
-        // Buat password baru
-        $newPassword = substr(str_shuffle('abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'), 0, 8);
-
-        // Simpan password baru ke DB
-        $customer->Password = Hash::make($newPassword);
+        $customer->Password = Hash::make($request->password);
         $customer->save();
 
-        // Kirim via email
-        Mail::raw("Password baru Anda adalah: $newPassword", function ($message) use ($email) {
-            $message->to($email)->subject('Reset Password - Gita Ulos');
-        });
+        // Bersihkan
+        DB::table('password_resets')->where('email', $email)->delete();
+        session()->forget('reset_email');
 
-        // Reset percobaan
-        Cache::forget("forgot_attempts_$email");
-        Cache::forget("forgot_locked_$email");
-
-        return redirect()->back()->with('success', 'Password baru berhasil dikirim ke email Anda.');
+        return redirect()->route('login')->with('success', 'Password berhasil direset');
     }
 }

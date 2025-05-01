@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
@@ -36,6 +37,19 @@ public function store(Request $request)
             'Quantity' => 'required|integer|min:1',
         ]);
 
+        $product = Product::findOrFail($request->ProductId);
+
+        if ($product->Quantity < $request->Quantity) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Stok tidak mencukupi.',
+            ], 400);
+        }
+
+        // Kurangi stok produk
+        $product->decrement('Quantity', $request->Quantity);
+
+        
         // Simpan pesanan ke database
         $order = Order::create([
             'ProductId' => $request->ProductId,
@@ -54,7 +68,8 @@ public function store(Request $request)
         // Mengembalikan respons sukses
         return response()->json([
             'success' => true,
-            'order' => $order,  // Mengirimkan data pesanan yang baru dibuat
+            'order' => $order,
+            'newStock' => $product->Quantity  // << ini penting untuk frontend  // Mengirimkan data pesanan yang baru dibuat
         ]);
     } catch (\Exception $e) {
         // Jika terjadi error, tangkap dan kembalikan error
@@ -80,11 +95,21 @@ public function store(Request $request)
     public function updateStatus(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        $previousStatus = $order->OrderStatus;
         $order->OrderStatus = $request->status;
         $order->save();
-
+    
+        // Jika status diubah menjadi 'Batal' dan sebelumnya bukan 'Batal'
+        if ($request->status === 'Batal' && $previousStatus !== 'Batal') {
+            $product = Product::find($order->ProductId);
+            if ($product) {
+                $product->increment('Quantity', $order->Quantity);
+            }
+        }
+    
         return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
     }
+    
 
     public function ordersBatal()
     {

@@ -82,6 +82,13 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('otp');
+            $table->timestamp('created_at')->nullable();
+        });
+        
     }
 
     public function down(): void
@@ -92,5 +99,6 @@ class CreateGitaUlosProdukTableFix extends Migration
         Schema::dropIfExists('Products');
         Schema::dropIfExists('Customers');
         Schema::dropIfExists('Admins');
+        Schema::dropIfExists('password_resets');
     }
 }
