@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="hero-section">
+<div class="hero-section" data-aos="fade-zoom-in" data-aos-delay="200">
         <h1 class="main-title">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p class="subtitle">
             Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="history-section" id="sejarahumkm">
+    <div class="history-section" id="sejarahumkm" data-aos="fade-right">
         <h2 class="section-title">Sejarah Berdirinya Toko Gita Ulos</h2>
         <div class="history-content">
             <p>
@@ -26,12 +26,12 @@
                 Pada tahun 2018, putra Ibu Tiurma, Mangasi Simanjuntak, yang baru menyelesaikan pendidikan di bidang bisnis, bergabung dan membawa inovasi baru dengan membuka platform online untuk menjangkau pasar yang lebih luas. Nama "Gita" dipilih sebagai penghormatan kepada nenek mereka yang merupakan penenun Ulos terkenal di kampungnya.
             </p>
         </div>
-        <div class="family-image">
+        <div class="family-image" data-aos="zoom-in-up" data-aos-delay="300">
             <img src="img/ulos/partonun.jpeg" alt="Keluarga Gita Ulos">
         </div>
     </div>
 
-    <div class="owners-section" id="UMKMnya">
+    <div class="owners-section" id="UMKMnya" data-aos="fade-left">
         <h2 class="section-title">Pemilik Gita Ulos</h2>
         <div class="owner-content">
             <div class="owner-text">
@@ -45,7 +45,7 @@
                     </p>
                 </div>
             </div>
-            <div class="owner-image">
+            <div class="owner-image" data-aos="flip-left" data-aos-delay="200">
                 <img src="img/background.png" alt="Pemilik Gita Ulos">
             </div>
         </div>
@@ -56,11 +56,11 @@
     <div class="vision-mission-section">
         <h2 class="section-title">Visi & Misi Gita Ulos</h2>
         <div class="vision-mission-content">
-            <div class="vision-box">
+        <div class="vision-box" data-aos="fade-up" data-aos-delay="100">
                 <h3>Visi</h3>
                 <p>Menjadi pusat pelestarian dan pengembangan Ulos Batak yang diakui secara nasional dan internasional, serta menjadi jembatan penghubung antara warisan budaya tradisional dengan generasi modern.</p>
             </div>
-            <div class="mission-box">
+           <div class="mission-box" data-aos="fade-up" data-aos-delay="200">
                 <h3>Misi</h3>
                 <ul>
                     <li>Melestarikan teknik tradisional pembuatan Ulos melalui pelatihan dan dokumentasi.</li>
@@ -76,7 +76,7 @@
 
     <div class="container my-5">
       <div class="row">
-          <div class="col-md-6">
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
               <h3>Lokasi & Kontak Kami</h3>
               <div class="map-container">
                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.1268481704317!2d98.6734735!3d3.5889271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312f94c65f63dd%3A0xf9a21acec1195170!2sMedan%2C%20Kota%20Medan%2C%20Sumatera%20Utara!5e0!3m2!1sid!2sid!4v1650123456789!5m2!1sid!2sid" 
@@ -177,7 +177,7 @@ h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 20px;
-  text-shadow: 0 2px 4px black(0, 0, 0, 0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .subtitle {
