@@ -1,4 +1,4 @@
-@extends('layouts.User')
+@extends('layouts.useradmin')
 
 @section('content')
 
@@ -11,12 +11,9 @@
         
 </div>
 </div>
-
-
     <div class="container my-5">
         <h2 class="text-center mb-4">Ulos Pilihan Terbaik</h2>
         <p class="text-center mb-4">Karya seni tradisional Batak pilihan dengan keahlian tinggi, memadukan budaya Indonesia yang kaya.</p>
-        
         <div class="position-relative">
             <div class="scroll-nav d-md-block d-none">
                 <button class="scroll-btn scroll-left" aria-label="Scroll left">

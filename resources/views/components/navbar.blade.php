@@ -10,7 +10,7 @@
             <ul class="navbar-nav flex-row-reverse gap-3 align-items-center fw-semibold">
                 <!-- Login dan Cart -->
                 <li class="nav-item">
-                    <a class="btn btn-outline-batik me-2 rounded-pill sparkle-button" href="{{ route('login.custom') }} "> Login </a>
+                    <a class="btn btn-outline-batik me-2 rounded-pill sparkle-button" href="{{ route('login') }} "> Login </a>
                 </li>
                 <li class="nav-item">
                     <a class="btn position-relative" href="{{ route('user.cart.index') }}">
@@ -32,7 +32,7 @@
                     <a href="{{ route('user.product.catalog') }}" class="nav-link nav-cute {{ request()->routeIs('user.product.catalog') ? 'active' : '' }}">Produk</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link nav-cute {{ request()->routeIs('home') ? 'active' : '' }}"> Beranda</a>
+                    <a href="{{ route('homeGuest') }}" class="nav-link nav-cute {{ request()->routeIs('home') ? 'active' : '' }}"> Beranda</a>
                 </li>
             </ul>
         </div>

@@ -13,7 +13,11 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\HomeController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Halaman guest
+// Guest (belum login)
+Route::get('/', [HomeController::class, 'homeGuest'])->name('homeGuest');
+
+Route::get('/customer/home', [HomeController::class, 'homeCustomer'])->name('homeCustomer');
 
 // Route untuk halaman dashboard admin
 Route::get('/Admin/homepage', [AdminController::class, 'dashboard'])->name('admin.homepage');
@@ -44,6 +48,8 @@ Route::prefix('Admin')->group(function () {
     Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
     Route::get('/orders/selesai', [OrderController::class, 'selesai'])->name('admin.orders.selesai');
     Route::get('/orders/batal', [OrderController::class, 'ordersBatal'])->name('admin.orders.batal');
+    Route::get('/homeuser', [HomeController::class, 'homeAdmin'])->name('homeAdmin');
+
 });
 
 Route::prefix('user')->group(function () {
@@ -75,7 +81,7 @@ Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->
 Route::get('/register', [CustomLoginController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [CustomLoginController::class, 'register'])->name('register.submit');
 // Route untuk halaman login
-Route::get('/login/custom', [CustomLoginController::class, 'showLoginForm'])->name('login.custom');
+Route::get('/login/custom', [CustomLoginController::class, 'showLoginForm'])->name('login');
 
 // Route untuk proses login (POST)
 Route::post('/login/custom', [CustomLoginController::class, 'login'])->name('login.custom.submit');

@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 Auth::login($user); // setelah create user
-return redirect()->route('home'); // atau ke dashboard
+return redirect()->route('homeCustomer'); // atau ke dashboard
 
 class RegisterController extends Controller  
 {

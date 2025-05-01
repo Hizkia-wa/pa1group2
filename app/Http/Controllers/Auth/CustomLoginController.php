@@ -42,7 +42,7 @@ class CustomLoginController extends Controller
         $customer = Customer::where('Email', $email)->first();
         if ($customer && Hash::check($password, $customer->Password)) {
             Auth::guard('web')->login($customer);
-            return redirect()->route('home');
+            return redirect()->route('homeCustomer');
         }
     
         return back()->with('error', 'Email atau password salah');
@@ -74,7 +74,7 @@ class CustomLoginController extends Controller
             'Password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login.custom')->with('success', 'Registrasi berhasil, silakan login.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
     public function showLinkRequestForm(): View

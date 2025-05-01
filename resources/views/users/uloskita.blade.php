@@ -8,7 +8,6 @@
         <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons">
-            <a href="#koleksi" class="btn btn-primary">Lihat Koleksi</a>
             <a href="#tentang" class="btn btn-secondary">Tentang Ulos</a>
         </div>
     </div>
@@ -26,7 +25,7 @@
 <div class="traditional-pattern-divider"></div>
 
 
-<div class="section-title-container" id="koleksi">
+<div class="section-title-container" id="tentang">
     <div class="section-decoration left"></div>
     <h2 class="section-title">Jenis Jenis Ulos Dan Kegunaannya</h2>
     <div class="section-decoration right"></div>
@@ -146,16 +145,16 @@
 }
 
 .btn-primary {
-    background-color: #8B0000;;
+    background-color: #FF9E00;;
     color: var(--white);
     border: none;
-    box-shadow: 0 4px 15px #8B0000;(255, 158, 0, 0.3);
+    box-shadow: 0 4px 15px #FF9E00;(255, 158, 0, 0.3);
 }
 
 .btn-primary:hover {
     background-color: var(--secondary-dark);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 158, 0, 0.4);
+    box-shadow: 0 6px 20px #FF9E00(255, 158, 0, 0.4);
 }
 
 .btn-secondary {

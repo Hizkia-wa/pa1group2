@@ -12,7 +12,7 @@
             <a href="{{ route ('products.index') }}" class="nav-link" id="product-link"><i class="bi bi-box-seam me-2"></i>Produk</a>
             <a href="{{ route ('admin.reviews') }}" class="nav-link" id="review-link"><i class="bi bi-chat-left-dots me-2"></i>Ulasan</a>
             <a href="{{ route ('admin.orders') }}" class="nav-link" id="product-link"><i class="bi bi-tag me-2"></i>Pemesanan</a>
-            <a href="{{ route ('admin.orders') }}" class="nav-link" id="product-link"><i class="bi bi-house me-2"></i>Tampilan User</a>
+            <a href="{{ route ('homeAdmin') }}" class="nav-link" id="product-link"><i class="bi bi-house me-2"></i>Tampilan User</a>
 
             <div class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="bi bi-clock-history me-2"></i>Riwayat</a>

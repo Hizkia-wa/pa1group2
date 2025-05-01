@@ -16,7 +16,7 @@
 
 
 <body>
-@include('components.customernavbar')
+    @include('components.navbaradmin')
 
     <main class="container py-4">
         @yield('content')
@@ -36,7 +36,7 @@
                 <div class="col-md-4 mb-4">
                     <h6 class="footer-heading">Tautan Cepat</h6>
                     <ul class="list-unstyled footer-links">
-                        <li><a href="{{ route('homeCustomer') }}" class="footer-link"><i class="bi bi-house-door me-2"></i>Beranda</a></li>
+                        <li><a href="{{ route('homeGuest') }}" class="footer-link"><i class="bi bi-house-door me-2"></i>Beranda</a></li>
                         <li><a href="{{ route('user.product.catalog') }}" class="footer-link"><i class="bi bi-bag me-2"></i>Produk</a></li>
                         <li><a href="{{ route('profil.umkm') }}" class="footer-link"><i class="bi bi-info-circle me-2"></i>profil</a></li>
                         <li><a href="{ route('user.reviews') }}" class="footer-link"><i class="bi bi-chat-dots me-2"></i>Ulasan</a></li>

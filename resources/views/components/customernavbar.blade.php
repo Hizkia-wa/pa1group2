@@ -34,7 +34,7 @@
                     <a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.index') ? 'text-dark text-decoration-underline' : '' }}">Produk</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'text-dark text-decoration-underline' : '' }}">Beranda</a>
+                    <a href="{{ route('homeCustomer') }}" class="nav-link {{ request()->routeIs('home') ? 'text-dark text-decoration-underline' : '' }}">Beranda</a>
                 </li>
             </ul>
         </div>
