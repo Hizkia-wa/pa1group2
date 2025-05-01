@@ -187,27 +187,25 @@
 </head>
 <body>
 <div class="container">
-        <h2>Reset Password</h2>
-        <form action="{{ route('reset.password.submit') }}" method="POST">
+        <h2>Verifikasi OTP</h2>
+        <p>Masukkan kode OTP yang telah Anda terima melalui email.</p>
+
+        <form method="POST" action="{{ route('otp.verify') }}">
             @csrf
-            <input type="hidden" name="email" value="{{ session('reset_email') }}">
-
+            <input type="hidden" name="email" value="{{ session('email') }}">
             <div class="form-group">
-                <label for="password">Password Baru</label>
-                <input type="password" name="password" id="password" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password_confirmation">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                <label for="otp">Kode OTP</label>
+                <input type="text" name="otp" id="otp" class="form-control" required>
             </div>
 
             @if(session('error'))
                 <div class="alert alert-danger mt-2">{{ session('error') }}</div>
             @endif
 
-            <button type="submit" class="btn btn-primary">Reset Password</button>
+            <button type="submit" class="btn btn-primary">Verifikasi</button>
         </form>
+
+        <a href="{{ route('forgot.password') }}" class="back-link">Kembali ke halaman lupa password</a>
     </div>
 </body>
 </html>
