@@ -3,7 +3,7 @@
 <div class="col-md-3 sidebar d-flex flex-column justify-content-between">
     <div>
         <div class="mb-5 d-flex align-items-center">
-            <img src="/logo.png" alt="Logo" width="40" class="me-3">
+        <img src="{{ asset('img/ulos/logogita.png') }}" alt="Logo Gita Ulos" width="80" class="me-3 rounded-circle">
             <strong class="fs-4">Gita Ulos</strong>
         </div>
 
