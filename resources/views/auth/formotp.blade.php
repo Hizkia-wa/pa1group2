@@ -186,34 +186,28 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="left">
-            <h1>SELAMAT DATANG DI<br>GITA ULOS</h1>
-            <p>Sebuah website penjualan ulos batak dengan bahan ulos terbaik dengan produksi asli warga lokal</p>
-            <img src="{{ asset('img/ulos/logogita.png') }}" alt="Rumah Adat" class="rumah-adat">
-        </div>
-        <div class="right">
-           
-            <h2>Lupa Password</h2>
-            <p>Silakan untuk memasukkan email yang anda gunakan</p>
-            <form action="{{ route('forgot.password.send') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" placeholder="Masukkan email" required>
-                    @if(session('error'))
-                        <div class="error">{{ session('error') }}</div>
-                    @endif
-                    @if(session('success'))
-                        <div class="success">{{ session('success') }}</div>
-                    @endif
-                </div>
-                <div class="form-group">
-                    <button type="submit" {{ session('locked') ? 'disabled' : '' }}>Kirim</button>
-                </div>
-            </form>
-            <a href="{{ route('login') }}" class="back-link">Kembali ke halaman login</a>
-        </div>
+<div class="container">
+        <h2>Reset Password</h2>
+        <form action="{{ route('reset.password.submit') }}" method="POST">
+            @csrf
+            <input type="hidden" name="email" value="{{ session('reset_email') }}">
+
+            <div class="form-group">
+                <label for="password">Password Baru</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirmation">Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+            </div>
+
+            @if(session('error'))
+                <div class="alert alert-danger mt-2">{{ session('error') }}</div>
+            @endif
+
+            <button type="submit" class="btn btn-primary">Reset Password</button>
+        </form>
     </div>
 </body>
 </html>

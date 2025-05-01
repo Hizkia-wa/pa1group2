@@ -195,24 +195,15 @@
         <div class="right">
            
             <h2>Lupa Password</h2>
-            <p>Silakan untuk memasukkan email yang anda gunakan</p>
-            <form action="{{ route('forgot.password.send') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" placeholder="Masukkan email" required>
-                    @if(session('error'))
-                        <div class="error">{{ session('error') }}</div>
-                    @endif
-                    @if(session('success'))
-                        <div class="success">{{ session('success') }}</div>
-                    @endif
-                </div>
-                <div class="form-group">
-                    <button type="submit" {{ session('locked') ? 'disabled' : '' }}>Kirim</button>
-                </div>
-            </form>
-            <a href="{{ route('login') }}" class="back-link">Kembali ke halaman login</a>
+            <p>Silakan masukkan password baru anda</p>
+            // route('reset.password.form')
+                <form method="POST" action="{{ route('reset.password.submit') }}">
+                    @csrf
+                    <label>Password Baru</label>
+                    <input type="password" name="password" required>
+                    <button type="submit">Simpan Password</button>
+                </form>
+            <a href="{{ route('login.') }}" class="back-link">Kembali ke halaman login</a>
         </div>
     </div>
 </body>

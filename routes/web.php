@@ -88,3 +88,9 @@ Route::post('/login/custom', [CustomLoginController::class, 'login'])->name('log
 
 Route::get('/lupa-password', [CustomLoginController::class, 'showForgotPasswordForm'])->name('forgot.password');
 Route::post('/lupa-password', [CustomLoginController::class, 'handleForgotPassword'])->name('forgot.password.send');
+
+Route::get('/verifikasi-otp', [CustomLoginController::class, 'showOTPForm'])->name('otp.form');
+Route::post('/verifikasi-otp', [CustomLoginController::class, 'verifyOTP'])->name('otp.verify');
+
+Route::get('/reset-password-baru', [CustomLoginController::class, 'showResetPasswordForm'])->name('reset.password.form');
+Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPassword'])->name('reset.password.submit');
