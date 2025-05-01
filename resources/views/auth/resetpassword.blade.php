@@ -196,14 +196,20 @@
            
             <h2>Lupa Password</h2>
             <p>Silakan masukkan password baru anda</p>
-            // route('reset.password.form')
-                <form method="POST" action="{{ route('reset.password.submit') }}">
-                    @csrf
-                    <label>Password Baru</label>
-                    <input type="password" name="password" required>
-                    <button type="submit">Simpan Password</button>
-                </form>
-            <a href="{{ route('login.') }}" class="back-link">Kembali ke halaman login</a>
+            <form method="POST" action="{{ route('reset.password.submit') }}">
+    @csrf
+    <input type="hidden" name="email" value="{{ session('reset_email') }}">
+    
+    <label>Password Baru</label>
+    <input type="password" name="password" required>
+    
+    <label>Konfirmasi Password Baru</label>
+    <input type="password" name="password_confirmation" required>
+    
+    <button type="submit">Simpan Password</button>
+</form>
+
+            <a href="{{ route('login') }}" class="back-link">Kembali ke halaman login</a>
         </div>
     </div>
 </body>

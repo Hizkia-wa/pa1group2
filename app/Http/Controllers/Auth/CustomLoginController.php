@@ -109,6 +109,11 @@ class CustomLoginController extends Controller
         return view('auth.formotp'); // Pastikan kamu memiliki file otp.blade.php
     }
 
+    public function showResetPasswordForm()
+    {
+        return view('auth.resetpassword'); // Pastikan kamu memiliki file otp.blade.php
+    }
+
     public function handleForgotPassword(Request $request)
     {
         $request->validate(['email' => 'required|email']);
@@ -158,21 +163,22 @@ class CustomLoginController extends Controller
 
     public function submitNewPassword(Request $request)
     {
-        $request->validate(['password' => 'required|min:6']);
-        $email = session('reset_email');
-
-        if (!$email) {
-            return redirect()->route('forgot.password')->with('error', 'Akses tidak sah');
+        $request->validate([
+            'password' => 'required|confirmed|min:6',
+            'email' => 'required|email'
+        ]);
+    
+        $Customer = Customer::where('email', $request->email)->first();
+    
+        if (!$Customer) {
+            return back()->with('error', 'Email tidak ditemukan.');
         }
-
-        $customer = Customer::where('Email', $email)->first();
-        $customer->Password = Hash::make($request->password);
-        $customer->save();
-
-        // Bersihkan
-        DB::table('password_resets')->where('email', $email)->delete();
+    
+        $Customer->password = Hash::make($request->password);
+        $Customer->save();
+    
         session()->forget('reset_email');
-
-        return redirect()->route('login')->with('success', 'Password berhasil direset');
-    }
+    
+        return redirect()->route('login')->with('success', 'Password berhasil direset.');
+    }      
 }
