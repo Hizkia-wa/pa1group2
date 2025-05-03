@@ -1,5 +1,5 @@
 {{-- LANGKAH 3: Perbarui tampilan productcatalog.blade.php --}}
-@extends('layouts.user')
+@extends('layouts.useradmin')
 
 @section('content')
 <div class="container py-5">
@@ -74,7 +74,7 @@
                         <a href="{{ route('user.product.detail', $product->id) }}" class="btn-buy">Beli</a>
                         <form action="{{ route('user.cart.add') }}" method="POST" class="form-cart">
                             @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" value="1">
                             <input type="hidden" name="size" value="200 x 50 cm">
                             <button type="submit" class="btn-cart">

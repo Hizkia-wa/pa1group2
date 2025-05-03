@@ -43,7 +43,7 @@
                 <label>Deskripsi:</label>
                 <input type="text" name="Description" class="form-control">
             </div>
-            <input type="hidden" name="is_best_seller" value="1">
+            <input type="hidden" name="IsBestSeller" value="1">
             <div class="col-md-6">
                 <label>Kategori:</label>
                 <select name="Category" class="form-control">

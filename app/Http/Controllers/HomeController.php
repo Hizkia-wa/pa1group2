@@ -17,7 +17,7 @@ class HomeController extends Controller
     // Untuk pengunjung (guest)
     public function homeGuest()
     {
-        $bestSellerProducts = Product::where('is_best_seller', 1)
+        $bestSellerProducts = Product::where('IsBestSeller', 1)
                                 ->orderBy('created_at', 'desc')
                                 ->take(10)
                                 ->get();
@@ -32,7 +32,7 @@ class HomeController extends Controller
     // Untuk customer (login)
     public function homeCustomer()
     {
-        $bestSellerProducts = Product::where('is_best_seller', 1)
+        $bestSellerProducts = Product::where('IsBestSeller', 1)
                                 ->orderBy('created_at', 'desc')
                                 ->take(10)
                                 ->get();
@@ -47,7 +47,7 @@ class HomeController extends Controller
     // Untuk admin (jika ada akses manual)
     public function homeAdmin()
     {
-        $bestSellerProducts = Product::where('is_best_seller', 1)
+        $bestSellerProducts = Product::where('IsBestSeller', 1)
                                 ->orderBy('created_at', 'desc')
                                 ->take(10)
                                 ->get();
@@ -56,6 +56,6 @@ class HomeController extends Controller
                             ->take(10)
                             ->get();
 
-        return view('admin.user.home', compact('bestSellerProducts', 'testimonials'));
+        return view('admin.users.home', compact('bestSellerProducts', 'testimonials'));
     }
 }

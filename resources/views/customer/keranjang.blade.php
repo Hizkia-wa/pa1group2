@@ -1,4 +1,4 @@
-@extends('layouts.User')
+@extends('layouts.customer')
 
 @section('content')
 <div class="container mt-5 d-flex">
@@ -7,47 +7,53 @@
         <h3 class="mb-4 fw-bold">Keranjang</h3>
 
         @foreach ($cartWithProduct as $item)
-        @php
-            $product = $item['product'];
-            $images = json_decode($product->Images, true);
-            $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
-        @endphp
+    @php
+        $product = $item->product;
+        $images = json_decode($product->Images, true);
+        $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
+    @endphp
 
-        <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
-            {{-- Checkbox --}}
-            <input type="checkbox" name="selected[]" value="{{ $item['id'] }}-{{ $item['size'] }}" class="form-check-input me-3 cart-checkbox">
+    <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
+        
+        <!-- Checkbox -->
+        <div class="form-check me-3">
+            <input 
+                type="checkbox" 
+                name="selected[]" 
+                value="{{ $item->id }}-{{ $item->Size }}" 
+                class="form-check-input cart-checkbox"
+            >
+        </div>
 
-            {{-- Gambar --}}
-            <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
-                <img src="{{ $imagePath }}" alt="{{ $product->ProductName }}" class="w-100 h-100 object-fit-cover">
-            </div>
+        <!-- Gambar Produk -->
+        <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
+            <img src="{{ $imagePath }}" alt="{{ $product->ProductName }}" class="w-100 h-100 object-fit-cover">
+        </div>
 
-            {{-- Detail Produk --}}
-            <div class="flex-grow-1">
-                <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
-                <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
-                <div class="mb-2">Ukuran: {{ $item['size'] }}</div>
+        <!-- Detail Produk -->
+        <div class="flex-grow-1">
+            <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
+            <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
+            <div class="mb-2">Ukuran: {{ $item->Size }}</div>
 
-                {{-- Quantity Control --}}
-                <form action="{{ route('user.cart.update', [$item['id'], $item['size']]) }}" method="POST" class="d-flex align-items-center">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
-                    <span class="fw-bold quantity-value">{{ $item['quantity'] }}</span>
-                    <input type="hidden" name="quantity" value="{{ $item['quantity'] }}">
-                    <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
-                </form>
-            </div>
-
-
-
-            {{-- Tombol Hapus --}}
-            <form action="{{ route('user.cart.remove', $item['id']) }}" method="POST" class="ms-3">
+            <!-- Kontrol Jumlah -->
+            <form action="{{ route('user.cart.update', [$item->id, $item->Size]) }}" method="POST" class="d-flex align-items-center">
                 @csrf
-                <button class="btn btn-outline-danger btn-sm">Hapus</button>
+                @method('PUT')
+                <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
+                <span class="fw-bold quantity-value">{{ $item->Quantity }}</span>
+                <input type="hidden" name="quantity" value="{{ $item->Quantity }}">
+                <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
             </form>
         </div>
-        @endforeach
+
+        <!-- Hapus -->
+        <form action="{{ route('user.cart.remove', $item->id) }}" method="POST" class="ms-3">
+            @csrf
+            <button class="btn btn-outline-danger btn-sm">Hapus</button>
+        </form>
+    </div>
+@endforeach
     </div>
 
     {{-- Form Pemesanan --}}

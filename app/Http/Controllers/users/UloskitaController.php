@@ -158,6 +158,18 @@ class UloskitaController extends Controller
         return view('users.uloskita', compact('ulosData'));
     }
 
+    public function indexcustomer()
+    {
+        $ulosData = $this->getUlosData();
+        return view('customer.uloskita', compact('ulosData'));
+    }
+
+    public function indexadmin()
+    {
+        $ulosData = $this->getUlosData();
+        return view('admin.users.uloskita', compact('ulosData'));
+    }
+
     // Menampilkan detail ulos berdasarkan jenis
     public function detail($jenis)
     {

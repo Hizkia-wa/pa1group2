@@ -9,22 +9,22 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAdmin">
             <ul class="navbar-nav gap-4 align-items-center fw-bold">
                 <li class="nav-item">
-                    <a href="{{ route('homeGuest') }}" class="nav-link nav-cute {{ request()->routeIs('homeGuest') ? 'active' : '' }}">Beranda</a>
+                    <a href="{{ route('homeAdmin') }}" class="nav-link nav-cute {{ request()->routeIs('homeAdmin') ? 'active' : '' }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('user.product.catalog') }}" class="nav-link nav-cute {{ request()->routeIs('user.product.catalog') ? 'active' : '' }}">Produk</a>
+                    <a href="{{ route('admin.catalog') }}" class="nav-link nav-cute {{ request()->routeIs('admin.catalog') ? 'active' : '' }}">Produk</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('profil.umkm') }}" class="nav-link nav-cute {{ request()->routeIs('profil.umkm') ? 'active' : '' }}">Profil</a>
+                    <a href="{{ route('adminprofil.umkm') }}" class="nav-link nav-cute {{ request()->routeIs('adminprofil.umkm') ? 'active' : '' }}">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('user.reviews') }}" class="nav-link nav-cute {{ request()->routeIs('user.reviews') ? 'active' : '' }}">Ulasan</a>
+                    <a href="{{ route('adminuser.reviews') }}" class="nav-link nav-cute {{ request()->routeIs('adminuser.reviews') ? 'active' : '' }}">Ulasan</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('uloskita') }}" class="nav-link nav-cute {{ request()->routeIs('uloskita') ? 'active' : '' }}">Ulos Kita</a>
+                    <a href="{{ route('admin.uloskita') }}" class="nav-link nav-cute {{ request()->routeIs('admin.uloskita') ? 'active' : '' }}">Ulos Kita</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('homeAdmin') }}" class="nav-link nav-cute {{ request()->routeIs('homeAdmin') ? 'active' : '' }}">Admin</a>
+                    <a href="{{ route('admin.homepage') }}" class="nav-link nav-cute {{ request()->routeIs('admin.homepage') ? 'active' : '' }}">Admin</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

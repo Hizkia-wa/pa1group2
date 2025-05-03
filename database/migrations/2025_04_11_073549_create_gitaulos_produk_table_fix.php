@@ -25,8 +25,8 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->string('Password', 255);
             $table->text('Address')->nullable();
             $table->date('Birthday')->nullable();
+            $table->string('Role')->default('customer');
             $table->timestamps();
-            
         });
 
         // Tabel Products
@@ -37,8 +37,9 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->decimal('Price', 10, 2);
             $table->string('Category');
             $table->text('Description')->nullable();
-            $table->longText('Images')->nullable(); // Menyimpan multiple image (format JSON, dsb)
-            $table->boolean('is_best_seller')->default(false); // Produk terlaris atau tidak
+            $table->string('ImageMain')->nullable();
+            $table->longText('Images')->nullable();
+            $table->boolean('IsBestSeller')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -46,13 +47,16 @@ class CreateGitaUlosProdukTableFix extends Migration
         // Tabel Carts
         Schema::create('Carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Product_id')->constrained('products')->onDelete('cascade');
+            $table->unsignedBigInteger('UserId');
+            $table->foreign('UserId')->references('id')->on('Customers')->onDelete('cascade');
+            $table->foreignId('ProductId')->constrained('Products')->onDelete('cascade');
+            $table->string('Size');
             $table->integer('Quantity');
             $table->timestamps();
         });
 
         // Tabel Orders
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('Orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ProductId');
             $table->string('CustomerName');
@@ -67,28 +71,27 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->enum('OrderStatus', ['Diproses', 'Selesai', 'Batal'])->default('Diproses');
             $table->timestamps();
             $table->softDeletes();
-        
-            $table->foreign('ProductId')->references('id')->on('products')->onDelete('cascade');
+
+            $table->foreign('ProductId')->references('id')->on('Products')->onDelete('cascade');
         });
-        
 
         // Tabel Reviews
         Schema::create('Reviews', function (Blueprint $table) {
             $table->id();
             $table->string('ReviewerName', 255);
             $table->unsignedTinyInteger('Rating');
-            $table->longText('Picture')->nullable(); // Bisa simpan multiple gambar
+            $table->longText('Picture')->nullable();
             $table->text('Comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('otp');
-            $table->timestamp('created_at')->nullable();
+        // Tabel password_resets
+        Schema::create('PasswordResets', function (Blueprint $table) {
+            $table->string('Email')->index();
+            $table->string('Otp');
+            $table->timestamp('CreatedAt')->nullable();
         });
-        
     }
 
     public function down(): void
@@ -99,6 +102,6 @@ class CreateGitaUlosProdukTableFix extends Migration
         Schema::dropIfExists('Products');
         Schema::dropIfExists('Customers');
         Schema::dropIfExists('Admins');
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('PasswordResets');
     }
 }

@@ -22,16 +22,16 @@
 
                 <!-- Menu navigasi -->
                 <li class="nav-item">
-                    <a href="{{ route('uloskita') }}" class="nav-link {{ request()->routeIs('uloskita') ? 'text-dark text-decoration-underline' : '' }}">Ulos Kita</a>
+                    <a href="{{ route('uloskita') }}" class="nav-link {{ request()->routeIs('customer.uloskita') ? 'text-dark text-decoration-underline' : '' }}">Ulos Kita</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('user.reviews') }}" class="nav-link {{ request()->routeIs('user.reviews') ? 'text-dark text-decoration-underline' : '' }}">Ulasan</a>
+                    <a href="{{ route('customer.reviews') }}" class="nav-link {{ request()->routeIs('user.reviews') ? 'text-dark text-decoration-underline' : '' }}">Ulasan</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('profil.umkm') }}" class="nav-link {{ request()->routeIs('profil.umkm') ? 'text-dark text-decoration-underline' : '' }}">Profil</a>
+                    <a href="{{ route('customerprofil.umkm') }}" class="nav-link {{ request()->routeIs('profil.umkm') ? 'text-dark text-decoration-underline' : '' }}">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.index') ? 'text-dark text-decoration-underline' : '' }}">Produk</a>
+                    <a href="{{ route('customer.catalog') }}" class="nav-link {{ request()->routeIs('products.index') ? 'text-dark text-decoration-underline' : '' }}">Produk</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('homeCustomer') }}" class="nav-link {{ request()->routeIs('home') ? 'text-dark text-decoration-underline' : '' }}">Beranda</a>

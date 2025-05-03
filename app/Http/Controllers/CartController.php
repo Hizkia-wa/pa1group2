@@ -6,137 +6,149 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Cart;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cart = session()->get('cart', []);
+        $cartItems = Cart::with('product')
+            ->where('UserId', auth('customer')->id())
+            ->get();
 
-        $productIds = array_column($cart, 'id');
-        $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
-
-        // Gabungkan info produk ke dalam tiap item keranjang
-        $cartWithProduct = array_map(function ($item) use ($products) {
-            $product = $products[$item['id']] ?? null;
-            return [
-                'id' => $item['id'],
-                'quantity' => $item['quantity'],
-                'size' => $item['size'],
-                'product' => $product,
-            ];
-        }, $cart);
-
-        return view('users.keranjang', compact('cartWithProduct'));
+        return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
     }
 
     public function addToCart(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
-            'size' => 'required|string',
+            'ProductId' => 'required|exists:Products,id',
+            'Quantity' => 'required|integer|min:1',
+            'Size' => 'required|string',
         ]);
 
-        $productId = $request->id;
-        $quantity = $request->quantity;
-        $size = $request->size;
+        // Cek apakah produk sudah ada di keranjang user
+        $cartItem = Cart::where('UserId', auth('customer')->id())
+            ->where('ProductId', $request->ProductId)
+            ->where('Size', $request->Size)
+            ->first();
 
-        $cart = Session::get('cart', []);
-        $found = false;
-
-        foreach ($cart as &$item) {
-            if ($item['id'] == $productId && $item['size'] == $size) {
-                $item['quantity'] += $quantity;
-                $found = true;
-                break;
-            }
+        if ($cartItem) {
+            // Jika sudah ada, update quantity
+            $cartItem->Quantity += $request->Quantity;
+            $cartItem->save();
+        } else {
+            // Jika belum ada, buat entri baru
+            Cart::create([
+                'UserId' => auth('customer')->id(),
+                'ProductId' => $request->ProductId,
+                'Quantity' => $request->Quantity,
+                'Size' => $request->Size,
+            ]);
         }
 
-        if (!$found) {
-            $cart[] = [
-                'id' => $productId,
-                'quantity' => $quantity,
-                'size' => $size,
-            ];
-        }
-
-        Session::put('cart', $cart);
-
-        // Cek jika permintaan dari AJAX
-        if ($request->ajax()) {
-            return response()->json(['message' => 'Produk ditambahkan ke keranjang.']);
-        }
-
-        // Jika bukan AJAX, redirect biasa
-        return redirect()->route('user.cart.index')->with('success', 'Produk ditambahkan ke keranjang.');
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
     public function removeFromCart($id)
     {
-        $cart = Session::get('cart', []);
-        $cart = array_filter($cart, function ($item) use ($id) {
-            return $item['id'] != $id;
-        });
+        Cart::where('id', $id)
+            ->where('UserId', auth('customer')->id())
+            ->delete();
 
-        Session::put('cart', array_values($cart));
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
     public function checkout(Request $request)
     {
-        $validated = $request->validate([
-            'CustomerName' => 'required|string',
-            'Email' => 'required|email',
-            'Phone' => 'required|string',
-            'City' => 'required|string',
-            'District' => 'required|string',
-            'Street' => 'required|string',
-            'PostalCode' => 'required|string',
-            'selected' => 'required|array',
-        ]);
-
-        $cart = Session::get('cart', []);
-        $selected = $request->selected;
-
-        foreach ($selected as $key) {
-            list($id, $size) = explode('-', $key);
-            foreach ($cart as $item) {
-                if ($item['id'] == $id && $item['size'] == $size) {
-                    Order::create([
-                        'ProductId' => $item['id'],
-                        'CustomerName' => $validated['CustomerName'],
-                        'Email' => $validated['Email'],
-                        'Phone' => $validated['Phone'],
-                        'City' => $validated['City'],
-                        'District' => $validated['District'],
-                        'Address' => $validated['Street'],
-                        'PostalCode' => $validated['PostalCode'],
-                        'Size' => $item['size'],
-                        'Quantity' => $item['quantity'],
-                    ]);
-                }
+        // Validasi
+        $selected = $request->input('selected');
+        if (!$selected || count($selected) === 0) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
+        }
+    
+        // Ambil produk
+        $items = [];
+        $total = 0;
+    
+        foreach ($selected as $value) {
+            list($cartId, $size) = explode('-', $value);
+            $cartItem = Cart::with('product')->find($cartId);
+    
+            if ($cartItem) {
+                $items[] = [
+                    'name' => $cartItem->product->ProductName,
+                    'size' => $cartItem->Size,
+                    'quantity' => $cartItem->Quantity,
+                    'price' => $cartItem->product->Price,
+                ];
+    
+                $total += $cartItem->Quantity * $cartItem->product->Price;
             }
         }
+    
+        return response()->json([
+            'success' => true,
+            'products' => $items,
+            'totalPrice' => $total
+        ]);
+    }
+    
+    public function processCheckout(Request $request)
+    {
+        $userId = auth('customer')->id();
+        $cartItems = Cart::with('product')->where('UserId', $userId)->get();
 
-        return redirect()->route('user.cart.index')->with('success', 'Pesanan berhasil diproses!');
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Keranjang kosong.');
+        }
+
+        // Buat order utama
+        $order = Order::create([
+            'UserId' => $userId,
+            'TotalPrice' => $cartItems->sum(function ($item) {
+                return $item->product->Price * $item->Quantity;
+            }),
+            'Status' => 'pending',
+        ]);
+
+        // Simpan detail per produk (jika kamu punya relasi orderItems)
+        foreach ($cartItems as $item) {
+            $order->orderItems()->create([
+                'ProductId' => $item->ProductId,
+                'Quantity' => $item->Quantity,
+                'Price' => $item->product->Price,
+                'Size' => $item->Size,
+            ]);
+
+            // Kurangi stok produk
+            $item->product->decrement('Quantity', $item->Quantity);
+        }
+
+        // Kosongkan keranjang
+        Cart::where('UserId', $userId)->delete();
+
+        return redirect()->route('customer.orders')->with('success', 'Pesanan berhasil dibuat.');
     }
 
     public function updateQuantity(Request $request, $id, $size)
     {
-        $cart = Session::get('cart', []);
-        foreach ($cart as &$item) {
-            if ($item['id'] == $id && $item['size'] == $size) {
-                if ($request->action == 'increase') {
-                    $item['quantity'] += 1;
-                } elseif ($request->action == 'decrease' && $item['quantity'] > 1) {
-                    $item['quantity'] -= 1;
-                }
-                break;
-            }
+        $cartItem = Cart::where('id', $id)
+            ->where('UserId', auth('customer')->id())
+            ->where('Size', $size)
+            ->first();
+
+        if (!$cartItem) {
+            return back()->with('error', 'Produk tidak ditemukan.');
         }
 
-        Session::put('cart', $cart);
-        return back();
+        if ($request->action == 'increase') {
+            $cartItem->Quantity += 1;
+        } elseif ($request->action == 'decrease' && $cartItem->Quantity > 1) {
+            $cartItem->Quantity -= 1;
+        }
+
+        $cartItem->save();
+        return back()->with('success', 'Jumlah produk diperbarui.');
     }
 }

@@ -20,6 +20,32 @@ class ReviewController extends Controller
         return view('users.reviews', compact('reviews', 'averageRating', 'ratings', 'totalReviews'));
     }
 
+    public function indexcustomer()
+    {
+        $reviews = Review::latest()->get();
+        $totalReviews = $reviews->count();
+        $averageRating = $reviews->avg('Rating');
+
+        $ratings = Review::selectRaw('Rating, COUNT(*) as count')
+                    ->groupBy('Rating')
+                    ->pluck('count', 'Rating');
+
+        return view('customer.reviews', compact('reviews', 'averageRating', 'ratings', 'totalReviews'));
+    }
+
+    public function indexadmin()
+    {
+        $reviews = Review::latest()->get();
+        $totalReviews = $reviews->count();
+        $averageRating = $reviews->avg('Rating');
+
+        $ratings = Review::selectRaw('Rating, COUNT(*) as count')
+                    ->groupBy('Rating')
+                    ->pluck('count', 'Rating');
+
+        return view('admin.users.reviews', compact('reviews', 'averageRating', 'ratings', 'totalReviews'));
+    }
+
     // ✅ Fungsi untuk halaman admin
     public function adminIndex()
     {

@@ -14,16 +14,14 @@ use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\HomeController;
 
 // Halaman guest
-// Guest (belum login)
 Route::get('/', [HomeController::class, 'homeGuest'])->name('homeGuest');
+Route::middleware('auth:customer')->get('/customer/home', [HomeController::class, 'homeCustomer'])->name('homeCustomer');
 
-Route::get('/customer/home', [HomeController::class, 'homeCustomer'])->name('homeCustomer');
+// Route untuk halaman dashboard admin (middleware auth:admin)
+Route::middleware('auth:admin')->get('/Admin/homepage', [AdminController::class, 'dashboard'])->name('admin.homepage');
 
-// Route untuk halaman dashboard admin
-Route::get('/Admin/homepage', [AdminController::class, 'dashboard'])->name('admin.homepage');
-
-
-Route::prefix('Admin')->group(function () {
+// ==================== Admin Routes ====================
+Route::prefix('Admin')->middleware('auth:admin')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
@@ -49,9 +47,15 @@ Route::prefix('Admin')->group(function () {
     Route::get('/orders/selesai', [OrderController::class, 'selesai'])->name('admin.orders.selesai');
     Route::get('/orders/batal', [OrderController::class, 'ordersBatal'])->name('admin.orders.batal');
     Route::get('/homeuser', [HomeController::class, 'homeAdmin'])->name('homeAdmin');
-
+    Route::get('/ulos-kita', [UloskitaController::class, 'indexadmin'])->name('admin.uloskita');
+    Route::get('/catalog', [ProductController::class, 'showAdminCatalog'])->name('admin.catalog');
+    Route::get('/profilumkm', function () {
+        return view('admin.users.profilumkm');
+    })->name('adminprofil.umkm');
+    Route::get('/admin/reviews', [ReviewController::class, 'indexadmin'])->name('adminuser.reviews');
 });
 
+// ==================== User Routes ====================
 Route::prefix('user')->group(function () {
     Route::get('/reviews', [ReviewController::class, 'index'])->name('user.reviews');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('user.reviews.store');
@@ -67,8 +71,22 @@ Route::prefix('user')->group(function () {
     Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
 });
 
-Route::post('/user/produk/order', [OrderController::class, 'store'])->name('user.product.order');
+// ==================== Customer Routes ====================
+Route::prefix('customer')->middleware('auth:customer')->group(function () {
+    Route::get('/ulos-kita', [UloskitaController::class, 'indexcustomer'])->name('customer.uloskita');
+    Route::get('/catalog', [ProductController::class, 'showCustomerCatalog'])->name('customer.catalog');
+    Route::get('/keranjang', [CartController::class, 'index'])->name('user.cart.index');
+    Route::post('/keranjang/tambah', [CartController::class, 'addToCart'])->name('user.cart.add');
+    Route::post('/keranjang/hapus/{id}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
+    Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
+    Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+    Route::get('/profilumkm', function () {
+        return view('customer.profilumkm');
+    })->name('customerprofil.umkm');
+    Route::get('/reviews', [ReviewController::class, 'indexcustomer'])->name('customer.reviews');
+});
 
+// ==================== Public Routes ====================
 Route::get('/profilumkm', function () {
     return view('users.profilumkm');
 })->name('profil.umkm');
@@ -78,19 +96,14 @@ Route::get('/uloskita', [UloskitaController::class, 'index'])->name('uloskita');
 // Route untuk halaman detail ulos
 Route::get('/ulos-kita/detail/{jenis}', [UloskitaController::class, 'detail'])->name('uloskita.detail');
 
+// ==================== Authentication Routes ====================
 Route::get('/register', [CustomLoginController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [CustomLoginController::class, 'register'])->name('register.submit');
-// Route untuk halaman login
 Route::get('/login/custom', [CustomLoginController::class, 'showLoginForm'])->name('login');
-
-// Route untuk proses login (POST)
 Route::post('/login/custom', [CustomLoginController::class, 'login'])->name('login.custom.submit');
-
 Route::get('/lupa-password', [CustomLoginController::class, 'showForgotPasswordForm'])->name('forgot.password');
 Route::post('/lupa-password', [CustomLoginController::class, 'handleForgotPassword'])->name('forgot.password.send');
-
 Route::get('/verifikasi-otp', [CustomLoginController::class, 'showOTPForm'])->name('otp.form');
 Route::post('/verifikasi-otp', [CustomLoginController::class, 'verifyOTP'])->name('otp.verify');
-
 Route::get('/reset-password-baru', [CustomLoginController::class, 'showResetPasswordForm'])->name('reset.password.form');
 Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPassword'])->name('reset.password.submit');
