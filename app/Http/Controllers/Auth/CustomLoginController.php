@@ -95,9 +95,12 @@ class CustomLoginController extends Controller
         );
     
         // Kirim email berisi OTP
-        Mail::raw("Kode OTP Anda untuk reset password adalah: $otp", function ($message) use ($email) {
-            $message->to($email)->subject('Kode OTP Reset Password');
+        Mail::html("Kode OTP Anda untuk reset password adalah: <b>$otp</b>", function ($message) use ($email) {
+            $message->to($email)
+                    ->subject('Kode OTP Reset Password')
+                    ->from('siahaanhizkia06@gmail.com', 'Laporan password');
         });
+        
     
         return redirect()->route('otp.form')->with('email', $email);
     }    
