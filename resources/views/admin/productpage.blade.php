@@ -14,9 +14,12 @@
             <span class="active-indicator"></span>
         @endif
     </a>
-    <a href="{{ route('products.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.create') ? 'active' : '' }}">
-        <i class="fas fa-plus"></i> Tambah Produk
-        @if(request()->routeIs('products.create'))
+</div>
+
+<div class="clearfix mb-3">
+    <a href="{{ route('products.best.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.create') ? 'active' : '' }}">
+        <i class="fas fa-plus"></i> Tambah Produk +
+        @if(request()->routeIs('products.best.create'))
             <span class="active-indicator"></span>
         @endif
     </a>
@@ -65,6 +68,39 @@
 /* Enhanced Navigation Buttons Styling with Better Active Indicators */
 
 /* Navigation Container */
+.nav-btn {
+    display: inline-block;
+    background-color: #198754; /* Bootstrap success color */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    float: right; /* Tombol berada di kanan */
+    margin-bottom: 10px;
+}
+
+.nav-btn:hover {
+    background-color: #157347;
+    color: white;
+    text-decoration: none;
+    transform: scale(1.03);
+}
+
+.nav-btn i {
+    margin-right: 6px;
+}
+
+.active-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: yellow;
+    border-radius: 50%;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
 .nav-buttons-container {
     display: flex;
     gap: 15px;

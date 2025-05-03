@@ -5,19 +5,6 @@
     <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
         <div class="d-flex justify-content-between align-items-center">
             <h5 class="text-dark fw-semibold mb-0">Selamat Datang, Admin!</h5>
-            <div class="dropdown admin-dropdown">
-                <button class="btn btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    <img src="https://i.pravatar.cc/30" alt="Admin" class="rounded-circle"> Admin
-                </button>
-                <div class="dropdown-menu shadow-sm border-0">
-                    <a class="dropdown-item" href="{{ route('admin.changePasswordForm') }}">Ubah Password</a>
-                    <div class="dropdown-divider"></div>
-                    <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="dropdown-item text-danger">Logout</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 
