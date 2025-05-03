@@ -1,20 +1,18 @@
 @extends('layouts.Admin')
 
 @section('content')
-    <div class="nav-buttons-container">
-        <a href="{{ route('products.index') }}" class="nav-btn {{ request()->routeIs('products.index') ? 'active' : '' }}">
-            <i class="fas fa-boxes"></i> Produk Kita
-            @if(request()->routeIs('products.index'))
-                <span class="active-indicator"></span>
-            @endif
-        </a>
-        <a href="{{ route('products.best') }}" class="nav-btn {{ request()->routeIs('products.best') ? 'active' : '' }}">
-            <i class="fas fa-fire"></i> Produk Laris
-            @if(request()->routeIs('products.best'))
-                <span class="active-indicator"></span>
-            @endif
-        </a>
-    </div>
+<div class="nav-buttons-container">
+<a href="{{ route('products.index') }}"
+   class="nav-btn {{ request()->is('Admin/products*') ? 'active' : '' }}">
+   Produk Kita
+</a>
+
+    <a href="{{ route('products.best') }}" 
+       class="nav-btn {{ request()->routeIs('products.best') ? 'active' : '' }}">
+        <i class="fas fa-fire"></i> Produk Laris
+    </a>
+</div>
+
 
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -66,86 +64,52 @@
     
     /* Navigation Container */
     .nav-buttons-container {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 25px;
-        padding: 5px;
-        position: relative;
-    }
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
     
-    /* Base Button Style */
-    .nav-btn {
-        background-color: #2d3748;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 15px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1;
-    }
-    
-    /* Hover Effect */
-    .nav-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* Button Backgrounds */
-    .nav-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #4a5568, #2d3748);
-        z-index: -1;
-        transition: all 0.3s ease;
-    }
-    
-    .nav-btn:hover::before {
-        background: linear-gradient(45deg, #2d3748, #1a202c);
-    }
-    
-    /* Active Button Style - ENHANCED */
-    .nav-btn.active {
-        background-color: transparent;
-        color: white;
-        box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
-        transform: translateY(-3px);
-    }
-    
-    .nav-btn.active::before {
-        background: linear-gradient(45deg, #3182ce, #4299e1);
-    }
-    
-    /* Button Icon */
-    .nav-btn i {
-        margin-right: 8px;
-        font-size: 16px;
-    }
-    
-    /* Active Indicator Line - ENHANCED */
-    .nav-btn::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 3px;
-        background-color: #4299e1;
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-    }
+   /* Base Nav Button */
+.nav-btn {
+    background-color: #2d3748;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover Effect */
+.nav-btn:hover {
+    background-color: #1a202c;
+    transform: translateY(-2px);
+}
+
+/* Active Button */
+.nav-btn.active {
+    background-color: #3182ce;
+    color: white;
+    box-shadow: 0 6px 12px rgba(49, 130, 206, 0.5);
+}
+
+/* Active underline */
+.nav-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background-color: #63b3ed;
+    border-radius: 4px;
+}
+
     
     .nav-btn.active::after {
         width: 80%;
