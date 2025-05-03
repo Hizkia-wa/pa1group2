@@ -47,35 +47,68 @@
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 90vw; width: 90%; max-height: 90vh;">
         <div class="modal-content bg-transparent border-0">
-            <div class="modal-body text-center">
-                <!-- Tombol tutup (X) -->
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position:absolute; top:10px; right:10px; z-index:1050; background-color: transparent; border: none;">
-                    <span aria-hidden="true" style="color:white; font-size: 30px;">&times;</span>
-                </button>
-                <!-- Gambar zoomed -->
-    <img id="modalImage" src="{{ asset('storage/' . $images[0]) }}" class="img-fluid rounded shadow" alt="Zoomed Image" style="width: 100%; height: auto; max-height: 80vh; object-fit: contain;">
+            <div class="modal-body text-center position-relative">
+                <!-- Tombol tutup -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        style="position:absolute; top:10px; right:10px; z-index:1050;"></button>
 
-    <!-- Tombol navigasi -->
-    <button id="prevBtn" class="btn btn-light position-absolute top-50 start-0 translate-middle-y" style="z-index:1050; opacity:0.7;">&#10094;</button>
-    <button id="nextBtn" class="btn btn-light position-absolute top-50 end-0 translate-middle-y" style="z-index:1050; opacity:0.7;">&#10095;</button>
-</div>
+                <!-- Gambar besar -->
+                <img id="modalImage" src="" class="img-fluid rounded shadow"
+                alt="Zoomed Image"
+                style="max-width: 700px; max-height: 60vh; width: 100%; height: auto; object-fit: contain; margin: auto;">
+
+
+                <!-- Navigasi -->
+                <button id="prevBtn" class="btn btn-light position-absolute top-50 start-0 translate-middle-y"
+                        style="z-index:1050; opacity:0.7;">&#10094;</button>
+                <button id="nextBtn" class="btn btn-light position-absolute top-50 end-0 translate-middle-y"
+                        style="z-index:1050; opacity:0.7;">&#10095;</button>
+            </div>
         </div>
     </div>
 </div>
+
 @endsection
 
-@section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const thumbnails = document.querySelectorAll('.thumbnail-img');
         const modalImage = document.getElementById('modalImage');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
 
-        thumbnails.forEach(thumbnail => {
+        // Ambil semua src gambar ke array
+        const imageSources = Array.from(thumbnails).map(img => img.getAttribute('data-img'));
+
+        let currentIndex = 0;
+
+        // Fungsi untuk mengganti gambar di modal
+        function showImage(index) {
+            if (index >= 0 && index < imageSources.length) {
+                modalImage.src = imageSources[index];
+                currentIndex = index;
+            }
+        }
+
+        // Klik thumbnail
+        thumbnails.forEach((thumbnail, index) => {
             thumbnail.addEventListener('click', function () {
-                const imgSrc = this.getAttribute('data-img');
-                modalImage.src = imgSrc;
+                showImage(index); // set gambar ke index yang diklik
             });
+        });
+
+        // Navigasi tombol prev
+        prevBtn.addEventListener('click', function () {
+            let newIndex = currentIndex - 1;
+            if (newIndex < 0) newIndex = imageSources.length - 1; // looping ke akhir
+            showImage(newIndex);
+        });
+
+        // Navigasi tombol next
+        nextBtn.addEventListener('click', function () {
+            let newIndex = currentIndex + 1;
+            if (newIndex >= imageSources.length) newIndex = 0; // looping ke awal
+            showImage(newIndex);
         });
     });
 </script>
-@endsection
