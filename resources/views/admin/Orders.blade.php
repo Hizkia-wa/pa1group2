@@ -57,23 +57,39 @@
                         <a href="#" class="btn btn-warning">Detail</a>
                     </td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                Konfirmasi
-                            </button>
-                            <ul class="dropdown-menu">
-                                @foreach ($group as $order)
-                                    <li>
-                                        <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="status" value="Diproses">
-                                            <button type="submit" class="dropdown-item text-primary fw-bold">Diproses (ID {{ $order->id }})</button>
-                                        </form>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </td>
+    <div class="dropdown">
+        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Ubah Status
+        </button>
+        <ul class="dropdown-menu">
+            @foreach ($group as $order)
+                <li class="dropdown-header">Pesanan ID {{ $order->id }}</li>
+                <li>
+                    <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="status" value="Diproses">
+                        <button type="submit" class="dropdown-item text-primary">Diproses</button>
+                    </form>
+                </li>
+                <li>
+                    <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="status" value="Selesai">
+                        <button type="submit" class="dropdown-item text-success">Selesai</button>
+                    </form>
+                </li>
+                <li>
+                    <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="status" value="Batal">
+                        <button type="submit" class="dropdown-item text-danger">Batal</button>
+                    </form>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+            @endforeach
+        </ul>
+    </div>
+</td>
                 </tr>
             @endforeach
         </tbody>
