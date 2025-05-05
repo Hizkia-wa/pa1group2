@@ -283,33 +283,7 @@
   --shadow-medium: rgba(0, 0, 0, 0.1);
 }
 
-.page-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 8px; 
-    text-decoration: none;
-}
 
-.page-loader.loaded {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loader {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid var(--primary-color, #6a1b9a);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
