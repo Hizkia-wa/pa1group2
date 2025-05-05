@@ -133,10 +133,6 @@
     left: -8px;
     right: -8px;
     bottom: -8px;
-   
-       
-       
-    );
     border-radius: 10px;
     z-index: -2;
     opacity: 0.3;

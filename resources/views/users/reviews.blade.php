@@ -250,20 +250,15 @@
     }
     
     .btn-primary {
-        background-color: #8B0000;;
-        border-color: #ff9800;
+        background-color: blue;;
+        border-color: blue;
         padding: 8px 20px;
         border-radius: 30px;
         font-weight: 500;
         transition: all 0.3s ease;
     }
     
-    .btn-primary:hover {
-        background-color: #f57c00;
-        border-color: #f57c00;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
-    }
+    
 </style>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
