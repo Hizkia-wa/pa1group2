@@ -13,7 +13,7 @@
                     <a class="btn btn-outline-batik me-2 rounded-pill sparkle-button" href="{{ route('login') }} "> Login </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn position-relative" href="{{ route('user.cart.index') }}">
+                    <a class="btn position-relative" href="{{ route('login') }} ">
                         <i class="bi bi-cart fs-5 text-dark"></i>
                     </a>
                 </li>

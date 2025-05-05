@@ -71,16 +71,10 @@
                     <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
                     <div class="product-actions">
-                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn-buy">Beli</a>
-                        <form action="{{ route('user.cart.add') }}" method="POST" class="form-cart">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="quantity" value="1">
-                            <input type="hidden" name="size" value="200 x 50 cm">
-                            <button type="submit" class="btn-cart">
-                                <i class="bi bi-cart-plus"></i> Keranjang
-                            </button>
-                        </form>
+                    <a href="{{ route('login') }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                    <a href="{{ route('login') }}" class="btn-cart">
+                        <i class="bi bi-cart-plus"></i> Keranjang
+                    </a>
                     </div>
                 </div>
             </div>
@@ -145,6 +139,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        text-decoration: none;
     }
 
     .product-desc {
@@ -186,6 +181,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-decoration: none;
     }
 
     .btn-buy {

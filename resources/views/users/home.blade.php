@@ -46,19 +46,15 @@
                             </div>
                             
                             <div class="card-body p-3">
-                                <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5>
+                                <a href="{{ route('login') }}"> <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5> </a>
                                 <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
                                 <div class="mt-2">
                                     <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
                                     <div class="d-flex product-buttons">
-                                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
-                                        <form action="{{ route('user.cart.add') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <button type="submit" class="btn-cart">
-                                                <i class="bi bi-cart-plus"></i> Keranjang
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('login') }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                                        <a href="{{ route('login') }}" class="btn-cart">
+                                            <i class="bi bi-cart-plus"></i> Keranjang
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -206,11 +202,10 @@
                 <p class="mb-4">
                     Tim kami siap membantu Anda dalam memilih Ulos terbaik sesuai kebutuhan. Kami juga menerima pesanan khusus dengan desain atau ukuran tertentu.
                 </p>
-                <a href="https://wa.me/+6282274398996" class="btn btn-success btn-sm rounded-pill px-4 py-2">
+                <a href="{{ route('login') }}" class="btn btn-success btn-sm rounded-pill px-4 py-2">
                     <i class="bi bi-whatsapp me-2"></i> Hubungi kami Melalui Via Whatsapp
                 </a>
             </div>
-    
             <!-- Kolom Kanan -->
             <div class="col-md-4 text-center text-md-end mt-4 mt-md-0">
                 <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" class="img-fluid rounded-4 shadow-sm custom-contact-img" alt="Contoh Ulos">
@@ -260,6 +255,7 @@
         gap: 4px;
         height: 40px;
         border-radius: 5px;
+        text-decoration: none;
     }
     
     .form-cart {
@@ -336,6 +332,7 @@
     height: 100%;
     max-width: 250px;
     margin: 0 auto;
+    text-decoration: none;
 }
 
 .product-card:hover {
@@ -371,6 +368,7 @@
 
 .product-buttons {
     gap: 5px;
+    text-decoration: none;
 }
 
 .keranjang-btn {
@@ -378,6 +376,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 }
 
 .testimonial-card {
