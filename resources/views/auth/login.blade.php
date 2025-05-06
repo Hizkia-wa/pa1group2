@@ -192,6 +192,23 @@
     }
   </style>
 </head>
+    <script>
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("password");
+    const toggleIcon = document.querySelector(".toggle-password");
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      toggleIcon.classList.remove("fa-eye");
+      toggleIcon.classList.add("fa-eye-slash");
+    } else {
+      passwordInput.type = "password";
+      toggleIcon.classList.remove("fa-eye-slash");
+      toggleIcon.classList.add("fa-eye");
+    }
+  }
+</script>
+
 <body>
   <div class="main-container">
     <div class="left-side">
@@ -235,10 +252,11 @@
             <i class="fas fa-user"></i>
             <input type="email" name="Email" placeholder="Email" required value="{{ old('Email') }}">
           </div>
-          <div class="form-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="Password" placeholder="Sandi" required>
-          </div>
+                <div class="form-group">
+          <i class="fas fa-lock"></i>
+          <input id="password" type="password" name="Password" placeholder="Sandi" required>
+          <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility()" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
+        </div>
           <button type="submit" class="btn-login">Login</button>
         </form>
 

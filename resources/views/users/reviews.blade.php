@@ -135,7 +135,7 @@
 <style>
    
    .review-header {
-    background: url("{{ asset('img/ulos/backgroundulasan.jpg') }}") center/cover no-repeat fixed;
+    background: url("{{ asset('img/ulos/backgroundhome.png') }}") center/cover no-repeat fixed;
     padding: 80px 0; 
     margin-top: 25px;
     position: relative;
