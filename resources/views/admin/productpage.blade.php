@@ -14,6 +14,9 @@
             <span class="active-indicator"></span>
         @endif
     </a>
+</div>
+
+<div class="nav-container">
     <a href="{{ route('products.best.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.best.create') ? 'active' : '' }}">
         <i class="fas fa-plus"></i> Tambah Produk
     </a>
@@ -57,6 +60,37 @@
 </div>
 
 <style>
+
+.nav-btn.add-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px; /* Atur padding agar tombol tidak terlalu panjang */
+    background-color: #DAA520;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.nav-btn.add-btn:hover {
+    background-color: #b48a1b;
+}
+
+.nav-btn.add-btn i {
+    margin-right: 5px; /* Memberikan jarak antara ikon dan teks */
+}
+
+.nav-btn.add-btn.active {
+    background-color: #b48a1b; /* Mengubah warna saat aktif */
+}
+
+.nav-container {
+    display: flex;
+    justify-content: flex-end; /* Membuat tombol berada di sebelah kanan */
+    margin: 20px;
+}
+    
 /* NAVIGATION BUTTONS - Modern Style */
 .nav-buttons-container {
     display: flex;

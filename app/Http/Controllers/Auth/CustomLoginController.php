@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -25,7 +26,12 @@ class CustomLoginController extends Controller
         $request->validate([
             'Email' => 'required|email',
             'Password' => 'required',
+        ], [
+            'Email.required' => 'Email wajib diisi.',
+            'Email.email' => 'Format email tidak valid. Pastikan menggunakan "@" dan domain yang benar.',
+            'Password.required' => 'Password wajib diisi.',
         ]);
+        
 
         $email = $request->Email;
         $password = $request->Password;
@@ -54,18 +60,35 @@ class CustomLoginController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:customers,Email',
             'password' => 'required|string|confirmed|min:6',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid. Pastikan menggunakan "@" dan domain yang benar.',
+            'email.max' => 'Email tidak boleh lebih dari 255 karakter.',
+            'email.unique' => 'Email ini sudah terdaftar. Silakan gunakan email lain.',
+            'password.required' => 'Password wajib diisi.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+            'password.min' => 'Password minimal harus terdiri dari 6 karakter.',
         ]);
-
+    
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Registrasi gagal. Periksa kembali data yang diisi.');
+        }
+    
         Customer::create([
             'CustomerName' => $request->name,
             'Email' => $request->email,
             'Password' => Hash::make($request->password),
         ]);
-
+    
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
 

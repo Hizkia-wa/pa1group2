@@ -213,5 +213,19 @@ html, body {
       </div>
     </div>
   </div>
+  {{-- Alert untuk error dan validasi --}}
+  @if (session('error'))
+  <script>
+      alert("{{ session('error') }}");
+  </script>
+  @endif
+
+  @if ($errors->any())
+  <script>
+      let messages = {!! json_encode($errors->all()) !!};
+      alert(messages.join("\n"));
+  </script>
+  @endif
+
 </body>
 </html>
