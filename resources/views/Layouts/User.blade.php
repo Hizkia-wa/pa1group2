@@ -2,8 +2,10 @@
 <html lang="id">
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <meta charset="UTF-8">
-    <title>Gita Ulos - @yield('title')</title>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="{{ asset('img/ulos/logogita.png') }}">
+<title>Gita Ulos - @yield('title')</title>
+
 
     <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
