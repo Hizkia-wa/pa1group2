@@ -14,68 +14,65 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
+    body {
       font-family: 'Poppins', sans-serif;
       background-color: #F3E9DC;
     }
 
-    .container {
+    .main-container {
       display: flex;
-      height: 100vh;
-      overflow: hidden;
+      flex-direction: row;
+      min-height: 100vh;
+      flex-wrap: wrap;
     }
 
-    .left-side {
-      flex: 1;
-      background: linear-gradient(to bottom right, #F3E9DC, #EBD5B3);
+    .left-side, .right-side {
+      flex: 1 1 50%;
       padding: 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+    }
+
+    .left-side {
+      background: linear-gradient(to bottom right, #F3E9DC, #EBD5B3);
       text-align: center;
       color: #6B4226;
     }
 
     .left-side h1 {
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 900;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .left-side p {
-      font-size: 15px;
+      font-size: 16px;
       margin-bottom: 25px;
       max-width: 90%;
       color: #5a3820;
     }
 
     .left-side img {
-      max-width: 70%;
-      border-radius: 15px;
+      max-width: 80%;
+      height: auto;
+      border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .right-side {
-      flex: 1;
       background-color: #6B4226;
       color: white;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
 
     .logo {
-      width: 90px;
-      height: 90px;
-      margin-bottom: 20px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       border: 3px solid #DAA520;
       overflow: hidden;
+      margin-bottom: 20px;
     }
 
     .logo img {
@@ -86,31 +83,34 @@
 
     .form-box {
       width: 100%;
-      max-width: 350px;
+      max-width: 400px;
+      background-color: rgba(255,255,255,0.05);
+      padding: 25px;
+      border-radius: 12px;
     }
 
     .form-box h2 {
       text-align: center;
-      font-size: 32px;
-      margin-bottom: 15px;
-      font-weight: 700;
+      font-size: 28px;
       color: #DAA520;
+      margin-bottom: 10px;
+      font-weight: 700;
     }
 
     .form-box p {
       text-align: center;
       font-size: 14px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .form-group {
-      margin-bottom: 15px;
       position: relative;
+      margin-bottom: 15px;
     }
 
     .form-group input {
       width: 100%;
-      padding: 12px 40px 12px 45px;
+      padding: 12px 45px;
       border: none;
       border-radius: 10px;
       background-color: #fff;
@@ -159,50 +159,66 @@
       text-decoration: underline;
     }
 
+    .alert {
+      font-size: 14px;
+    }
+
     @media (max-width: 768px) {
-      .container {
+      .main-container {
         flex-direction: column;
       }
 
       .left-side, .right-side {
-        width: 100%;
-        height: auto;
-        min-height: 50vh;
+        flex: 1 1 100%;
         padding: 30px 20px;
+      }
+
+      .left-side h1 {
+        font-size: 24px;
+      }
+
+      .left-side p {
+        font-size: 14px;
+      }
+
+      .form-box {
+        max-width: 100%;
+        padding: 20px;
+      }
+
+      .form-box h2 {
+        font-size: 24px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="main-container">
     <div class="left-side">
       <h1>SELAMAT DATANG DI<br>GITA ULOS</h1>
-      <p>Sebuah website penjualan ulos batak dengan<br>bahan ulos terbaik dengan produksi asli warga lokal</p>
-      <img src="{{ asset('img/ulos/logogita.png') }}" alt="Rumah Adat" class="rumah-adat">
+      <p>Website penjualan ulos Batak berkualitas tinggi dari pengrajin lokal.</p>
+      <img src="{{ asset('img/ulos/logogita.png') }}" alt="Rumah Adat">
     </div>
     <div class="right-side">
       <div class="logo">
-        <img src="{{ asset('img/ulos/logogita.png') }}" alt="Rumah Adat" class="rumah-adat">
+        <img src="{{ asset('img/ulos/logogita.png') }}" alt="Logo Gita Ulos">
       </div>
       <div class="form-box">
         <h2>Login</h2>
         <p>Silakan login terlebih dahulu sebelum melakukan pemesanan</p>
 
-        {{-- Flash Message --}}
         @if (session('success'))
           <div class="alert alert-success text-center">
             {{ session('success') }}
           </div>
         @endif
 
-        {{-- Error Login --}}
         @if (session('error'))
           <div class="alert alert-danger text-center">
             {{ session('error') }}
           </div>
         @endif
 
-        {{-- Validation Error --}}
         @if ($errors->any())
           <div class="alert alert-danger">
             <ul class="mb-0">
@@ -225,6 +241,7 @@
           </div>
           <button type="submit" class="btn-login">Login</button>
         </form>
+
         <div class="extra-links">
           Belum punya akun? <a href="{{ route('register') }}">Register</a> |
           <a href="{{ route('forgot.password') }}">Lupa password?</a>
