@@ -195,7 +195,6 @@ class ProductController extends Controller
             $product->main_image_url = asset('images/no-image.png');
         }
         
-        // Tambahkan path lengkap untuk semua gambar
         $product->all_images = collect($product->image_array)->map(function($img) {
             return asset('storage/' . $img);
         })->toArray();
