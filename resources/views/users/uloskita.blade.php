@@ -301,30 +301,20 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-/* Perubahan pada Collection Card */
 .collection-card {
     position: relative;
     height: 100%;
-    border-radius: 8px; /* Lebih kecil dari 12px sebelumnya */
+    border-radius: 8px; 
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06); /* Shadow lebih halus */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06); 
     transition: var(--transition);
     background-color: var(--white);
     transform: translateY(0);
 }
 
 .collection-card:hover {
-    transform: translateY(-5px); /* Lebih kecil dari -10px sebelumnya */
-    box-shadow: 0 10px 25px rgba(123, 44, 191, 0.12); /* Shadow lebih kecil */
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 25px rgba(123, 44, 191, 0.12); 
 }
 
 .collection-card-media {
