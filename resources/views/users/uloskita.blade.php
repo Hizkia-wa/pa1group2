@@ -9,16 +9,13 @@
         <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons">
-            <a href="#tentang" class="btn btn-secondary">Tentang Ulos</a>
+            <a href="#" class="btn btn-secondary">Tentang Ulos</a>
         </div>
     </div>
 </div>
 
-<!-- Traditional Pattern Divider -->
+
 <div class="traditional-pattern-divider"></div>
-
-
-
 <div class="section-title-container" id="koleksi">
     <div class="section-decoration left"></div>
     <h2 class="section-title">Jenis Jenis Ulos Dan Kegunaannya</h2>
@@ -28,22 +25,21 @@
 
 
 
+<!-- Versi yang diperbarui untuk bagian collection grid -->
 <div class="collection-section active" id="ulos-section">
     <div class="container">
         <div class="row collection-grid">
             @forelse($ulosData as $ulos)
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-4 collection-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-3 collection-item">
                 <div class="collection-card">
                     <div class="collection-card-media">
                         <img src="{{ asset('img/ulos/' . $ulos['image']) }}" alt="{{ $ulos['name'] }}" class="collection-img">
-                        <div class="collection-hover-overlay">
-                            
-                        </div>
+                        <div class="collection-hover-overlay"></div>
                     </div>
                     <div class="collection-card-body">
                         <h3 class="collection-card-title">{{ $ulos['name'] }}</h3>
                         <div class="collection-card-divider"></div>
-                        <p class="collection-card-description">{{ Str::limit($ulos['short_description'], 100) }}</p>
+                        <p class="collection-card-description">{{ Str::limit($ulos['short_description'], 80) }}</p>
                         <a href="{{ route('uloskita.detail', ['jenis' => $ulos['slug']]) }}" class="collection-card-btn">
                             Lihat Detail
                             <i class="fas fa-arrow-right"></i>
@@ -67,6 +63,8 @@
 </div>
 
 
+
+
 </div>
 <!-- Culture Info Section -->
 <div class="info-section">
@@ -87,7 +85,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="info-image">
-                    <img src="{{ asset('img/ulos/ulos_culture.jpg') }}" alt="Ulos Culture">
+                    <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" alt="Ulos Culture">
                     <div class="info-image-decoration"></div>
                 </div>
             </div>
@@ -98,7 +96,7 @@
     </div>
 </div>
 
-<!-- Traditional Pattern Footer Divider -->
+
 <div class="traditional-pattern-footer"></div>
 
 <style>
@@ -117,7 +115,7 @@
     --transition: all 0.3s ease;
 }
 
-/* Hero Section */
+
 .hero-header {
     position: relative;
     height: 500px;
@@ -150,8 +148,8 @@
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: 3rem;
+    font-weight: 600;
     margin-bottom: 20px;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
@@ -280,7 +278,7 @@
 }
 
 .section-title {
-    color: var(--primary-dark);
+    color: black;
     font-size: 2.4rem;
     font-weight: 700;
     margin: 0 20px;
@@ -302,104 +300,66 @@
     position: relative;
 }
 
+
+
+
+
+
+
+
+
+
+
+/* Perubahan pada Collection Card */
 .collection-card {
     position: relative;
     height: 100%;
-    border-radius: 12px;
+    border-radius: 8px; /* Lebih kecil dari 12px sebelumnya */
     overflow: hidden;
-    box-shadow: var(--shadow);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06); /* Shadow lebih halus */
     transition: var(--transition);
     background-color: var(--white);
     transform: translateY(0);
 }
 
 .collection-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(123, 44, 191, 0.15);
+    transform: translateY(-5px); /* Lebih kecil dari -10px sebelumnya */
+    box-shadow: 0 10px 25px rgba(123, 44, 191, 0.12); /* Shadow lebih kecil */
 }
 
 .collection-card-media {
     position: relative;
-    height: 280px;
+    height: 220px; /* Lebih kecil dari 280px sebelumnya */
     overflow: hidden;
 }
 
-.collection-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
-}
-
-.collection-hover-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: var(--transition);
-}
-
-.collection-card:hover .collection-hover-overlay {
-    opacity: 1;
-}
-
-.collection-card:hover .collection-img {
-    transform: scale(1.1);
-}
-
-.collection-hover-content {
-    text-align: center;
-}
-
-.collection-view-btn {
-    display: inline-block;
-    padding: 10px 25px;
-    background-color: var(--secondary-color);
-    color: var(--white);
-    font-weight: 600;
-    border-radius: 30px;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-.collection-card:hover .collection-view-btn {
-    transform: translateY(0);
-    opacity: 1;
-}
-
 .collection-card-body {
-    padding: 25px;
+    padding: 18px; /* Lebih kecil dari 25px sebelumnya */
 }
 
 .collection-card-title {
     color: var(--text-color);
-    font-size: 1.5rem;
+    font-size: 1.3rem; /* Lebih kecil dari 1.5rem sebelumnya */
     font-weight: 700;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Lebih kecil dari 15px sebelumnya */
     position: relative;
     transition: var(--transition);
+    line-height: 1.3;
 }
 
 .collection-card-divider {
-    width: 60px;
-    height: 3px;
+    width: 50px; /* Lebih kecil dari 60px sebelumnya */
+    height: 2px; /* Lebih kecil dari 3px sebelumnya */
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Lebih kecil dari 15px sebelumnya */
 }
 
 .collection-card-description {
     color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    height: 80px;
+    font-size: 0.9rem; /* Lebih kecil dari 1rem sebelumnya */
+    line-height: 1.5;
+    margin-bottom: 15px; /* Lebih kecil dari 20px sebelumnya */
+    height: 60px; /* Lebih kecil dari 80px sebelumnya */
     overflow: hidden;
 }
 
@@ -408,41 +368,65 @@
     align-items: center;
     color: var(--primary-color);
     font-weight: 600;
+    font-size: 0.9rem; /* Ukuran font yang lebih kecil */
     text-decoration: none;
-    padding: 8px 0;
+    padding: 5px 0; /* Lebih kecil dari 8px 0 sebelumnya */
     position: relative;
     transition: var(--transition);
 }
 
-.collection-card-btn::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    transition: var(--transition);
+/* Responsive adaptations */
+@media (max-width: 1200px) {
+    .collection-card-media {
+        height: 200px; /* Lebih kecil dari 240px sebelumnya */
+    }
 }
 
-.collection-card-btn i {
-    margin-left: 8px;
-    transition: var(--transition);
+@media (max-width: 992px) {
+    .collection-card-media {
+        height: 180px;
+    }
+    
+    .collection-card-title {
+        font-size: 1.2rem;
+    }
 }
 
-.collection-card-btn:hover {
-    color: var(--secondary-color);
+@media (max-width: 768px) {
+    .col-md-6 {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .mb-4 {
+        margin-bottom: 1rem !important;
+    }
+    
+    .collection-card-media {
+        height: 170px;
+    }
+    
+    .collection-card-body {
+        padding: 15px;
+    }
 }
 
-.collection-card-btn:hover::after {
-    width: 100%;
-    background-color: var(--secondary-color);
+@media (max-width: 576px) {
+    .collection-card-media {
+        height: 160px;
+    }
+    
+    .collection-card-title {
+        font-size: 1.1rem;
+    }
+    
+    .collection-card-description {
+        font-size: 0.85rem;
+        height: 50px;
+    }
 }
 
-.collection-card-btn:hover i {
-    transform: translateX(5px);
-    color: var(--secondary-color);
-}
+
 
 /* Empty Collection */
 .empty-collection {

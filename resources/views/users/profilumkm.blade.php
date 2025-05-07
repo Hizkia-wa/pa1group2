@@ -132,13 +132,13 @@ body {
 
 h1, h2, h3, h4, h5, h6, .section-title, .main-title, .owner-name {
     color: var(--text-color);
-    font-weight: 700;
+    font-weight: 600;
     color: black;
     font-size: 3rem;
     margin-bottom: 20px;
 }
 
-/* Hero Section */
+
 .hero-section {
     background: url("{{ asset('img/ulos/backgroundhome.png') }}");
     background-size: cover;

@@ -189,7 +189,6 @@
 
 .accordion-button:not(.collapsed) {
     color: #fff;
-    background: linear-gradient(135deg, #8062D6 0%, #6A5BE2 100%);
     box-shadow: none;
 }
 

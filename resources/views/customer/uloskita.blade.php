@@ -14,14 +14,6 @@
 </div>
 
 
-
-
-
-
-
-
-
-
 <div class="traditional-pattern-divider"></div>
 
 
