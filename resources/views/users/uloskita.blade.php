@@ -329,27 +329,27 @@
 
 .collection-card-title {
     color: var(--text-color);
-    font-size: 1.3rem; /* Lebih kecil dari 1.5rem sebelumnya */
+    font-size: 1.3rem; 
     font-weight: 700;
-    margin-bottom: 10px; /* Lebih kecil dari 15px sebelumnya */
+    margin-bottom: 10px; 
     position: relative;
     transition: var(--transition);
     line-height: 1.3;
 }
 
 .collection-card-divider {
-    width: 50px; /* Lebih kecil dari 60px sebelumnya */
-    height: 2px; /* Lebih kecil dari 3px sebelumnya */
+    width: 50px; 
+    height: 2px; 
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    margin-bottom: 10px; /* Lebih kecil dari 15px sebelumnya */
+    margin-bottom: 10px; 
 }
 
 .collection-card-description {
     color: var(--text-light);
-    font-size: 0.9rem; /* Lebih kecil dari 1rem sebelumnya */
+    font-size: 0.9rem; 
     line-height: 1.5;
-    margin-bottom: 15px; /* Lebih kecil dari 20px sebelumnya */
-    height: 60px; /* Lebih kecil dari 80px sebelumnya */
+    margin-bottom: 15px; 
+    height: 60px; 
     overflow: hidden;
 }
 
@@ -360,7 +360,7 @@
     font-weight: 600;
     font-size: 0.9rem; /* Ukuran font yang lebih kecil */
     text-decoration: none;
-    padding: 5px 0; /* Lebih kecil dari 8px 0 sebelumnya */
+    padding: 5px 0; 
     position: relative;
     transition: var(--transition);
 }
@@ -368,7 +368,7 @@
 /* Responsive adaptations */
 @media (max-width: 1200px) {
     .collection-card-media {
-        height: 200px; /* Lebih kecil dari 240px sebelumnya */
+        height: 200px; 
     }
 }
 
