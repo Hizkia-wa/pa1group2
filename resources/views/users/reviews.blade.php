@@ -393,7 +393,7 @@
         }
     }
     
-    /* Pagination */
+  
     .pagination .page-link {
         color: #ff9800;
     }
