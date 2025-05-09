@@ -75,16 +75,19 @@ Route::prefix('user')->group(function () {
 Route::prefix('customer')->middleware('auth:customer')->group(function () {
     Route::get('/ulos-kita', [UloskitaController::class, 'indexcustomer'])->name('customer.uloskita');
     Route::get('/catalog', [ProductController::class, 'showCustomerCatalog'])->name('customer.catalog');
-    Route::get('/keranjang', [CartController::class, 'index'])->name('user.cart.index');
-    Route::post('/keranjang/tambah', [CartController::class, 'addToCart'])->name('user.cart.add');
-    Route::post('/keranjang/hapus/{id}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
-    Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
-    Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
     Route::get('/produk/{id}', [ProductController::class, 'showCustomerDetail'])->name('customer.product.detail');
     Route::get('/profilumkm', function () {
         return view('customer.profilumkm');
     })->name('customerprofil.umkm');
     Route::get('/reviews', [ReviewController::class, 'indexcustomer'])->name('customer.reviews');
+
+    // ==================== Cart Routes ====================
+    Route::get('/cart', [CartController::class, 'index'])->name('customer.cart');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('customer.cart.add');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('customer.cart.checkout');
+    Route::post('/cart/process-checkout', [CartController::class, 'processCheckout'])->name('customer.cart.processCheckout');
+    Route::post('/cart/update-quantity/{id}/{size}', [CartController::class, 'updateQuantity'])->name('customer.cart.updateQuantity');
 });
 
 // ==================== Public Routes ====================

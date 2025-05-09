@@ -71,8 +71,8 @@
                     <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
                     <div class="product-actions">
-                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn-buy">Beli</a>
-                        <form action="{{ route('user.cart.add') }}" method="POST" class="form-cart">
+                        <a href="{{ route('customer.product.detail', $product->id) }}" class="btn-buy">Beli</a>
+                        <form action="{{ route('customer.cart.add') }}" method="POST" class="form-cart">
                             @csrf
                             <input type="hidden" name="ProductId" value="{{ $product->id }}">
                             <input type="hidden" name="Quantity" value="1">
