@@ -37,16 +37,21 @@
                                 $mainImage = !empty($images) ? $images[0] : null;
                             @endphp
                             
-                            <div class="product-image-container">
-                                @if($mainImage)
-                                <img src="{{ asset('storage/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
-                                @else
-                                <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top product-image" alt="No Image Available" loading="lazy">
-                                @endif
-                            </div>
-                            
-                            <div class="card-body p-3">
-                                <a href="{{ route('user.product.detail', $product->id) }}"> <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5> </a>
+                         <div class="product-image-container">
+                             @if($mainImage)
+                                <a href="{{ route('login') }}">
+                                    <img src="{{ asset('storage/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
+                                     </a>
+                                    @else
+                                          <a href="{{ route('login') }}">
+                                     <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top product-image" alt="No Image Available" loading="lazy">
+                                     </a>
+                                 @endif
+                                        </div>
+
+                                <div class="card-body p-3">
+                                     <h5 class="card-title">{{ $product->ProductName }}</h5>
+                                     
                                 <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
                                 <div class="mt-2">
                                     <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
@@ -377,6 +382,11 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
+}
+
+.card-title {
+    text-decoration: none;
+    color: inherit;
 }
 
 .testimonial-card {

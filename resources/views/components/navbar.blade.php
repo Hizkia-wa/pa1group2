@@ -74,7 +74,7 @@
 }
 
 .cart-icon-wrapper:hover .cart-icon {
-    color: #d9480f; /* warna saat hover */
+    color: #d9480f; 
     transform: scale(1.2) rotate(-5deg);
 }
 

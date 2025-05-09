@@ -26,32 +26,35 @@
                     <i class="bi bi-chevron-right"></i>
                 </button>
             </div>
-            
-            <div class="products-scroll-container">
-                <div class="products-scroll-wrapper">
-                    @forelse($bestSellerProducts as $product)
-                    <div class="product-card-wrapper">
-                        <div class="card product-card">
-                            @php
-                                $images = json_decode($product->Images, true);
-                                $mainImage = !empty($images) ? $images[0] : null;
-                            @endphp
-                            
-                            <div class="product-image-container">
-                                @if($mainImage)
-                                <img src="{{ asset('storage/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
-                                @else
-                                <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top product-image" alt="No Image Available" loading="lazy">
-                                @endif
-                            </div>
-                            
-                            <div class="card-body p-3">
-                                <a href="{{ route('customer.product.detail', $product->id) }}"> <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5> </a>
+<div class="products-scroll-container">
+    <div class="products-scroll-wrapper">
+        @forelse($bestSellerProducts as $product)
+        <div class="product-card-wrapper">
+            <div class="card product-card">
+                @php
+                    $images = json_decode($product->Images, true);
+                    $mainImage = !empty($images) ? $images[0] : null;
+                @endphp
+                
+                <div class="product-image-container">
+                    @if($mainImage)
+                    <a href="{{ route('user.product.detail', $product->id) }}">
+                        <img src="{{ asset('storage/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
+                    </a>
+                    @else
+                    <a href="{{ route('user.product.detail', $product->id) }}">
+                        <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top product-image" alt="No Image Available" loading="lazy">
+                    </a>
+                    @endif
+                </div>
+                
+                <div class="card-body p-3">
+                    <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5>
                                 <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
                                 <div class="mt-2">
                                     <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
                                     <div class="d-flex product-buttons">
-                                        <a href="{{ route('customer.product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
                                         <form action="{{ route('user.cart.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
