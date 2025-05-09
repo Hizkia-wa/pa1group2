@@ -46,7 +46,7 @@
                             </div>
                             
                             <div class="card-body p-3">
-                                <a href="{{ route('login') }}"> <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5> </a>
+                                <a href="{{ route('user.product.detail', $product->id) }}"> <h5 class="card-title text-truncate">{{ $product->ProductName }}</h5> </a>
                                 <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
                                 <div class="mt-2">
                                     <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>

@@ -205,7 +205,40 @@ class ProductController extends Controller
         }
         
         return view('users.detailproduct', compact('product'));
-    
+    }
+
+      public function showCustomerDetail($id)
+    {
+        $product = Product::findOrFail($id);
+        
+        // Pastikan data gambar tersedia dan valid
+        if ($product->Images) {
+            try {
+                $product->image_array = json_decode($product->Images, true);
+            } catch (\Exception $e) {
+                $product->image_array = [];
+            }
+        } else {
+            $product->image_array = [];
+        }
+        
+        // Tambahkan path lengkap untuk gambar utama
+        if ($product->image) {
+            $product->main_image_url = asset('storage/' . $product->image);
+        } else {
+            $product->main_image_url = asset('images/no-image.png');
+        }
+        
+        $product->all_images = collect($product->image_array)->map(function($img) {
+            return asset('storage/' . $img);
+        })->toArray();
+
+        // Jika ada gambar utama, tambahkan ke array all_images jika belum ada
+        if ($product->image && !in_array($product->main_image_url, $product->all_images)) {
+            array_unshift($product->all_images, $product->main_image_url);
+        }
+        
+        return view('customer.detailproduct', compact('product'));
     }
 
     public function showUserCatalog(Request $request)

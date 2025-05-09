@@ -80,6 +80,7 @@ Route::prefix('customer')->middleware('auth:customer')->group(function () {
     Route::post('/keranjang/hapus/{id}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
     Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
     Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+    Route::get('/produk/{id}', [ProductController::class, 'showCustomerDetail'])->name('customer.product.detail');
     Route::get('/profilumkm', function () {
         return view('customer.profilumkm');
     })->name('customerprofil.umkm');
