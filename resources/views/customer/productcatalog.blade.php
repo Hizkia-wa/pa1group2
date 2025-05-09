@@ -1,5 +1,5 @@
 {{-- LANGKAH 3: Perbarui tampilan productcatalog.blade.php --}}
-@extends('layouts.user')
+@extends('layouts.customer')
 
 @section('content')
 <div class="container py-5">

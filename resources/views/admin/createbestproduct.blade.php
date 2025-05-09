@@ -1,20 +1,7 @@
 @extends('layouts.Admin')
 
 @section('content')
-<div class="nav-buttons-container">
-<a href="{{ route('products.index') }}"
-   class="nav-btn {{ request()->is('Admin/products*') ? 'active' : '' }}">
-   Produk Kita
-</a>
-
-    <a href="{{ route('products.best') }}" 
-       class="nav-btn {{ request()->routeIs('products.best') ? 'active' : '' }}">
-        <i class="fas fa-fire"></i> Produk Laris
-    </a>
-</div>
-
-
-    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+   <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row mb-2">
             <div class="col-md-6">

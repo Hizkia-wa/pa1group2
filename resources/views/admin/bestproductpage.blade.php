@@ -1,28 +1,47 @@
 @extends('layouts.Admin')
 
 @section('content')
-<div class="nav-buttons-container">
-    <a href="{{ route('products.index') }}" class="nav-btn {{ request()->routeIs('products.index') ? 'active' : '' }}">
-        <i class="fas fa-boxes"></i> Produk Kita
-        @if(request()->routeIs('products.index'))
-            <span class="active-indicator"></span>
-        @endif
-    </a>
-    <a href="{{ route('products.best') }}" class="nav-btn {{ request()->routeIs('products.best') ? 'active' : '' }}">
-        <i class="fas fa-fire"></i> Produk Laris
-        @if(request()->routeIs('products.best'))
-            <span class="active-indicator"></span>
-        @endif
-    </a>
+
+
+<div class="dashboard-header">
+    <div class="page-title">
+        <h2><i class="fas fa-store"></i> Manajemen Produk</h2>
+    </div>
 </div>
 
-<div class="nav-container">
-    <a href="{{ route('products.best.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.best.create') ? 'active' : '' }}">
-        <i class="fas fa-plus"></i> Tambah Produk
-    </a>
+
+<div class="admin-navigation-container">
+    <!-- Kategori Produk Navigation -->
+    <div class="nav-category-group">
+        <h4 class="nav-group-title">Kategori Produk</h4>
+        <div class="nav-buttons-container">
+            <a href="{{ route('products.index') }}" class="nav-btn product-main {{ request()->routeIs('products.index') ? 'active' : '' }}">
+                <i class="fas fa-boxes"></i> Produk Kita
+                @if(request()->routeIs('products.index'))
+                    <span class="active-indicator"></span>
+                @endif
+            </a>
+            <a href="{{ route('products.best') }}" class="nav-btn product-best {{ request()->routeIs('products.best') ? 'active' : '' }}">
+                <i class="fas fa-fire"></i> Produk Laris
+                @if(request()->routeIs('products.best'))
+                    <span class="active-indicator"></span>
+                @endif
+            </a>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="nav-action-group">
+        <h4 class="nav-group-title">Tindakan</h4>
+        <div class="nav-container">
+            <a href="{{ route('products.best.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.best.create') ? 'active' : '' }}">
+                <i class="fas fa-plus-circle"></i> Tambah Produk Laris
+            </a>
+        </div>
+    </div>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive mt-4">
     <table class="table table-bordered bg-white text-center align-middle">
         <thead class="table-dark">
             <tr>
@@ -61,78 +80,148 @@
 
 <style>
 
-.nav-btn.add-btn {
+
+
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.page-title h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
     display: flex;
     align-items: center;
-    padding: 8px 15px; /* Atur padding agar tombol tidak terlalu panjang */
-    background-color: #DAA520;
-    color: white;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: background 0.3s ease;
+    gap: 10px;
 }
 
-.nav-btn.add-btn:hover {
-    background-color: #b48a1b;
-}
-
-.nav-btn.add-btn i {
-    margin-right: 5px; /* Memberikan jarak antara ikon dan teks */
-}
-
-.nav-btn.add-btn.active {
-    background-color: #b48a1b; /* Mengubah warna saat aktif */
-}
-
-.nav-container {
+/* Container utama untuk navigasi admin */
+.admin-navigation-container {
     display: flex;
-    justify-content: flex-end; /* Membuat tombol berada di sebelah kanan */
-    margin: 20px;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* NAVIGATION BUTTONS - Konsisten dengan Produk Utama */
+/* Judul grup navigasi */
+.nav-group-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding-left: 5px;
+    border-left: 4px solid #4a5568;
+}
+
+/* Container grup kategori */
+.nav-category-group, .nav-action-group {
+    width: 100%;
+}
+
+/* Container tombol navigasi */
 .nav-buttons-container {
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
     gap: 15px;
-    margin-bottom: 25px;
+    flex-wrap: wrap;
 }
 
+/* Tombol navigasi dasar */
 .nav-btn {
     display: flex;
     align-items: center;
-    padding: 10px 18px;
+    padding: 12px 20px;
     font-weight: 600;
     font-size: 14px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(135deg, #2d3748, #1a202c);
-    color: white;
     text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .nav-btn i {
-    margin-right: 8px;
+    margin-right: 10px;
     font-size: 16px;
 }
 
-.nav-btn:hover {
-    background: linear-gradient(135deg, #4a5568, #2d3748);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-}
-
-.nav-btn.active {
+/* Tombol Produk Kita - Style */
+.nav-btn.product-main {
     background: linear-gradient(135deg, #3182ce, #2b6cb0);
-    box-shadow: 0 6px 15px rgba(49, 130, 206, 0.5);
-    transform: translateY(-3px);
+    color: white;
 }
 
+.nav-btn.product-main:hover {
+    background: linear-gradient(135deg, #2b6cb0, #1e4e8c);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(49, 130, 206, 0.4);
+}
+
+.nav-btn.product-main.active {
+    background: linear-gradient(135deg, #1e4e8c, #153e75);
+    box-shadow: 0 6px 12px rgba(49, 130, 206, 0.6);
+}
+
+/* Tombol Produk Laris - Style */
+.nav-btn.product-best {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    color: white;
+}
+
+.nav-btn.product-best:hover {
+    background: linear-gradient(135deg, #dd6b20, #c05621);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(237, 137, 54, 0.4);
+}
+
+.nav-btn.product-best.active {
+    background: linear-gradient(135deg, #c05621, #9c4221);
+    box-shadow: 0 6px 12px rgba(237, 137, 54, 0.6);
+}
+
+/* Container untuk tombol aksi */
+.nav-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Tombol Tambah Produk - Style */
+.nav-btn.add-btn {
+    background: linear-gradient(135deg, #38a169, #2f855a);
+    color: white;
+    padding: 12px 22px;
+    font-weight: 700;
+}
+
+.nav-btn.add-btn i {
+    font-size: 18px;
+}
+
+.nav-btn.add-btn:hover {
+    background: linear-gradient(135deg, #2f855a, #276749);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(56, 161, 105, 0.4);
+}
+
+.nav-btn.add-btn.active {
+    background: linear-gradient(135deg, #276749, #22543d);
+    box-shadow: 0 6px 12px rgba(56, 161, 105, 0.6);
+}
+
+/* Indikator aktif untuk semua tombol */
 .nav-btn.active::after {
     content: '';
     position: absolute;
@@ -142,19 +231,25 @@
     width: 60%;
     height: 4px;
     border-radius: 2px;
-    background-color: #63b3ed;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.nav-btn.add-btn {
-    background: linear-gradient(135deg, #38a169, #2f855a);
-}
-
-.nav-btn.add-btn:hover {
-    background: linear-gradient(135deg, #2f855a, #276749);
-}
-
-.nav-btn.add-btn.active {
-    background: linear-gradient(135deg, #2f855a, #276749);
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .admin-navigation-container {
+        padding: 15px;
+    }
+    
+    .nav-btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .nav-btn i {
+        margin-right: 8px;
+        font-size: 14px;
+    }
 }
 </style>
 @endsection

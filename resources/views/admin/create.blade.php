@@ -1,78 +1,76 @@
 @extends('layouts.Admin')
 
 @section('content')
-<div class="nav-buttons-container">
-    <a href="{{ route('products.index') }}" class="nav-btn {{ request()->routeIs('products.index') ? 'active' : '' }}">
-        <i class="fas fa-boxes"></i> Produk Kita
-        @if(request()->routeIs('products.index'))
-            <span class="active-indicator"></span>
-        @endif
-    </a>
-    <a href="{{ route('products.best') }}" class="nav-btn {{ request()->routeIs('products.best') ? 'active' : '' }}">
-        <i class="fas fa-fire"></i> Produk Laris
-        @if(request()->routeIs('products.best'))
-            <span class="active-indicator"></span>
-        @endif
-    </a>
-</div>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
-    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <label>Nama Produk:</label>
-                <input type="text" name="ProductName" class="form-control">
+    <!-- Header Description Section -->
+    <div class="container-fluid mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah Produk Baru</h4>
             </div>
-            <div class="col-md-6">
-                <label>Gambar Utama:</label>
-                <input type="file" name="ImageMain" class="form-control">
+            <div class="card-body">
+                <p class="lead">Silakan isi formulir di bawah ini untuk menambahkan produk baru ke sistem.</p>
+                <p>Pastikan semua informasi produk diisi dengan lengkap dan benar. Untuk gambar produk, Anda dapat mengunggah satu gambar utama dan beberapa gambar tambahan.</p>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <label>Harga Produk:</label>
-                <input type="text" name="Price" class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label>Jumlah Stok:</label>
-                <input type="number" name="Quantity" class="form-control" min="0" required>
-            </div>
-            <div class="col-md-6">
-                <label>Gambar Lainnya:</label>
-                <input type="file" name="ImageOthers[]" class="form-control" multiple>
+    </div>
+
+    <!-- Product Form Section -->
+    <div class="container-fluid">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Produk:</label>
+                            <input type="text" name="ProductName" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Harga Produk:</label>
+                            <input type="text" name="Price" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Jumlah Stok:</label>
+                            <input type="number" name="Quantity" class="form-control" min="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Deskripsi:</label>
+                            <input type="text" name="Description" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <input type="hidden" name="IsBestSeller" value="1">
+                        <div class="col-md-6">
+                            <label class="form-label">Kategori:</label>
+                            <select name="Category" class="form-control">
+                                <option value="Ulos">Ulos</option>
+                                <option value="Tenun">Tenun</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Gambar Utama:</label>
+                        <input type="file" name="ImageMain" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Gambar Lainnya:</label>
+                        <input type="file" name="ImageOthers[]" class="form-control" multiple>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-save me-1"></i> Tambah Produk
+                        </button>
+                        <a href="{{ route('products.best') }}" class="btn btn-dark">
+                            <i class="fas fa-arrow-left me-1"></i> Kembali
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <label>Deskripsi:</label>
-                <input type="text" name="Description" class="form-control">
-            </div>
-            <div class="col-md-6">
-                <label>Kategori:</label>
-                <select name="Category" class="form-control">
-                    <option value="Ulos">Ulos</option>
-                    <option value="Tenun">Tenun</option>
-                    <option value="Lainnya">Lainnya</option>
-                </select>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-danger">Tambah</button>
-        <a href="{{ route('products.best') }}" class="btn btn-dark">Kembali</a>
-    </form>
-</div>
-
-
+    </div>
 
 <style>
     /* Enhanced Navigation Buttons Styling with Better Active Indicators */
@@ -80,84 +78,48 @@
     /* Navigation Container */
     .nav-buttons-container {
         display: flex;
-        gap: 15px;
-        margin-bottom: 25px;
-        padding: 5px;
-        position: relative;
+        gap: 10px;
+        margin-bottom: 20px;
     }
     
-    /* Base Button Style */
+    /* Base Nav Button */
     .nav-btn {
         background-color: #2d3748;
         color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 8px;
+        padding: 10px 24px;
+        border-radius: 10px;
         font-weight: 600;
-        font-size: 15px;
         text-decoration: none;
-        transition: all 0.3s ease;
+        font-size: 15px;
         position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
-    
+
     /* Hover Effect */
     .nav-btn:hover {
+        background-color: #1a202c;
         transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
-    
-    /* Button Backgrounds */
-    .nav-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #4a5568, #2d3748);
-        z-index: -1;
-        transition: all 0.3s ease;
-    }
-    
-    .nav-btn:hover::before {
-        background: linear-gradient(45deg, #2d3748, #1a202c);
-    }
-    
-    /* Active Button Style - ENHANCED */
+
+    /* Active Button */
     .nav-btn.active {
-        background-color: transparent;
+        background-color: #3182ce;
         color: white;
-        box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
-        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(49, 130, 206, 0.5);
     }
-    
-    .nav-btn.active::before {
-        background: linear-gradient(45deg, #3182ce, #4299e1);
-    }
-    
-    /* Button Icon */
-    .nav-btn i {
-        margin-right: 8px;
-        font-size: 16px;
-    }
-    
-    /* Active Indicator Line - ENHANCED */
-    .nav-btn::after {
+
+    /* Active underline */
+    .nav-btn.active::after {
         content: '';
         position: absolute;
-        bottom: 0;
+        bottom: -4px;
         left: 50%;
-        width: 0;
-        height: 3px;
-        background-color: #4299e1;
-        transition: all 0.3s ease;
         transform: translateX(-50%);
+        width: 60%;
+        height: 4px;
+        background-color: #63b3ed;
+        border-radius: 4px;
     }
     
     .nav-btn.active::after {
@@ -233,5 +195,5 @@
             opacity: 0;
         }
     }
-        </style>
+</style>
 @endsection
