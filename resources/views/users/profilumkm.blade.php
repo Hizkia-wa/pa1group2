@@ -3,13 +3,13 @@
 @section('content')
 <div class="container py-4">
     <!-- Header Section - Lebih compact dan rapi -->
-    <div class="hero-section" data-aos="fade-zoom-in" data-aos-delay="200">
-        <div class="hero-content">
-            <h1 class="main-title">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
-            <p class="subtitle">
+    <div class="hero-section animate__fadeIn">
+        <div class="hero-content animate__zoomIn" style="animation-delay: 0.2s;">
+            <h1 class="main-title animate__fadeInUp" style="animation-delay: 0.3s;">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
+            <p class="subtitle animate__fadeInUp" style="animation-delay: 0.4s;">
                 Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.
             </p>
-            <div class="hero-buttons">
+            <div class="hero-buttons animate__fadeInUp" style="animation-delay: 0.5s;">
                 <a href="#sejarahumkm" class="btn-primary">Sejarah <span class="arrow">→</span></a>
                 <a href="#UMKMnya" class="btn-secondary">Pemilik <span class="arrow">→</span></a>
             </div>
@@ -17,10 +17,10 @@
     </div>
 
     <!-- Sejarah Section - Layout lebih bersih -->
-    <div class="section-container" id="sejarahumkm" data-aos="fade-right">
-        <h2 class="section-title">Sejarah Berdirinya Toko Gita Ulos</h2>
+    <div class="section-container animate__fadeIn" id="sejarahumkm">
+        <h2 class="section-title animate__fadeInUp">Sejarah Berdirinya Toko Gita Ulos</h2>
         <div class="content-wrapper">
-            <div class="text-content">
+            <div class="text-content animate__fadeInLeft">
                 <p>
                     Gita Ulos bermula dari perjalanan cinta terhadap warisan budaya Batak yang dirintis oleh keluarga Simanjuntak pada tahun 2015. Berawal dari keprihatinan melihat semakin sedikitnya penenun tradisional Ulos yang mampu bertahan di era modern, Ibu Tiurma Simanjuntak yang merupakan putri asli Toba, memutuskan untuk membuka usaha kecil di rumahnya di Balige.
                 </p>
@@ -31,44 +31,44 @@
                     Pada tahun 2018, putra Ibu Tiurma, Mangasi Simanjuntak, yang baru menyelesaikan pendidikan di bidang bisnis, bergabung dan membawa inovasi baru dengan membuka platform online untuk menjangkau pasar yang lebih luas. Nama "Gita" dipilih sebagai penghormatan kepada nenek mereka yang merupakan penenun Ulos terkenal di kampungnya.
                 </p>
             </div>
-            <div class="image-container" data-aos="zoom-in-up" data-aos-delay="300">
+            <div class="image-container animate__zoomIn" style="animation-delay: 0.3s;">
                 <img src="img/ulos/partonun.jpeg" alt="Keluarga Gita Ulos" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
 
     <!-- Pemilik Section - Lebih seimbang -->
-    <div class="section-container bg-light" id="UMKMnya" data-aos="fade-left">
-        <h2 class="section-title">Pemilik Gita Ulos</h2>
+    <div class="section-container bg-light animate__fadeIn" id="UMKMnya">
+        <h2 class="section-title animate__fadeInUp">Pemilik Gita Ulos</h2>
         <div class="content-wrapper reverse">
-            <div class="text-content">
+            <div class="text-content animate__fadeInRight">
                 <p>
                     Gita Ulos dengan bangga menjalin kemitraan dengan para penenun (partonun) terbaik yang membawa keahlian dan warisan budaya dalam setiap helai tenunan:
                 </p>
-                <div class="owner-card">
+                <div class="owner-card animate__fadeInUp" style="animation-delay: 0.2s;">
                     <h3 class="owner-name">Nai Tiurma Situmorang (65 tahun)</h3>
                     <p>
                         Berasal dari Desa Lumban Suhi-suhi, Samosir, Nai Tiurma telah menenun selama lebih dari 45 tahun. Keahliannya dalam menciptakan motif Ragidup dengan teknik songket tradisional menjadikan karyanya sangat dicari. Proses menenunnya masih menggunakan alat tenun gedogan warisan dari ibunya, dengan pewarna alami dari tumbuhan lokal seperti kulit manggis dan daun sirih. Setiap lembar Ulos buatannya memerlukan waktu pengerjaan hingga dua bulan.
                     </p>
                 </div>
             </div>
-            <div class="image-container" data-aos="flip-left" data-aos-delay="200">
+            <div class="image-container animate__flipInX" style="animation-delay: 0.2s;">
                 <img src="img/background.png" alt="Pemilik Gita Ulos" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
 
     <!-- Visi & Misi Section - Layout standar dengan tampilan card -->
-    <div class="section-container">
-        <h2 class="section-title">Visi & Misi Gita Ulos</h2>
+    <div class="section-container animate__fadeIn">
+        <h2 class="section-title animate__fadeInUp">Visi & Misi Gita Ulos</h2>
         <div class="row">
-            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-md-6 mb-4 animate__fadeInUp" style="animation-delay: 0.1s;">
                 <div class="vision-mission-card">
                     <h3>Visi</h3>
                     <p>Menjadi pusat pelestarian dan pengembangan Ulos Batak yang diakui secara nasional dan internasional, serta menjadi jembatan penghubung antara warisan budaya tradisional dengan generasi modern.</p>
                 </div>
             </div>
-            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-md-6 mb-4 animate__fadeInUp" style="animation-delay: 0.2s;">
                 <div class="vision-mission-card">
                     <h3>Misi</h3>
                     <ul>
@@ -83,51 +83,50 @@
         </div>
     </div>
 
-<!-- Location & Contact -->
-<div class="container my-5" data-aos="fade-up" data-aos-duration="800">
-  <h3 class="text-center mb-5 fw-bold text-primary" data-aos="zoom-in" data-aos-delay="100">📍 Lokasi & Kontak Kami</h3>
-  
-  <div class="row g-4 align-items-stretch">
-    
-    <!-- Map -->
-    <div class="col-md-6" data-aos="fade-right" data-aos-delay="200">
-      <div class="shadow rounded-4 overflow-hidden">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.201663504994!2d99.15515687592641!3d2.4397623975392104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3031ffc56771a24b%3A0x52c629ec1d6260d1!2sGITA%20ULOS!5e0!3m2!1sid!2sid!4v1746016363635!5m2!1sid!2sid" 
-          width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
-          class="rounded-4 w-100">
-        </iframe>
-      </div>
-    </div>
+    <!-- Location & Contact -->
+    <div class="container my-5 animate__fadeIn">
+        <h3 class="text-center mb-5 fw-bold text-primary animate__zoomIn" style="animation-delay: 0.1s;">📍 Lokasi & Kontak Kami</h3>
+        
+        <div class="row g-4 align-items-stretch">
+            <!-- Map -->
+            <div class="col-md-6 animate__fadeInLeft" style="animation-delay: 0.2s;">
+                <div class="shadow rounded-4 overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.201663504994!2d99.15515687592641!3d2.4397623975392104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3031ffc56771a24b%3A0x52c629ec1d6260d1!2sGITA%20ULOS!5e0!3m2!1sid!2sid!4v1746016363635!5m2!1sid!2sid" 
+                        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                        class="rounded-4 w-100">
+                    </iframe>
+                </div>
+            </div>
 
-    <!-- Contact Info -->
-    <div class="col-md-6" data-aos="fade-left" data-aos-delay="400">
-      <div class="card shadow rounded-4 h-100">
-        <div class="card-body p-4">
-          <h5 class="mb-3 text-dark fw-semibold">
-            <i class="bi bi-telephone-fill me-2 text-success"></i>Telepon & WhatsApp
-          </h5>
-          <p class="ms-4">+62 812 3456 7890</p>
+            <!-- Contact Info -->
+            <div class="col-md-6 animate__fadeInRight" style="animation-delay: 0.4s;">
+                <div class="card shadow rounded-4 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="mb-3 text-dark fw-semibold">
+                            <i class="bi bi-telephone-fill me-2 text-success"></i>Telepon & WhatsApp
+                        </h5>
+                        <p class="ms-4">+62 812 3456 7890</p>
 
-          <h5 class="mb-3 mt-4 text-dark fw-semibold">
-            <i class="bi bi-envelope-fill me-2 text-danger"></i>Email
-          </h5>
-          <p class="ms-4">info@gitaulos.com</p>
+                        <h5 class="mb-3 mt-4 text-dark fw-semibold">
+                            <i class="bi bi-envelope-fill me-2 text-danger"></i>Email
+                        </h5>
+                        <p class="ms-4">info@gitaulos.com</p>
 
-          <h5 class="mb-3 mt-4 text-dark fw-semibold">
-            <i class="bi bi-clock-fill me-2 text-warning"></i>Jam Buka
-          </h5>
-          <ul class="ms-4 mb-0 list-unstyled">
-            <li>Senin - Jumat: 08:00 - 17:00</li>
-            <li>Sabtu: 09:00 - 15:00</li>
-            <li>Minggu: <span class="text-muted">Tutup</span></li>
-          </ul>
+                        <h5 class="mb-3 mt-4 text-dark fw-semibold">
+                            <i class="bi bi-clock-fill me-2 text-warning"></i>Jam Buka
+                        </h5>
+                        <ul class="ms-4 mb-0 list-unstyled">
+                            <li>Senin - Jumat: 08:00 - 17:00</li>
+                            <li>Sabtu: 09:00 - 15:00</li>
+                            <li>Minggu: <span class="text-muted">Tutup</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-
 
 <style>
 :root {
@@ -483,5 +482,95 @@ p {
         padding: 30px 0;
     }
 }
+
+/* Animasi dengan IntersectionObserver */
+.animate__fadeIn, .animate__fadeInLeft, .animate__fadeInRight, .animate__fadeInUp, .animate__zoomIn, .animate__flipInX {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate__fadeIn.visible { opacity: 1; transform: translateY(0); }
+.animate__fadeInLeft.visible { opacity: 1; transform: translateX(0); }
+.animate__fadeInRight.visible { opacity: 1; transform: translateX(0); }
+.animate__fadeInUp.visible { opacity: 1; transform: translateY(0); }
+.animate__zoomIn.visible { opacity: 1; transform: scale(1); }
+.animate__flipInX.visible { opacity: 1; transform: rotateX(0); }
+
+.animate__fadeInLeft { transform: translateX(-50px); }
+.animate__fadeInRight { transform: translateX(50px); }
+.animate__fadeInUp { transform: translateY(50px); }
+.animate__zoomIn { transform: scale(0.8); }
+.animate__flipInX { transform: rotateX(90deg); }
+
+/* Perkuat animasi existing */
+.hero-section {
+    transition: transform 0.3s ease;
+}
+
+.hero-section:hover {
+    transform: scale(1.01);
+}
+
+.btn-primary, .btn-secondary {
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.image-container img {
+    transition: transform 0.3s ease;
+}
+
+.image-container img:hover {
+    transform: scale(1.05);
+}
+
+.vision-mission-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vision-mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.owner-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.owner-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer untuk animasi saat scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate__fadeIn, .animate__fadeInLeft, .animate__fadeInRight, .animate__fadeInUp, .animate__zoomIn, .animate__flipInX').forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
 @endsection

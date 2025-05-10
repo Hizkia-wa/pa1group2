@@ -3,34 +3,30 @@
 @section('content')
 
 <!-- Hero Section -->
-<div class="hero-header">
+<div class="hero-header animate__fadeIn">
     <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
-        <p>Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
-        <div class="hero-buttons">
+    <div class="hero-content animate__zoomIn" style="animation-delay: 0.2s;">
+        <h1 class="animate__fadeInUp" style="animation-delay: 0.3s;">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
+        <p class="animate__fadeInUp" style="animation-delay: 0.4s;">Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
+        <div class="hero-buttons animate__fadeInUp" style="animation-delay: 0.5s;">
             <a href="#" class="btn btn-secondary">Tentang Ulos</a>
         </div>
     </div>
 </div>
 
-
-<div class="traditional-pattern-divider"></div>
-<div class="section-title-container" id="koleksi">
-    <div class="section-decoration left"></div>
-    <h2 class="section-title">Jenis Jenis Ulos Dan Kegunaannya</h2>
-    <div class="section-decoration right"></div>
+<div class="traditional-pattern-divider animate__fadeIn" style="animation-delay: 0.6s;"></div>
+<div class="section-title-container animate__fadeIn" id="koleksi">
+    <div class="section-decoration left animate__fadeInLeft"></div>
+    <h2 class="section-title animate__fadeInUp">Jenis Jenis Ulos Dan Kegunaannya</h2>
+    <div class="section-decoration right animate__fadeInRight"></div>
 </div>
 
-
-
-
-<!-- Versi yang diperbarui untuk bagian collection grid -->
-<div class="collection-section active" id="ulos-section">
+<!-- Collection Grid -->
+<div class="collection-section active animate__fadeIn" id="ulos-section">
     <div class="container">
         <div class="row collection-grid">
             @forelse($ulosData as $ulos)
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-3 collection-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-3 collection-item animate__fadeInUp" style="animation-delay: {{ $loop->index * 0.2 }}s;">
                 <div class="collection-card">
                     <div class="collection-card-media">
                         <img src="{{ asset('img/ulos/' . $ulos['image']) }}" alt="{{ $ulos['name'] }}" class="collection-img">
@@ -48,7 +44,7 @@
                 </div>
             </div>
             @empty
-            <div class="col-12">
+            <div class="col-12 animate__fadeInUp">
                 <div class="empty-collection">
                     <div class="empty-icon">
                         <i class="fas fa-search"></i>
@@ -62,28 +58,24 @@
     </div>
 </div>
 
-
-
-
-</div>
 <!-- Culture Info Section -->
-<div class="info-section">
+<div class="info-section animate__fadeIn">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6">
+            <div class="col-lg-6 animate__fadeInLeft">
                 <div class="info-content">
-                    <h2>Warisan Budaya Yang Tak Ternilai</h2>
-                    <p>Ulos adalah kain tenun tradisional yang berasal dari suku Batak di Sumatera Utara. Lebih dari sekadar kain, Ulos memiliki makna spiritual dan budaya yang mendalam, diwariskan dari generasi ke generasi.</p>
-                    <p>Setiap motif dan warna pada Ulos memiliki filosofi tersendiri yang melambangkan harapan, doa, dan status sosial pemakainya.</p>
+                    <h2 class="animate__fadeInUp">Warisan Budaya Yang Tak Ternilai</h2>
+                    <p class="animate__fadeInUp" style="animation-delay: 0.2s;">Ulos adalah kain tenun tradisional yang berasal dari suku Batak di Sumatera Utara. Lebih dari sekadar kain, Ulos memiliki makna spiritual dan budaya yang mendalam, diwariskan dari generasi ke generasi.</p>
+                    <p class="animate__fadeInUp" style="animation-delay: 0.3s;">Setiap motif dan warna pada Ulos memiliki filosofi tersendiri yang melambangkan harapan, doa, dan status sosial pemakainya.</p>
                     <ul class="info-list">
-                        <li><i class="fas fa-check-circle"></i> Ditenun dengan teknik tradisional turun-temurun</li>
-                        <li><i class="fas fa-check-circle"></i> Setiap jenis memiliki fungsi adat yang spesifik</li>
-                        <li><i class="fas fa-check-circle"></i> Simbol status sosial dan identitas budaya Batak</li>
-                        <li><i class="fas fa-check-circle"></i> Digunakan dalam berbagai upacara adat penting</li>
+                        <li class="animate__fadeInUp" style="animation-delay: 0.4s;"><i class="fas fa-check-circle"></i> Ditenun dengan teknik tradisional turun-temurun</li>
+                        <li class="animate__fadeInUp" style="animation-delay: 0.5s;"><i class="fas fa-check-circle"></i> Setiap jenis memiliki fungsi adat yang spesifik</li>
+                        <li class="animate__fadeInUp" style="animation-delay: 0.6s;"><i class="fas fa-check-circle"></i> Simbol status sosial dan identitas budaya Batak</li>
+                        <li class="animate__fadeInUp" style="animation-delay: 0.7s;"><i class="fas fa-check-circle"></i> Digunakan dalam berbagai upacara adat penting</li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 animate__fadeInRight">
                 <div class="info-image">
                     <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" alt="Ulos Culture">
                     <div class="info-image-decoration"></div>
@@ -92,17 +84,13 @@
         </div>
     </div>
 </div>
-        </div>
-    </div>
-</div>
 
-
-<div class="traditional-pattern-footer"></div>
+<div class="traditional-pattern-footer animate__fadeIn" style="animation-delay: 0.8s;"></div>
 
 <style>
 :root {
     --primary-color: black;
-    --primary-light: color: black;;
+    --primary-light: black;
     --primary-dark: #5A189A;
     --secondary-color: #FF9E00;
     --secondary-light: #FFB700;
@@ -114,7 +102,6 @@
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     --transition: all 0.3s ease;
 }
-
 
 .hero-header {
     position: relative;
@@ -134,7 +121,6 @@
     top: 0;
     left: 0;
     background: rgba(255, 255, 255, 0.05);
-    
 }
 
 .hero-content {
@@ -224,39 +210,6 @@
     background: linear-gradient(to right, rgba(0,0,0,0.1), transparent, rgba(0,0,0,0.1));
 }
 
-/* Category Tabs */
-.categories-section {
-    padding: 20px 0 40px;
-}
-
-.category-tabs {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.category-tab {
-    padding: 12px 30px;
-    border: 2px solid var(--primary-color);
-    border-radius: 50px;
-    font-weight: 600;
-    background-color: transparent;
-    color: var(--primary-color);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.category-tab:hover {
-    background-color: rgba(123, 44, 191, 0.1);
-}
-
-.category-tab.active {
-    background-color: var(--primary-color);
-    color: var(--white);
-}
-
 /* Section Title */
 .section-title-container {
     display: flex;
@@ -300,56 +253,55 @@
     position: relative;
 }
 
-
 .collection-card {
     position: relative;
     height: 100%;
-    border-radius: 8px; 
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
     transition: var(--transition);
     background-color: var(--white);
     transform: translateY(0);
 }
 
 .collection-card:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 10px 25px rgba(123, 44, 191, 0.12); 
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(123, 44, 191, 0.12);
 }
 
 .collection-card-media {
     position: relative;
-    height: 220px; /* Lebih kecil dari 280px sebelumnya */
+    height: 220px;
     overflow: hidden;
 }
 
 .collection-card-body {
-    padding: 18px; /* Lebih kecil dari 25px sebelumnya */
+    padding: 18px;
 }
 
 .collection-card-title {
     color: var(--text-color);
-    font-size: 1.3rem; 
+    font-size: 1.3rem;
     font-weight: 700;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     position: relative;
     transition: var(--transition);
     line-height: 1.3;
 }
 
 .collection-card-divider {
-    width: 50px; 
-    height: 2px; 
+    width: 50px;
+    height: 2px;
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 .collection-card-description {
     color: var(--text-light);
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
     line-height: 1.5;
-    margin-bottom: 15px; 
-    height: 60px; 
+    margin-bottom: 15px;
+    height: 60px;
     overflow: hidden;
 }
 
@@ -358,17 +310,22 @@
     align-items: center;
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 0.9rem; /* Ukuran font yang lebih kecil */
+    font-size: 0.9rem;
     text-decoration: none;
-    padding: 5px 0; 
+    padding: 5px 0;
     position: relative;
     transition: var(--transition);
+}
+
+.collection-card-btn:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
 }
 
 /* Responsive adaptations */
 @media (max-width: 1200px) {
     .collection-card-media {
-        height: 200px; 
+        height: 200px;
     }
 }
 
@@ -415,8 +372,6 @@
         height: 50px;
     }
 }
-
-
 
 /* Empty Collection */
 .empty-collection {
@@ -481,7 +436,7 @@
 }
 
 .info-content h2 {
-    color: black;;
+    color: black;
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 25px;
@@ -523,6 +478,11 @@
 .info-image img {
     width: 100%;
     border-radius: 12px;
+    transition: var(--transition);
+}
+
+.info-image:hover img {
+    transform: scale(1.05);
 }
 
 .info-image-decoration {
@@ -537,7 +497,7 @@
     z-index: -1;
 }
 
-
+/* Traditional Pattern Footer */
 .traditional-pattern-footer {
     height: 40px;
     background-image: url('{{ asset("img/ulos/pattern.png") }}');
@@ -581,7 +541,6 @@
         font-size: 2rem;
         color: black;
     }
-    
 }
 
 @media (max-width: 768px) {
@@ -597,11 +556,6 @@
         font-size: 1.05rem;
     }
     
-    .category-tab {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    
     .section-title {
         font-size: 1.8rem;
     }
@@ -609,7 +563,6 @@
     .section-decoration {
         max-width: 80px;
     }
-    
     
     .info-image {
         margin-top: 40px;
@@ -632,15 +585,6 @@
     .btn {
         padding: 12px 25px;
         font-size: 0.9rem;
-    }
-    
-    .category-tabs {
-        gap: 10px;
-    }
-    
-    .category-tab {
-        padding: 8px 15px;
-        font-size: 0.85rem;
     }
     
     .section-title {
@@ -667,63 +611,93 @@
     .info-content p {
         font-size: 1rem;
     }
-  
+}
+
+/* Animasi dengan IntersectionObserver */
+.animate__fadeIn, .animate__fadeInLeft, .animate__fadeInRight, .animate__fadeInUp, .animate__zoomIn {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate__fadeIn.visible { opacity: 1; transform: translateY(0); }
+.animate__fadeInLeft.visible { opacity: 1; transform: translateX(0); }
+.animate__fadeInRight.visible { opacity: 1; transform: translateX(0); }
+.animate__fadeInUp.visible { opacity: 1; transform: translateY(0); }
+.animate__zoomIn.visible { opacity: 1; transform: scale(1); }
+
+.animate__fadeInLeft { transform: translateX(-50px); }
+.animate__fadeInRight { transform: translateX(50px); }
+.animate__fadeInUp { transform: translateY(50px); }
+.animate__zoomIn { transform: scale(0.8); }
+
+/* Perkuat animasi existing */
+.hero-header {
+    transition: transform 0.3s ease;
+}
+
+.hero-header:hover {
+    transform: scale(1.01);
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.collection-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collection-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(123, 44, 191, 0.2);
+}
+
+.collection-card-btn {
+    transition: all 0.3s ease;
+}
+
+.collection-card-btn:hover {
+    transform: translateX(8px);
+    color: var(--secondary-dark);
+}
+
+.info-image {
+    transition: transform 0.3s ease;
+}
+
+.info-image:hover {
+    transform: scale(1.02);
 }
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Category tabs functionality
-        const categoryTabs = document.querySelectorAll('.category-tab');
-        const collectionSections = document.querySelectorAll('.collection-section');
-        
-        categoryTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Remove active class from all tabs
-                categoryTabs.forEach(t => t.classList.remove('active'));
-                
-                // Add active class to clicked tab
-                this.classList.add('active');
-                
-                // Hide all collection sections
-                collectionSections.forEach(section => {
-                    section.classList.remove('active');
-                });
-                
-                // Show the corresponding collection section
-                const targetId = this.getAttribute('data-target') + '-section';
-                document.getElementById(targetId).classList.add('active');
-                
-                // Update section title based on category
-                const sectionTitle = document.querySelector('.section-title');
-                switch(this.getAttribute('data-target')) {
-                    case 'ulos':
-                        sectionTitle.textContent = 'Koleksi Ulos Tradisional';
-                        break;
-                    case 'sortali':
-                        sectionTitle.textContent = 'Koleksi Sortali Tradisional';
-                        break;
-                    case 'topi':
-                        sectionTitle.textContent = 'Koleksi Topi Batak Tradisional';
-                        break;
-                    case 'mandar':
-                        sectionTitle.textContent = 'Koleksi Mandar Tradisional';
-                        break;
-                }
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
     });
+
+    // Intersection Observer untuk animasi saat scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate__fadeIn, .animate__fadeInLeft, .animate__fadeInRight, .animate__fadeInUp, .animate__zoomIn').forEach(element => {
+        observer.observe(element);
+    });
+});
 </script>
 @endsection
