@@ -83,39 +83,51 @@
         </div>
     </div>
 
-    <!-- Contact Section - Layout grid standar Bootstrap -->
-    <div class="section-container bg-light">
-        <h2 class="section-title">Lokasi & Kontak Kami</h2>
-        <div class="row">
-            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.1268481704317!2d98.6734735!3d3.5889271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312f94c65f63dd%3A0xf9a21acec1195170!2sMedan%2C%20Kota%20Medan%2C%20Sumatera%20Utara!5e0!3m2!1sid!2sid!4v1650123456789!5m2!1sid!2sid" 
-                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="contact-card">
-                    <div class="contact-info">
-                        <h5><i class="bi bi-telephone me-2"></i> Telepon & WhatsApp</h5>
-                        <p>+62 812 3456 7890</p>
-                    </div>
-                    <div class="contact-info">
-                        <h5><i class="bi bi-envelope me-2"></i> Email</h5>
-                        <p>info@gitaulos.com</p>
-                    </div>
-                    <div class="contact-info">
-                        <h5><i class="bi bi-clock me-2"></i> Jam Buka</h5>
-                        <p>
-                            Senin - Jumat: 08:00 - 17:00<br>
-                            Sabtu: 09:00 - 15:00<br>
-                            Minggu: Tutup
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Location & Contact -->
+<div class="container my-5" data-aos="fade-up" data-aos-duration="800">
+  <h3 class="text-center mb-5 fw-bold text-primary" data-aos="zoom-in" data-aos-delay="100">📍 Lokasi & Kontak Kami</h3>
+  
+  <div class="row g-4 align-items-stretch">
+    
+    <!-- Map -->
+    <div class="col-md-6" data-aos="fade-right" data-aos-delay="200">
+      <div class="shadow rounded-4 overflow-hidden">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.201663504994!2d99.15515687592641!3d2.4397623975392104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3031ffc56771a24b%3A0x52c629ec1d6260d1!2sGITA%20ULOS!5e0!3m2!1sid!2sid!4v1746016363635!5m2!1sid!2sid" 
+          width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+          class="rounded-4 w-100">
+        </iframe>
+      </div>
     </div>
+
+    <!-- Contact Info -->
+    <div class="col-md-6" data-aos="fade-left" data-aos-delay="400">
+      <div class="card shadow rounded-4 h-100">
+        <div class="card-body p-4">
+          <h5 class="mb-3 text-dark fw-semibold">
+            <i class="bi bi-telephone-fill me-2 text-success"></i>Telepon & WhatsApp
+          </h5>
+          <p class="ms-4">+62 812 3456 7890</p>
+
+          <h5 class="mb-3 mt-4 text-dark fw-semibold">
+            <i class="bi bi-envelope-fill me-2 text-danger"></i>Email
+          </h5>
+          <p class="ms-4">info@gitaulos.com</p>
+
+          <h5 class="mb-3 mt-4 text-dark fw-semibold">
+            <i class="bi bi-clock-fill me-2 text-warning"></i>Jam Buka
+          </h5>
+          <ul class="ms-4 mb-0 list-unstyled">
+            <li>Senin - Jumat: 08:00 - 17:00</li>
+            <li>Sabtu: 09:00 - 15:00</li>
+            <li>Minggu: <span class="text-muted">Tutup</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <style>
 :root {

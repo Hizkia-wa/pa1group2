@@ -198,61 +198,98 @@
         </div>
     </div>
 
-    <!-- FAQ Section -->
-    <div class="custom-contact-box my-5 p-4 p-md-5">
-        <div class="row align-items-center">
-            <!-- Kolom Kiri -->
-            <div class="col-md-8">
-                <h3 class="fw-bold mb-3">Apakah ada pertanyaan seputar produk kami?</h3>
-                <p class="mb-4">
-                    Tim kami siap membantu Anda dalam memilih Ulos terbaik sesuai kebutuhan. Kami juga menerima pesanan khusus dengan desain atau ukuran tertentu.
-                </p>
-                <a href="{{ route('login') }}" class="btn btn-success btn-sm rounded-pill px-4 py-2">
-                    <i class="bi bi-whatsapp me-2"></i> Hubungi kami Melalui Via Whatsapp
-                </a>
-            </div>
-            <!-- Kolom Kanan -->
-            <div class="col-md-4 text-center text-md-end mt-4 mt-md-0">
-                <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" class="img-fluid rounded-4 shadow-sm custom-contact-img" alt="Contoh Ulos">
-            </div>
-        </div>
+   <div class="custom-contact-box my-5 p-4 p-md-5 rounded-4 shadow-lg bg-white position-relative">
+  <div class="row align-items-center">
+
+    <!-- Konten Kiri -->
+    <div class="col-md-8">
+      <h3 class="fw-bold mb-3 text-dark">Masih Bingung Soal Produk Kami?</h3>
+      <p class="mb-4 text-muted">
+        Kami siap membantu Anda menemukan Ulos terbaik sesuai kebutuhan. Bisa juga request desain atau ukuran spesial.
+      </p>
+      <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-wa-custom d-inline-flex align-items-center">
+        <i class="bi bi-whatsapp me-2 fs-5"></i> Chat WhatsApp Sekarang
+      </a>
     </div>
-    
+
+    <!-- Gambar Kanan -->
+    <div class="col-md-4 text-center text-md-end mt-4 mt-md-0">
+      <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" 
+           class="img-fluid rounded-4 shadow-sm custom-contact-img" 
+           alt="Contoh Ulos" 
+           style="max-height: 260px; object-fit: cover;">
+    </div>
+  </div>
+</div>
+
     
 
     <!-- Location & Contact -->
-    <div class="container my-5">
-        <div class="row">
-        <h3>Lokasi & Kontak Kami</h3>
-            <div class="col-md-6">
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.201663504994!2d99.15515687592641!3d2.4397623975392104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3031ffc56771a24b%3A0x52c629ec1d6260d1!2sGITA%20ULOS!5e0!3m2!1sid!2sid!4v1746016363635!5m2!1sid!2sid" 
-                        width="100%" border-radius="10px" height="350" style="border:50px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-4">Telepon & WhatsApp</h5>
-                        <p><i class="bi bi-telephone me-2"></i> +62 812 3456 7890</p>
-                        
-                        <h5 class="card-title mb-4 mt-4">Email</h5>
-                        <p><i class="bi bi-envelope me-2"></i> info@gitaulos.com</p>
-                        
-                        <h5 class="card-title mb-4 mt-4">Jam Buka</h5>
-                        <p>
-                            Senin - Jumat: 08:00 - 17:00<br>
-                            Sabtu: 09:00 - 15:00<br>
-                            Minggu: Tutup
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container my-5">
+  <h3 class="text-center mb-5 fw-bold text-primary">📍 Lokasi & Kontak Kami</h3>
+  <div class="row g-4 align-items-stretch">
+    <!-- Map -->
+    <div class="col-md-6">
+      <div class="shadow rounded-4 overflow-hidden">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.201663504994!2d99.15515687592641!3d2.4397623975392104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3031ffc56771a24b%3A0x52c629ec1d6260d1!2sGITA%20ULOS!5e0!3m2!1sid!2sid!4v1746016363635!5m2!1sid!2sid" 
+          width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+          class="rounded-4 w-100">
+        </iframe>
+      </div>
     </div>
+
+    <!-- Contact Info -->
+    <div class="col-md-6">
+      <div class="card shadow rounded-4 h-100">
+        <div class="card-body p-4">
+          <h5 class="mb-3 text-dark fw-semibold"><i class="bi bi-telephone-fill me-2 text-success"></i>Telepon & WhatsApp</h5>
+          <p class="ms-4">+62 812 3456 7890</p>
+
+          <h5 class="mb-3 mt-4 text-dark fw-semibold"><i class="bi bi-envelope-fill me-2 text-danger"></i>Email</h5>
+          <p class="ms-4">info@gitaulos.com</p>
+
+          <h5 class="mb-3 mt-4 text-dark fw-semibold"><i class="bi bi-clock-fill me-2 text-warning"></i>Jam Buka</h5>
+          <ul class="ms-4 mb-0 list-unstyled">
+            <li>Senin - Jumat: 08:00 - 17:00</li>
+            <li>Sabtu: 09:00 - 15:00</li>
+            <li>Minggu: <span class="text-muted">Tutup</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 <style>
+    .custom-contact-box {
+  background: linear-gradient(135deg, #fdfdfd, #f7faff);
+  border-left: 8px solid #28a745;
+}
+
+.btn-wa-custom {
+  background-color: #25D366;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-wa-custom:hover {
+  background-color: #1ebe5d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.5);
+}
+
+.custom-contact-img:hover {
+  transform: scale(1.03);
+  transition: 0.3s ease;
+}
     .btn-cart {
         background-color: white;
         color: #2563eb;
