@@ -12,7 +12,7 @@
                         <i class="bi bi-cart-fill cart-icon"></i>
                     </a>
                 </li>
-                <!-- Menu navigasi -->
+             
                 <li class="nav-item">
                     <a href="{{ route('uloskita') }}" class="nav-link nav-item-link {{ request()->routeIs('customer.uloskita') ? 'active' : '' }}">Ulos Kita</a>
                 </li>
@@ -33,7 +33,7 @@
     </div>
 </nav>
 
-<!-- CSS styling for navbar -->
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
@@ -45,7 +45,7 @@
     --highlight: #f2d2b1;
 }
 
-/* Warna dan animasi ikon keranjang */
+
 .cart-icon {
     font-size: 2rem;
     color: #ff6b00;

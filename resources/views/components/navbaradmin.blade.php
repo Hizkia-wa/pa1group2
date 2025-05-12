@@ -26,15 +26,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.homepage') }}" class="nav-link nav-cute {{ request()->routeIs('admin.homepage') ? 'active' : '' }}">Admin</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-search fs-5 text-dark"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('user.cart.index') }}" class="nav-link position-relative">
-                        <i class="bi bi-cart fs-5 text-dark"></i>
-                    </a>
+               
                 </li>
             </ul>
         </div>

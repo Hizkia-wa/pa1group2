@@ -2,27 +2,26 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2 class="mb-4">Daftar Pesanan</h2>
+    <h2 class="page-title">Daftar Pesanan</h2>
 
-    <div class="nav-buttons-container">
-        <a href="{{ route('admin.orders') }}" class="nav-btn {{ request()->routeIs('admin.orders') && !request()->has('status') ? 'active' : '' }}">
-            <i class="fas fa-shopping-cart"></i> Pesanan
-            @if(request()->routeIs('admin.orders') && !request()->has('status'))
-                <span class="active-indicator"></span>
-            @endif
-        </a>
-        <a href="{{ route('admin.orders.selesai', ['status' => 'Selesai']) }}" class="nav-btn complete-btn {{ request()->has('status') && request('status') == 'Selesai' ? 'active' : '' }}">
-            <i class="fas fa-check-circle"></i> Selesai
-            @if(request()->has('status') && request('status') == 'Selesai')
-                <span class="active-indicator"></span>
-            @endif
-        </a>
-        <a href="{{ route('admin.orders.batal', ['status' => 'Batal']) }}" class="nav-btn cancel-btn {{ request()->has('status') && request('status') == 'Batal' ? 'active' : '' }}">
-            <i class="fas fa-times-circle"></i> Cancel
-            @if(request()->has('status') && request('status') == 'Batal')
-                <span class="active-indicator"></span>
-            @endif
-        </a>
+    <div class="navbar-container">
+        <div class="navbar-wrapper">
+            <a href="{{ route('admin.orders') }}" 
+               class="navbar-btn {{ request()->routeIs('admin.orders') && !request()->has('status') ? 'active' : '' }}">
+                <i class="fas fa-shopping-cart"></i> 
+                Pesanan
+            </a>
+            <a href="{{ route('admin.orders.selesai', ['status' => 'Selesai']) }}" 
+               class="navbar-btn navbar-btn-complete {{ request()->has('status') && request('status') == 'Selesai' ? 'active' : '' }}">
+                <i class="fas fa-check-circle"></i> 
+                Selesai
+            </a>
+            <a href="{{ route('admin.orders.batal', ['status' => 'Batal']) }}" 
+               class="navbar-btn navbar-btn-cancel {{ request()->has('status') && request('status') == 'Batal' ? 'active' : '' }}">
+                <i class="fas fa-times-circle"></i> 
+                Cancel
+            </a>
+        </div>
     </div>
 
     <table class="table table-bordered text-center align-middle">
@@ -99,130 +98,145 @@
 
 
 <style>
- 
-    .nav-buttons-container {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 25px;
-        padding: 5px;
-        position: relative;
-    }
-    
+ :root {
+    /* Color Palette */
+    --color-primary: #3182ce;
+    --color-secondary: #2d3748;
+    --color-complete: #38a169;
+    --color-cancel: #e53e3e;
+    --color-text-light: #ffffff;
+    --color-text-dark: #2d3748;
+    --color-background: #f8f9fa;
+}
 
-    .nav-btn {
-        background-color: #2d3748;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 15px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1;
-    }
-    
-   
-    .nav-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        color: white;
-        text-decoration: none;
-    }
-    
+/* Page Title */
+.page-title {
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-secondary);
+    color: var(--color-text-dark);
+}
 
-    .nav-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
+/* Navbar Container */
+.navbar-container {
+    background-color: var(--color-background);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-wrapper {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Navbar Buttons */
+.navbar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 8px;
+    color: var(--color-secondary);
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border: 2px solid var(--color-secondary);
+}
+
+.navbar-btn i {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* Active State */
+.navbar-btn.active {
+    color: var(--color-text-light);
+    border-color: transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific Button Colors */
+.navbar-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 4px;
+    border-radius: 2px;
+}
+
+/* Default (Pesanan) Button */
+.navbar-btn {
+    background-color: transparent;
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+}
+
+.navbar-btn.active,
+.navbar-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.navbar-btn.active::after {
+    background-color: var(--color-text-light);
+}
+
+/* Complete Button */
+.navbar-btn-complete {
+    background-color: transparent;
+    border-color: var(--color-complete);
+    color: var(--color-complete);
+}
+
+.navbar-btn-complete.active,
+.navbar-btn-complete:hover {
+    background-color: var(--color-complete);
+    color: var(--color-text-light);
+}
+
+.navbar-btn-complete.active::after {
+    background-color: var(--color-text-light);
+}
+
+/* Cancel Button */
+.navbar-btn-cancel {
+    background-color: transparent;
+    border-color: var(--color-cancel);
+    color: var(--color-cancel);
+}
+
+.navbar-btn-cancel.active,
+.navbar-btn-cancel:hover {
+    background-color: var(--color-cancel);
+    color: var(--color-text-light);
+}
+
+.navbar-btn-cancel.active::after {
+    background-color: var(--color-text-light);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar-wrapper {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar-btn {
         width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #4a5568, #2d3748);
-        z-index: -1;
-        transition: all 0.3s ease;
-    }
-    
-    .nav-btn:hover::before {
-        background: linear-gradient(45deg, #2d3748, #1a202c);
-    }
-    
-    /* Active Button Style - ENHANCED */
-    .nav-btn.active {
-        background-color: transparent;
-        color: white;
-        box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
-        transform: translateY(-3px);
-        text-decoration: none;
-    }
-    
-    .nav-btn.active::before {
-        background: linear-gradient(45deg, #3182ce, #4299e1);
-    }
-    
-    /* Complete Button Style */
-    .nav-btn.complete-btn::before {
-        background: linear-gradient(45deg, rgba(66, 153, 225, 0.3), rgba(66, 153, 225, 0.3));
-    }
-    
-    .nav-btn.complete-btn.active::before {
-        background: linear-gradient(45deg,  rgba(66, 153, 225, 0.3), #2f855a);
-    }
-    
-
-    .nav-btn.cancel-btn::before {
-        background: linear-gradient(45deg, #c53030, #e53e3e);
-    }
-    
-    .nav-btn.cancel-btn.active::before {
-        background: linear-gradient(45deg, #9b2c2c, #c53030);
-    }
-    
-
-    .nav-btn i {
-        margin-right: 8px;
-        font-size: 16px;
-    }
-    
-
-    .nav-btn::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 3px;
-        background-color: #fff;
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-    }
-    
-    .nav-btn.active::after {
-        width: 80%;
-    }
-    
-
-    .nav-btn.active .active-indicator {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background-color: #fff;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
         justify-content: center;
-        font-size: 10px;
-        box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-        animation: pulse 1.5s infinite;
     }
+}
 </style>
 
 
@@ -231,7 +245,19 @@
 
 
 <script>
-   
+   document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.navbar-btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+        });
+    });
+});
     const buttons = document.querySelectorAll('.nav-btn');
     
     buttons.forEach(button => {

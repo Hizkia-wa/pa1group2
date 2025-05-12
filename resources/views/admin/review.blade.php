@@ -5,7 +5,7 @@
 @section('content')
 <div class="container my-4">
     <div class="row g-4">
-        {{-- Summary Rating & Total Ulasan --}}
+       
         <div class="col-md-4">
             <div class="card shadow-sm p-3">
                 <h5 class="mb-2">Rating</h5>
@@ -42,17 +42,13 @@
             </div>
         </div>
 
-        {{-- Daftar Ulasan --}}
+       
         <div class="col-md-8">
             @foreach ($reviews as $review)
                 <div class="card mb-3 shadow-sm">
                     <div class="card-body d-flex">
-                        {{-- Foto Profil --}}
-                        <div class="me-3 d-flex align-items-start">
-                            <img src="{{ asset('images/default-profile.png') }}" alt="Foto Profil" class="rounded-circle" width="50" height="50">
-                        </div>
-
-                        {{-- Konten Utama --}}
+                       
+                     
                         <div class="flex-grow-1 d-flex justify-content-between">
                             <div class="d-flex flex-column justify-content-center">
                                 <h6 class="fw-bold mb-1">{{ $review->ReviewerName }}</h6>
