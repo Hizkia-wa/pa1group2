@@ -71,22 +71,35 @@
     </div>
 </div>
 
-<!-- Culture Section with Image -->
-<div class="container my-5 animate__fadeIn">
-    <div class="row align-items-center">
-        <div class="col-md-6 animate__fadeInLeft">
-            <h2>Warisan Budaya yang Ditenun dengan Cinta</h2>
-            <p>Ulos telah menjadi simbol identitas Batak selama berabad-abad, merupakan simbol berkat, perlindungan dan kehangatan yang diterapkan secara fisik maupun spiritual. Proses pembuatan setiap helai ulos memerlukan keahlian tinggi, kesabaran, dan membutuhkan waktu yang lama hingga berhari-hari, diwariskan dari generasi ke generasi.</p>
-            <p>Gita Ulos hadir untuk melestarikan warisan budaya dengan menawarkan koleksi ulos yang dikerjakan oleh para pengrajin ulos dan penenun tradisional asli Batak di sekitar Danau Toba, yang secara metode telah dipelajari langsung dari generasi sebelumnya. Dengan teknik tradisional yang diadaptasi dengan perkembangan modern, kami tetap mempertahankan nilai budaya yang telah ada selama ratusan tahun serta memberikan wawasan budaya yang tak ternilai kepada semua pelanggan kami.</p>
-            <a href="{{ route('uloskita') }}" class="btn btn-primary">Baca Selengkapnya</a>
-        </div>
-        <div class="col-md-6 animate__fadeInRight">
-            <div class="col-md-6 d-flex justify-content-center">
-                <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid custom-culture-image" alt="Pengrajin Ulos" loading="lazy">
+<section class="heritage-section py-5" style="background: #f9f9f9;">
+    <div class="container animate__animated animate__fadeIn">
+        <div class="row align-items-center">
+            <!-- CARD TEKS -->
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <div class="custom-card-bg p-4 rounded-4 shadow">
+                    <h2 class="mb-3 fw-bold" style="color: #8B0000;">Warisan Budaya yang Ditenun dengan Cinta</h2>
+                    <p>
+                        Ulos adalah simbol budaya Batak yang menyimbolkan berkat, perlindungan, dan kehangatan. Proses pembuatannya diwariskan dari generasi ke generasi dan membutuhkan kesabaran serta keahlian tinggi.
+                    </p>
+                    <p>
+                        Gita Ulos hadir untuk menjaga warisan ini tetap hidup, dengan menghadirkan koleksi ulos buatan tangan oleh para penenun asli di sekitar Danau Toba. Perpaduan tradisi dan modernitas ini membawa makna budaya kepada setiap pelanggan kami.
+                    </p>
+                    <a href="{{ route('uloskita') }}" class="btn btn-lg mt-3 px-4 py-2 shadow rounded-pill text-white" style="background-color: #8B0000;">
+                        Baca Selengkapnya
+                    </a>
+                </div>
+            </div>
+
+            <!-- GAMBAR -->
+            <div class="col-md-6 d-flex justify-content-center animate__animated animate__fadeInRight">
+                <div class="image-container">
+                    <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid shadow rounded-4" alt="Pengrajin Ulos" style="max-height: 420px; object-fit: cover;">
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 
 <!-- Making Process -->
 <div class="container my-5 process-section animate__fadeIn">
@@ -240,6 +253,34 @@
 </div>
 
 <style>
+.custom-card-bg {
+    background: linear-gradient(
+        135deg,
+        rgba(139, 0, 0, 0.1),  
+        rgba(255, 255, 255, 0.9) 
+    );
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(139, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.custom-card-bg:hover {
+    transform: translateY(-4px);
+}
+.custom-soft-btn {
+    background-color:rgb(221, 91, 91); 
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.custom-soft-btn:hover {
+    background-color: #a94442;
+    transform: scale(1.03);
+}
+
+
 .custom-contact-box {
     background: linear-gradient(135deg, #fdfdfd, #f7faff);
     border-left: 8px solid #28a745;
@@ -446,7 +487,7 @@
 }
 
 .active-process .process-circle {
-    background-color: var(--primary-color, #6a1b9a) !important;
+    background: linear-gradient(135deg, #8B0000, #FFFFFF) !important; 
     transform: scale(1.2);
 }
 
