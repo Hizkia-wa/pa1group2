@@ -31,7 +31,7 @@
     <div class="nav-action-group">
         <h4 class="nav-group-title">Tindakan</h4>
         <div class="nav-container">
-            <a href="{{ route('products.best.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.best.create') ? 'active' : '' }}">
+            <a href="{{ route('products.create') }}" class="nav-btn add-btn {{ request()->routeIs('products.best.create') ? 'active' : '' }}">
                 <i class="fas fa-plus-circle"></i> Tambah Produk Kita
             </a>
         </div>
