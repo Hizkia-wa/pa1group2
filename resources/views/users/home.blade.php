@@ -73,32 +73,31 @@
 
 <section class="heritage-section py-5" style="background: #f9f9f9;">
     <div class="container animate__animated animate__fadeIn">
-        <div class="row align-items-center">
-            <!-- CARD TEKS -->
-            <div class="col-md-6 animate__animated animate__fadeInLeft">
-                <div class="custom-card-bg p-4 rounded-4 shadow">
-                    <h2 class="mb-3 fw-bold" style="color: #8B0000;">Warisan Budaya yang Ditenun dengan Cinta</h2>
-                    <p>
-                        Ulos adalah simbol budaya Batak yang menyimbolkan berkat, perlindungan, dan kehangatan. Proses pembuatannya diwariskan dari generasi ke generasi dan membutuhkan kesabaran serta keahlian tinggi.
-                    </p>
-                    <p>
-                        Gita Ulos hadir untuk menjaga warisan ini tetap hidup, dengan menghadirkan koleksi ulos buatan tangan oleh para penenun asli di sekitar Danau Toba. Perpaduan tradisi dan modernitas ini membawa makna budaya kepada setiap pelanggan kami.
-                    </p>
-                    <a href="{{ route('uloskita') }}" class="btn btn-lg mt-3 px-4 py-2 shadow rounded-pill text-white" style="background-color: #8B0000;">
-                        Baca Selengkapnya
-                    </a>
-                </div>
+        <div class="custom-heritage-card p-4 p-md-5 rounded-4 shadow-lg d-flex flex-column flex-md-row align-items-center gap-4">
+            
+            <!-- Gambar -->
+            <div class="heritage-img-container flex-shrink-0">
+                <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
             </div>
 
-            <!-- GAMBAR -->
-            <div class="col-md-6 d-flex justify-content-center animate__animated animate__fadeInRight">
-                <div class="image-container">
-                    <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid shadow rounded-4" alt="Pengrajin Ulos" style="max-height: 420px; object-fit: cover;">
-                </div>
+            <!-- Konten Teks -->
+            <div class="heritage-content text-center text-md-start">
+                <h2 class="fw-bold mb-3" style="color: #8B0000;">Warisan Budaya yang Ditenun dengan Cinta</h2>
+                <p>
+                    Ulos adalah simbol budaya Batak yang menyimbolkan berkat, perlindungan, dan kehangatan. Proses pembuatannya diwariskan dari generasi ke generasi dan membutuhkan kesabaran serta keahlian tinggi.
+                </p>
+                <p>
+                    Gita Ulos hadir untuk menjaga warisan ini tetap hidup, dengan menghadirkan koleksi ulos buatan tangan oleh para penenun asli di sekitar Danau Toba. Perpaduan tradisi dan modernitas ini membawa makna budaya kepada setiap pelanggan kami.
+                </p>
+                <a href="{{ route('uloskita') }}" class="btn btn-lg mt-3 px-4 py-2 shadow rounded-pill text-white" style="background-color: #8B0000;">
+                    Baca Selengkapnya
+                </a>
             </div>
+
         </div>
     </div>
 </section>
+
 
 
 <!-- Making Process -->
@@ -253,6 +252,51 @@
 </div>
 
 <style>
+    .custom-heritage-card {
+    background: linear-gradient(
+        135deg,
+        rgba(139, 0, 0, 0.05),
+        rgba(255, 255, 255, 0.85)
+    );
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(139, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.custom-heritage-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.heritage-img-container {
+    max-width: 420px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    transition: transform 0.5s ease;
+}
+
+.heritage-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    border-radius: 1.5rem;
+}
+
+.heritage-img-container:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1) contrast(1.1);
+}
+
+.heritage-content p {
+    color: #333;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
 .custom-card-bg {
     background: linear-gradient(
         135deg,
@@ -278,6 +322,66 @@
 .custom-soft-btn:hover {
     background-color: #a94442;
     transform: scale(1.03);
+}
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    background: linear-gradient(135deg, #fff, #f3f3f3);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.image-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{ asset("img/patterns/ulos-pattern.png") }}'); 
+    background-size: cover;
+    opacity: 0.07;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.image-container:hover {
+    transform: scale(1.03) rotateX(3deg) rotateY(-3deg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    transition: transform 0.6s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.image-container:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.05) contrast(1.1);
+}
+
+
+.btn:active {
+    transform: scale(0.98); 
+    background-color: #6A0000; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; 
+}
+
+
+.btn:focus {
+    outline: none; 
+    background-color:rgb(242, 12, 12); 
+    box-shadow: 0 0 10pxrgb(36, 4, 4); 
+    transition: background-color 0.2s ease; 
 }
 
 
@@ -311,16 +415,23 @@
 
 .btn-cart {
     background-color: white;
-    color: #2563eb;
-    border: 2px solid #2563eb;
+    color: #8B0000; 
+    border: 2px solid #8B0000;
     gap: 4px;
     height: 40px;
     border-radius: 5px;
     text-decoration: none;
     padding-top: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.btn-cart:hover {
+    background-color: #8B0000;
+    color: white;
+}
+
 
 .form-cart {
     width: 100%;
@@ -328,20 +439,21 @@
 }
 
 :root {
-    --primary-color: blue;
-    --secondary-color: #8e24aa;
-    --accent-color: #ffc107; 
-    --text-color: #212121;
-    --text-secondary: #666;
-    --text-light: #ffffff;
-    --danger-color: #dc3545;
-    --success-color: #28a745;
-    --light-gray: #f3f4f6;
-    --lighter-gray: #f9f9f9;
-    --border-color: #eaeaea;
-    --shadow-light: rgba(0, 0, 0, 0.05);
-    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --primary-color: #800000; 
+    --secondary-color: #8B0000; 
+    --accent-color: #B22222; 
+    --text-color: #212121; 
+    --text-secondary: #666; 
+    --text-light: #ffffff; 
+    --danger-color: #dc3545; 
+    --success-color: #28a745; 
+    --light-gray: #f3f4f6; 
+    --lighter-gray: #f9f9f9; 
+    --border-color: #eaeaea; 
+    --shadow-light: rgba(0, 0, 0, 0.05); 
+    --shadow-medium: rgba(0, 0, 0, 0.1); 
 }
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

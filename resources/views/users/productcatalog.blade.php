@@ -185,19 +185,19 @@
     }
 
     .btn-buy {
-        background-color: #2563eb; 
+        background-color: #8B0000; 
         color: white;
         text-decoration: none;
     }
 
     .btn-buy:hover {
-        background-color: #1d4ed8;
+        background-color: #8B0000; 
     }
 
     .btn-cart {
         background-color: white;
-        color: #2563eb;
-        border: 1px solid #2563eb;
+        color: #8B0000; 
+        border: 1px solid #8B0000; 
         gap: 4px;
     }
 
