@@ -120,7 +120,7 @@
     border-left: 4px solid #4a5568;
 }
 
-/* Container grup kategori */
+
 .nav-category-group, .nav-action-group {
     width: 100%;
 }
@@ -132,7 +132,7 @@
     flex-wrap: wrap;
 }
 
-/* Tombol navigasi dasar */
+
 .nav-btn {
     display: flex;
     align-items: center;
@@ -152,7 +152,7 @@
     font-size: 16px;
 }
 
-/* Tombol Produk Kita - Style */
+
 .nav-btn.product-main {
     background: linear-gradient(135deg, #3182ce, #2b6cb0);
     color: white;
