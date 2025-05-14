@@ -79,7 +79,7 @@
             
             <!-- Gambar -->
             <div class="heritage-img-container flex-shrink-0">
-                <img src="{{ asset('img/ulos/whatsappimage.jpg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
+                <img src="{{ asset('img/ulos/uloskitaimage.png') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
             </div>
 
             <!-- Konten Teks -->
