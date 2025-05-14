@@ -82,7 +82,7 @@
                 <img src="{{ asset('img/ulos/uloskitaimage.png') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
             </div>
 
-            <!-- Konten Teks -->
+          
             <div class="heritage-content text-center text-md-start">
                 <h2 class="fw-bold mb-3" style="color: #8B0000;">Warisan Budaya yang Ditenun dengan Cinta</h2>
                 <p>
@@ -417,8 +417,8 @@
 
 .btn-cart {
     background-color: white;
-    color: #8B0000; 
-    border: 2px solid #8B0000;
+    color: blue; 
+    border: 2px solid blue;
     gap: 4px;
     height: 40px;
     border-radius: 5px;

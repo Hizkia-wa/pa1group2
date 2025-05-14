@@ -71,16 +71,10 @@
                     <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
                     <div class="product-actions">
-                        <a href="{{ route('customer.product.detail', $product->id) }}" class="btn-buy">Beli</a>
-                        <form action="{{ route('customer.cart.add') }}" method="POST" class="form-cart">
-                            @csrf
-                            <input type="hidden" name="ProductId" value="{{ $product->id }}">
-                            <input type="hidden" name="Quantity" value="1">
-                            <input type="hidden" name="Size" value="200 x 50 cm">
-                            <button type="submit" class="btn-cart">
-                                <i class="bi bi-cart-plus"></i> Keranjang
-                            </button>
-                        </form>
+                    <a href="{{ route('login') }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                    <a href="{{ route('login') }}" class="btn-cart">
+                        <i class="bi bi-cart-plus"></i> Keranjang
+                    </a>
                     </div>
                 </div>
             </div>
@@ -145,6 +139,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        text-decoration: none;
     }
 
     .product-desc {
@@ -186,22 +181,23 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-decoration: none;
     }
 
     .btn-buy {
-        background-color: #2563eb; 
+        background-color: #8B0000; 
         color: white;
         text-decoration: none;
     }
 
     .btn-buy:hover {
-        background-color: #1d4ed8;
+        background-color: #8B0000; 
     }
 
     .btn-cart {
         background-color: white;
-        color: #2563eb;
-        border: 1px solid #2563eb;
+        color: #8B0000; 
+        border: 1px solid #8B0000; 
         gap: 4px;
     }
 

@@ -9,7 +9,6 @@
         <h1 class="animate__fadeInUp" style="animation-delay: 0.3s;">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p class="animate__fadeInUp" style="animation-delay: 0.4s;">Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons animate__fadeInUp" style="animation-delay: 0.5s;">
-            <a href="#" class="btn btn-secondary">Tentang Ulos</a>
         </div>
     </div>
 </div>
@@ -269,11 +268,44 @@
     box-shadow: 0 10px 25px rgba(123, 44, 191, 0.12);
 }
 
+/* UPDATED IMAGE STYLES */
 .collection-card-media {
     position: relative;
     height: 220px;
     overflow: hidden;
+    background-color: #f5f5f5; /* Light background for empty space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.collection-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the image covers the container area properly */
+    object-position: center; /* Centers the image */
+    transition: transform 0.5s ease;
+}
+
+.collection-card:hover .collection-img {
+    transform: scale(1.05);
+}
+
+.collection-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.collection-card:hover .collection-hover-overlay {
+    opacity: 1;
+}
+/* END OF UPDATED IMAGE STYLES */
 
 .collection-card-body {
     padding: 18px;

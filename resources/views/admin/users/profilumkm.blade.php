@@ -3,18 +3,21 @@
 @section('content')
 <div class="container py-4">
     <!-- Header Section - Lebih compact dan rapi -->
-    <div class="hero-section animate__fadeIn">
-        <div class="hero-content animate__zoomIn" style="animation-delay: 0.2s;">
-            <h1 class="main-title animate__fadeInUp" style="animation-delay: 0.3s;">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
-            <p class="subtitle animate__fadeInUp" style="animation-delay: 0.4s;">
-                Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.
-            </p>
-            <div class="hero-buttons animate__fadeInUp" style="animation-delay: 0.5s;">
-                <a href="#sejarahumkm" class="btn-primary">Sejarah <span class="arrow">→</span></a>
-                <a href="#UMKMnya" class="btn-secondary">Pemilik <span class="arrow">→</span></a>
-            </div>
+   <div class="hero-section animate__fadeIn">
+    <div class="hero-content animate__zoomIn" style="animation-delay: 0.2s;">
+        <h1 class="main-title animate__fadeInUp" style="animation-delay: 0.3s;">
+            Keindahan Budaya Batak Dalam Setiap Helai Ulos
+        </h1>
+        <p class="subtitle animate__fadeInUp" style="animation-delay: 0.4s;">
+            Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.
+        </p>
+        <div class="hero-buttons animate__fadeInUp" style="animation-delay: 0.5s;">
+            <a href="#sejarahumkm" class="btn-primary">Sejarah <span class="arrow">→</span></a>
+            <a href="#UMKMnya" class="btn-secondary">Pemilik <span class="arrow">→</span></a>
         </div>
     </div>
+</div>
+
 
     <!-- Sejarah Section - Layout lebih bersih -->
     <div class="section-container animate__fadeIn" id="sejarahumkm">
@@ -131,7 +134,7 @@
 <style>
 :root {
     --primary-color: #7B2CBF;
-    --secondary-color: #FF9E00;
+    --secondary-color: #8B0000; /* Ganti dengan warna maroon */
     --text-color: #333333;
     --text-light: #666666;
     --background-light: #F9F7FE;
@@ -238,22 +241,46 @@ p {
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
+     transition: background-color 0.3s, transform 0.1s ease;
+}
+.btn-primary:focus, .btn-secondary:focus {
+    outline: 2px dashed var(--secondary-color);
+    outline-offset: 3px;
 }
 
 .btn-primary {
-    background-color: var(--secondary-color);
+    background-color: #8B0000;
     color: white;
+    border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+    background-color: #a13333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.25);
+}
+
+.btn-primary:active {
+    background-color: #5c0000; 
+    transform: scale(0.98);     
 }
 
 .btn-secondary {
-    background-color: #333333;
-    color: white;
-    border: 1px solid white;
+    background-color: white;
+    color: #8B0000;
+    border: 2px solid #8B0000;
 }
 
-.btn-primary:hover, .btn-secondary:hover {
+.btn-secondary:hover {
+    background-color: #fbeaea;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: #8B0000;
+    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
+}
+
+.btn-secondary:active {
+    background-color: #f0dede; /* lebih gelap dari hover */
+    transform: scale(0.98);
 }
 
 .arrow {

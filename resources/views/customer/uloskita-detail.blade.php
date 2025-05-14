@@ -1,5 +1,3 @@
-@extends('layouts.customer')
-
 @section('content')
 <div class="container mt-5">
     <div class="row">
@@ -241,6 +239,7 @@
     }
 }
 
+/* Make sure tabs are scrollable on mobile */
 @media (max-width: 575.98px) {
     .ulos-tabs .nav {
         -webkit-overflow-scrolling: touch;

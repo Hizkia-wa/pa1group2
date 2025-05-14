@@ -417,8 +417,8 @@
 
 .btn-cart {
     background-color: white;
-    color: #8B0000; 
-    border: 2px solid #8B0000;
+    color: blue; 
+    border: 2px solid blue;
     gap: 4px;
     height: 40px;
     border-radius: 5px;
