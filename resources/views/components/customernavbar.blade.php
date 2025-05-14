@@ -14,7 +14,7 @@
                 </li>
              
                 <li class="nav-item">
-                    <a href="{{ route('uloskita') }}" class="nav-link nav-item-link {{ request()->routeIs('customer.uloskita') ? 'active' : '' }}">Ulos Kita</a>
+                    <a href="{{ route('customer.uloskita') }}" class="nav-link nav-item-link {{ request()->routeIs('customer.uloskita') ? 'active' : '' }}">Ulos Kita</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('customer.reviews') }}" class="nav-link nav-item-link {{ request()->routeIs('user.reviews') ? 'active' : '' }}">Ulasan</a>
@@ -23,7 +23,7 @@
                     <a href="{{ route('customerprofil.umkm') }}" class="nav-link nav-item-link {{ request()->routeIs('profil.umkm') ? 'active' : '' }}">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('customer.catalog') }}" class="nav-link nav-item-link {{ request()->routeIs('products.index') ? 'active' : '' }}">Produk</a>
+                    <a href="{{ route('customer.catalog') }}" class="nav-link nav-item-link {{ request()->routeIs('customer.catalog') ? 'active' : '' }}">Produk</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('homeCustomer') }}" class="nav-link nav-item-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>

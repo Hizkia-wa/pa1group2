@@ -9,7 +9,6 @@
         <h1 class="animate__fadeInUp" style="animation-delay: 0.3s;">Keindahan Budaya Batak Dalam Setiap Helai Ulos</h1>
         <p class="animate__fadeInUp" style="animation-delay: 0.4s;">Temukan koleksi Ulos terbaik dari Danau Toba, warisan budaya Indonesia yang ditenun dengan keahlian dan tradisi turun-temurun.</p>
         <div class="hero-buttons animate__fadeInUp" style="animation-delay: 0.5s;">
-            <a href="#" class="btn btn-secondary">Tentang Ulos</a>
         </div>
     </div>
 </div>

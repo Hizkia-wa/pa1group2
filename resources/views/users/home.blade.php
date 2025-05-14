@@ -43,7 +43,9 @@
                         </div>
 
                         <div class="card-body p-3">
-                            <h5 class="card-title">{{ $product->ProductName }}</h5>
+                            <a href="{{ route('user.product.detail', ['id' => $product->id]) }}" style="color: maroon; text-decoration: none;">
+                                <h5 class="card-title">{{ $product->ProductName }}</h5>
+                            </a>
                             <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
                             <div class="mt-2">
                                 <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
