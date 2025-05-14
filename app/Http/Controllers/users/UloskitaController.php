@@ -13,15 +13,16 @@ class UloskitaController extends Controller
     {
         return [
             [
-                'name' => 'Ulos Antakantak',
-                'slug' => 'antakantak',
+                'name' => 'Ulos Mangiring',
+                'slug' => 'mangiring',
                 'category' => 'ulos',
-                'short_description' => 'Ulos Antakantak adalah kain tenun yang berbentuk selendang dengan motif yang sederhana namun elegan.',
-                'image' => 'ulos-atakanta.jpg',
-                'description' => 'Ulos Antakantak adalah kain tenun yang berbentuk selendang dengan motif yang sederhana namun elegan. Biasanya, ulos ini memiliki warna dasar gelap dengan pola garis-garis atau geometris yang menarik.',
-                'kegunaan' => 'Ulos Antakantak digunakan dalam berbagai upacara adat seperti pernikahan dan pemakaman. Ulos ini juga sering digunakan sebagai hadiah penghormatan kepada tamu istimewa.',
-                'pembuatan' => 'Proses pembuatan Ulos Antakantak melibatkan teknik tenun tradisional menggunakan alat tenun bukan mesin (ATBM). Pembuatannya memerlukan ketelitian tinggi dan waktu yang cukup lama karena dibuat secara manual.'
+                'short_description' => 'Ulos Mangiring dikenal sebagai simbol perlindungan dan keberkahan.',
+                'image' => 'ulosmangiring.jpg',
+                'description' => 'Ulos Mangiring memiliki motif garis-garis yang tersusun rapi dengan warna dominan merah, hitam, putih, dan kuning. Ulos ini melambangkan perlindungan dan keberkahan bagi penerimanya, sering diberikan kepada anak atau cucu sebagai doa agar selalu mendapat berkah dan perlindungan dari leluhur.',
+                'kegunaan' => 'Ulos Mangiring biasanya diberikan kepada anak atau cucu yang baru lahir sebagai simbol doa untuk kehidupan yang penuh berkat dan perlindungan dari leluhur.',
+                'pembuatan' => 'Proses pembuatan Ulos Mangiring melibatkan tenunan manual dengan teknik tradisional yang memerlukan ketelitian dan waktu cukup lama untuk menghasilkan motif yang rumit dan indah.'
             ],
+
             [
                 'name' => 'Ulos Ragidup',
                 'slug' => 'ragidup',

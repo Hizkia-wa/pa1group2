@@ -76,7 +76,7 @@
             </div>
             <div class="col-lg-6 animate__fadeInRight">
                 <div class="info-image">
-                    <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" alt="Ulos Culture">
+                    <img src="{{ asset('img/ulos/uloskitaimage.png') }}" alt="Ulos Culture">
                     <div class="info-image-decoration"></div>
                 </div>
             </div>
