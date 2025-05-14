@@ -79,7 +79,7 @@
             
             <!-- Gambar -->
             <div class="heritage-img-container flex-shrink-0">
-                <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
+                <img src="{{ asset('img/ulos/imagehome.jpg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
             </div>
 
             <!-- Konten Teks -->
@@ -213,7 +213,7 @@
             </a>
         </div>
         <div class="col-md-4 text-center text-md-end mt-4 mt-md-0 animate__fadeInRight">
-            <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" 
+            <img src="{{ asset('img/ulos/whatsappimage.jpg') }}" 
                  class="img-fluid rounded-4 shadow-sm custom-contact-img" 
                  alt="Contoh Ulos" 
                  style="max-height: 260px; object-fit: cover;">

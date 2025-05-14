@@ -4,7 +4,7 @@
 
 <div class="hero-header animate__fadeIn">
     <div class="hero-image-container">
-        <img src="{{ asset('img/background.png') }}" alt="Gambar Budaya Batak" class="hero-image animate__zoomIn">
+        <img src="{{ asset('img/imagehome.jpg') }}" alt="Gambar Budaya Batak" class="hero-image animate__zoomIn">
     </div>
     <div class="hero-content animate__slideInUp">
     </div>
@@ -79,7 +79,7 @@
             
             <!-- Gambar -->
             <div class="heritage-img-container flex-shrink-0">
-                <img src="{{ asset('img/ulos/partonun.jpeg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
+                <img src="{{ asset('img/ulos/whatsappimage.jpg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
             </div>
 
             <!-- Konten Teks -->

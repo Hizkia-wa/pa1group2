@@ -32,7 +32,7 @@
                 </p>
             </div>
             <div class="image-container animate__zoomIn" style="animation-delay: 0.3s;">
-                <img src="img/ulos/partonun.jpeg" alt="Keluarga Gita Ulos" class="img-fluid rounded shadow">
+                <img src="img/ulos/imgaeprofil.jpg" alt="Keluarga Gita Ulos" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="image-container animate__flipInX" style="animation-delay: 0.2s;">
-                <img src="img/background.png" alt="Pemilik Gita Ulos" class="img-fluid rounded shadow">
+                <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik Gita Ulos" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
