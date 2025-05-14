@@ -1,10 +1,11 @@
 <!-- resources/views/components/navbaradmin.blade.php -->
 <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm px-4 animate__animated animate__fadeInDown">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold glowing-brand" href="#">Gita Ulos</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+         <a class="navbar-brand d-flex align-items-center glowing-brand" href="{{ route('homeGuest') }}">
+            <img src="{{ asset('img/ulos/logogita.png') }}" alt="Gita Ulos Logo" height="40" class="d-inline-block align-text-top me-2">
+            <span class="brand-text">G𝓲𝓽𝓪 𝓤𝓵𝓸𝓼</span>
+        </a>
+
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAdmin">
             <ul class="navbar-nav gap-4 align-items-center fw-bold">

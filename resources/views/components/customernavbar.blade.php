@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm px-4">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold glowing-brand" href="#">Gita Ulos</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
+         <a class="navbar-brand d-flex align-items-center glowing-brand" href="{{ route('homeGuest') }}">
+            <img src="{{ asset('img/ulos/logogita.png') }}" alt="Gita Ulos Logo" height="40" class="d-inline-block align-text-top me-2">
+            <span class="brand-text">G𝓲𝓽𝓪 𝓤𝓵𝓸𝓼</span>
+        </a>
+
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav flex-row-reverse gap-3 fw-semibold align-items-center">
                 <li class="nav-item">

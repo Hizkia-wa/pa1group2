@@ -182,7 +182,7 @@
         padding: 80px 0; 
         margin-top: 25px;
         position: relative;
-        border-bottom: 1px solid rgba(255, 152, 0, 0.3);
+        border-bottom: 1px solid  #8B0000(255, 152, 0, 0.3);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
@@ -203,7 +203,7 @@
     }
 
     .review-title {
-        color: #ff9800;
+        color:  #8B0000;
         font-weight: 700;
         font-size: 2.5rem;
         margin-bottom: 15px;
@@ -229,17 +229,17 @@
     .line-left, .line-right {
         height: 2px;
         width: 100px;
-        background: linear-gradient(90deg, transparent, #ff9800);
+        background: linear-gradient(90deg, transparent,  #8B0000);
         display: inline-block;
     }
     
     .line-right {
-        background: linear-gradient(90deg, #ff9800, transparent);
+        background: linear-gradient(90deg,  #8B0000, transparent);
     }
     
     .review-decoration i {
         font-size: 1.5rem;
-        color: #ff9800;
+        color:  #8B0000;
         margin: 0 15px;
     }
   
@@ -262,7 +262,7 @@
     
     .rating-summary-card {
         background: linear-gradient(135deg, #ffffff, #f8f9fa);
-        border-left: 4px solid #ff9800;
+        border-left: 4px solid   #8B0000;
     }
     
     /* Review List Styling */
@@ -281,7 +281,7 @@
     .avatar-circle {
         width: 50px;
         height: 50px;
-        background-color: #ff9800;
+        background-color:  #8B0000;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -326,13 +326,13 @@
     }
     
     .star-rating.text-warning {
-        filter: drop-shadow(0 2px 5px rgba(255, 193, 7, 0.5));
+        filter: drop-shadow(0 2px 5px  #8B0000(255, 193, 7, 0.5));
     }
     
     /* Button Styling */
     .btn-primary {
-        background-color: #ff9800;
-        border-color: #ff9800;
+        background-color:  #8B0000;
+        border-color:  #8B0000;
         padding: 8px 20px;
         border-radius: 30px;
         font-weight: 500;
@@ -340,20 +340,20 @@
     }
     
     .btn-primary:hover, .btn-primary:focus {
-        background-color: #e68a00;
-        border-color: #e68a00;
+        background-color:  #8B0000;
+        border-color:  #8B0000;
         box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
         transform: translateY(-3px);
     }
     
     .btn-outline-primary {
-        color: #ff9800;
-        border-color: #ff9800;
+        color:  #8B0000;
+        border-color:  #8B0000;
     }
     
     .btn-outline-primary:hover {
-        background-color: #ff9800;
-        border-color: #ff9800;
+        background-color:  #8B0000;
+        border-color:  #8B0000;
     }
     
     /* Form Styling */
@@ -362,13 +362,13 @@
     }
     
     .form-floating>.form-control:focus {
-        border-color: #ff9800;
+        border-color:   #8B0000;
         box-shadow: 0 0 0 0.25rem rgba(255, 152, 0, 0.25);
     }
     
     .form-check-input:checked {
-        background-color: #ff9800;
-        border-color: #ff9800;
+        background-color:  #8B0000;
+        border-color:  #8B0000;
     }
     
     /* Animation */
@@ -400,7 +400,7 @@
     }
     
     .pagination .page-item.active .page-link {
-        background-color: #ff9800;
+        background-color:  #8B0000;
         border-color: #ff9800;
     }
 
