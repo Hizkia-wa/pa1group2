@@ -199,7 +199,7 @@
             <input type="number" name="Quantity" value="1" min="1" required>
         </div>
 
-        <button type="button" class="btn-submit" onclick="window.location.href='{{ route('login') }}'">
+        <button type="button" class="btn-submit" id="waButton" data-admin="6282274398996">
             <i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp
         </button>
 
