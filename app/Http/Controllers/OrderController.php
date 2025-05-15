@@ -8,13 +8,16 @@ use App\Models\Product;
 
 class OrderController extends Controller
 {
-    public function index()
+public function index()
 {
     $orders = Order::whereNotIn('OrderStatus', ['Selesai', 'Batal'])
         ->orderBy('created_at', 'desc')
         ->get()
         ->groupBy(function ($item) {
-            return $item->CustomerName . '|' . $item->Email . '|' . $item->Phone . '|' . $item->created_at->format('Y-m-d');
+            return $item->CustomerName 
+                . '|' . $item->Email 
+                . '|' . $item->Phone 
+                . '|' . $item->created_at->format('Y-m-d H:i:s'); // waktu lengkap sampai detik
         });
 
     return view('admin.orders', compact('orders'));
@@ -52,17 +55,18 @@ public function store(Request $request)
         
         // Simpan pesanan ke database
         $order = Order::create([
-            'ProductId' => $request->ProductId,
+            'ProductId'    => $request->ProductId,
             'CustomerName' => $request->name,
-            'Email' => $request->email,
-            'Phone' => $request->phone,
-            'City' => $request->city,
-            'District' => $request->district,
-            'Address' => $request->address,
-            'PostalCode' => $request->postal_code,
-            'Size' => $request->size,
-            'Quantity' => $request->Quantity,
-            'OrderStatus' => 'Diproses', // Status default
+            'Email'        => $request->email,
+            'Phone'        => $request->phone,
+            'City'         => $request->city,
+            'District'     => $request->district,
+            'Address'      => $request->address,
+            'PostalCode'   => $request->postal_code,
+            'Size'         => $request->size,
+            'Quantity'     => $request->Quantity,
+            'total_price'  => $product->Price * $request->Quantity,
+            'OrderStatus'  => 'Diproses',
         ]);
 
         // Mengembalikan respons sukses

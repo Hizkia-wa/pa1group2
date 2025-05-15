@@ -2,28 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Product;
 
 class Order extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
+
     protected $table = 'Orders';
+
     protected $fillable = [
-        'CustomerName', 'Email', 'Phone',
-        'total_price', 'City', 'District', 'Address', 'PostalCode',
-        'Status',
+        'ProductId',
+        'CustomerName',
+        'Email',
+        'Phone',
+        'City',
+        'District',
+        'Address',
+        'PostalCode',
+        'Size',
+        'Quantity',
+        'total_price',
+        'OrderStatus',
     ];
 
-    public function orderItems()
+    public function product()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->belongsTo(Product::class, 'ProductId');
     }
-    public function items()
-    {
-    return $this->hasMany(OrderItem::class, 'order_id'); // ganti jika nama kolom foreign key berbeda
-    }
-
 }
