@@ -394,7 +394,7 @@ class ProductController extends Controller
                     ->pluck('Category');
         
         // Kirim parameter pencarian kembali ke tampilan untuk mempertahankan status
-        return view('Customer.productcatalog', compact('products', 'categories'));
+        return view('customer.productcatalog', compact('products', 'categories'));
     }
 
     public function showAdminCatalog(Request $request)
