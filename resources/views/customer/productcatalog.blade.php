@@ -43,7 +43,7 @@
     <div class="alert alert-info mb-4">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                Menampilkan hasil {{ $products->count() }} dari {{ $products->total() }} produk
+                Menampilkan {{ $products->count() }} produk
                 @if(request('search')) untuk pencarian "{{ request('search') }}" @endif
                 @if(request('category')) dalam kategori "{{ request('category') }}" @endif
             </div>
@@ -66,18 +66,24 @@
                 <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
 
                 <div class="product-info">
-                        <a href="{{ route('customer.product.detail', $product->id) }}" class="btn-buy">Beli</a>
-                        <form action="{{ route('customer.cart.add') }}" method="POST" class="form-cart">
-                            @csrf
-                            <input type="hidden" name="ProductId" value="{{ $product->id }}">
-                            <input type="hidden" name="Quantity" value="1">
-                            <input type="hidden" name="Size" value="200 x 50 cm">
-                            <button type="submit" class="btn-cart">
-                                <i class="bi bi-cart-plus"></i> Keranjang
-                            </button>
-                        </form>
-                    </div>
-                </div>
+    <h5 class="product-title">{{ $product->ProductName }}</h5>
+    <p class="product-desc">{{ Str::limit($product->Description, 40) }}</p>
+    <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
+
+    <div class="product-actions">
+        <a href="{{ route('customer.product.detail', $product->id) }}" class="btn-buy flex-grow-1 me-2">Beli</a>
+        <form action="{{ route('customer.cart.add') }}" method="POST" class="form-cart">
+            @csrf
+            <input type="hidden" name="ProductId" value="{{ $product->id }}">
+            <input type="hidden" name="Quantity" value="1">
+            <input type="hidden" name="Size" value="200 x 50 cm">
+            <button type="submit" class="btn-cart">
+                <i class="bi bi-cart-plus"></i> Keranjang
+            </button>
+        </form>
+    </div>
+</div>
+
             </div>
         </div>
         @empty
@@ -91,11 +97,6 @@
         @endforelse
     </div>
 
-    {{-- Pagination --}}
-    <div class="d-flex justify-content-center mt-4">
-        {{ $products->appends(request()->query())->links() }}
-    </div>
-</div>
 @endsection
 
 {{-- CSS untuk Styling --}}

@@ -71,10 +71,11 @@
                     <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
                     <div class="product-actions">
-                    <a href="{{ route('login') }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
+                    <a href="{{ route('login') }}" class="btn-buy flex-grow-1 me-2">Beli</a>
                     <a href="{{ route('login') }}" class="btn-cart">
                         <i class="bi bi-cart-plus"></i> Keranjang
                     </a>
+
                     </div>
                 </div>
             </div>
@@ -88,11 +89,6 @@
             </div>
         </div>
         @endforelse
-    </div>
-
-    {{-- Pagination --}}
-    <div class="d-flex justify-content-center mt-4">
-        {{ $products->appends(request()->query())->links() }}
     </div>
 </div>
 @endsection
@@ -184,26 +180,31 @@
         text-decoration: none;
     }
 
-    .btn-buy {
-        background-color: #8B0000; 
-        color: white;
-        text-decoration: none;
-    }
+ .btn-buy {
+    background-color: #8B0000;
+    color: white;
+    text-decoration: none;
+}
 
-    .btn-buy:hover {
-        background-color: #8B0000; 
-    }
+.btn-buy:hover {
+    background-color: #a80000;
+    color: white;
+}
 
-    .btn-cart {
-        background-color: white;
-        color: #8B0000; 
-        border: 1px solid #8B0000; 
-        gap: 4px;
-    }
+.btn-cart {
+    background-color: white;
+    color: #8B0000;
+    border: 1px solid #8B0000;
+    gap: 4px;
+    text-decoration: none;
+}
 
-    .btn-cart:hover {
-        background-color: #f0f7ff;
-    }
+.btn-cart:hover {
+    background-color: #f0f7ff;
+    color: #8B0000;
+    border-color: #8B0000;
+}
+
     
     .form-cart {
         width: 100%;

@@ -328,7 +328,7 @@ class ProductController extends Controller
         }
         
         // Dapatkan produk dengan paginasi
-        $products = $query->paginate(12);
+         $products = $query->get();
         
         // Ambil semua kategori untuk dropdown filter
         $categories = Product::whereNull('deleted_at')
