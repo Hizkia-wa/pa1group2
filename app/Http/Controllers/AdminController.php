@@ -15,10 +15,10 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $jumlahProduk = Product::count();
-        $jumlahCustomer = Customer::count();
-        $jumlahOrder = Order::count();
-        $jumlahReview = Review::count();
+        $jumlahProduk = product::count();
+        $jumlahCustomer = customer::count();
+        $jumlahOrder = order::count();
+        $jumlahReview = review::count();
 
         return view('admin.homepage', compact('jumlahProduk', 'jumlahCustomer', 'jumlahOrder', 'jumlahReview'));
     }
