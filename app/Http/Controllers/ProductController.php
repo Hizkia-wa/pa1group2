@@ -232,13 +232,13 @@ class ProductController extends Controller
         
         // Tambahkan path lengkap untuk gambar utama
         if ($product->image) {
-            $product->main_image_url = asset('storage/' . $product->image);
+            $product->main_image_url = asset('storage/app/public/' . $product->image);
         } else {
             $product->main_image_url = asset('images/no-image.png');
         }
         
         $product->all_images = collect($product->image_array)->map(function($img) {
-            return asset('storage/' . $img);
+            return asset('storage/app/public/' . $img);
         })->toArray();
 
         // Jika ada gambar utama, tambahkan ke array all_images jika belum ada
@@ -266,13 +266,13 @@ class ProductController extends Controller
         
         // Tambahkan path lengkap untuk gambar utama
         if ($product->image) {
-            $product->main_image_url = asset('storage/' . $product->image);
+            $product->main_image_url = asset('storage/app/public/' . $product->image);
         } else {
             $product->main_image_url = asset('images/no-image.png');
         }
         
         $product->all_images = collect($product->image_array)->map(function($img) {
-            return asset('storage/' . $img);
+            return asset('storage/app/public/' . $img);
         })->toArray();
 
         // Jika ada gambar utama, tambahkan ke array all_images jika belum ada
