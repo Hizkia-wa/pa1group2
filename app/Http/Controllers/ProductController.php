@@ -77,6 +77,48 @@ class ProductController extends Controller
         return redirect()->route('products.best')->with('success', 'Produk terlaris berhasil ditambahkan!');
     }
 
+    public function storeRegular(Request $request)
+{
+    $request->validate([
+        'ProductName' => 'required|string|max:255',
+        'Price' => 'required|numeric',
+        'Quantity' => 'required|integer|min:0',
+        'Category' => 'required|string',
+        'Description' => 'nullable|string',
+        'ImageMain' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'ImageOthers.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    $product = new Product();
+    $product->ProductName = $request->ProductName;
+    $product->Price = $request->Price;
+    $product->Quantity = $request->Quantity;
+    $product->Category = $request->Category;
+    $product->Description = $request->Description;
+
+    // Handle gambar utama
+    if ($request->hasFile('ImageMain')) {
+        $product->ImageMain = $request->file('ImageMain')->store('products', 'public');
+    }
+
+    // Handle gambar lainnya
+    $imagePaths = [];
+    if ($request->hasFile('ImageOthers')) {
+        foreach ($request->file('ImageOthers') as $image) {
+            $imagePaths[] = $image->store('products', 'public');
+        }
+    }
+
+    $product->Images = json_encode($imagePaths);
+
+    // Tandai sebagai produk biasa (bukan best seller)
+    $product->IsBestSeller = false;
+
+    $product->save();
+
+    return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
+}
+
     public function show($id)
     {
         $product = Product::findOrFail($id);
