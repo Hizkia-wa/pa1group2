@@ -83,7 +83,7 @@ class CustomLoginController extends Controller
                 ->with('error', 'Registrasi gagal. Periksa kembali data yang diisi.');
         }
     
-        Customer::create([
+        customer::create([
             'CustomerName' => $request->name,
             'Email' => $request->email,
             'Password' => Hash::make($request->password),
@@ -103,7 +103,7 @@ class CustomLoginController extends Controller
         $email = $request->email;
     
         // Cari customer berdasarkan email
-        $customer = Customer::where('Email', $email)->first();
+        $customer = customer::where('Email', $email)->first();
         if (!$customer) {
             return back()->with('error', 'Email tidak ditemukan.');
         }

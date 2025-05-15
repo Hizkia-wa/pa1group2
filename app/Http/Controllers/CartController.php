@@ -20,7 +20,7 @@ class CartController extends Controller
     {
         $userId = $this->getCurrentUserId();
 
-        $cartItems = Cart::with('product')
+        $cartItems = cart::with('product')
             ->where('UserId', $userId)
             ->get();
 
@@ -30,7 +30,7 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $request->validate([
-            'ProductId' => 'required|exists:Products,id',
+            'ProductId' => 'required|exists:products,id',
             'Quantity' => 'required|integer|min:1',
             'Size' => 'required|string',
         ]);
@@ -38,7 +38,7 @@ class CartController extends Controller
         $userId = $this->getCurrentUserId();
 
         // Cek apakah produk sudah ada di keranjang user
-        $cartItem = Cart::where('UserId', $userId)
+        $cartItem = cart::where('UserId', $userId)
             ->where('ProductId', $request->ProductId)
             ->where('Size', $request->Size)
             ->first();
@@ -49,7 +49,7 @@ class CartController extends Controller
             $cartItem->save();
         } else {
             // Jika belum ada, buat entri baru
-            Cart::create([
+            cart::create([
                 'UserId' => $userId,
                 'ProductId' => $request->ProductId,
                 'Quantity' => $request->Quantity,
@@ -64,7 +64,7 @@ class CartController extends Controller
     {
         $userId = $this->getCurrentUserId();
 
-        Cart::where('id', $id)
+        cart::where('id', $id)
             ->where('UserId', $userId)
             ->delete();
 
@@ -83,7 +83,7 @@ public function checkout(Request $request)
 
     foreach ($selected as $value) {
         list($cartId, $size) = explode('-', $value);
-        $cartItem = Cart::with('product')->find($cartId);
+        $cartItem = cart::with('product')->find($cartId);
 
         if ($cartItem) {
             $product = $cartItem->product;
@@ -143,7 +143,7 @@ public function processCheckout(Request $request)
 {
     $userId = $this->getCurrentUserId();
 
-    $cartItems = Cart::with('product')->where('UserId', $userId)->get();
+    $cartItems = cart::with('product')->where('UserId', $userId)->get();
 
     if ($cartItems->isEmpty()) {
         return redirect()->back()->with('error', 'Keranjang kosong.');
@@ -180,7 +180,7 @@ public function processCheckout(Request $request)
         $item->product->decrement('Quantity', $item->Quantity);
     }
 
-    Cart::where('UserId', $userId)->delete();
+    cart::where('UserId', $userId)->delete();
 
     return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
 }
@@ -189,7 +189,7 @@ public function processCheckout(Request $request)
     {
         $userId = $this->getCurrentUserId();
 
-        $cartItem = Cart::where('id', $id)
+        $cartItem = cart::where('id', $id)
             ->where('UserId', $userId)
             ->where('Size', $size)
             ->first();
