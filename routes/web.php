@@ -34,6 +34,7 @@ Route::prefix('Admin')->middleware('auth:admin')->group(function () {
     Route::put('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
     Route::get('/products/bestproducts', [ProductController::class, 'bestProducts'])->name('products.best');
     Route::get('/products/bestproducts/create', [ProductController::class, 'createBestProduct'])->name('products.best.create');
+    Route::post('/products/bestproducts', [ProductController::class, 'store'])->name('products.best.store');
     Route::get('/bestproducts/{id}/edit', [ProductController::class, 'edit'])->name('bestproducts.edit');
     Route::put('/bestproducts/{id}', [ProductController::class, 'update'])->name('bestproducts.update');
     Route::get('/change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.changePasswordForm');
