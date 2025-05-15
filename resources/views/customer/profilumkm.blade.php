@@ -19,72 +19,80 @@
 </div>
 
 
-    <!-- Sejarah Section - Layout lebih bersih -->
-    <div class="section-container animate__fadeIn" id="sejarahumkm">
-        <h2 class="section-title animate__fadeInUp">Sejarah Berdirinya Toko Gita Ulos</h2>
-        <div class="content-wrapper">
-            <div class="text-content animate__fadeInLeft">
-                <p>
-                    Gita Ulos bermula dari perjalanan cinta terhadap warisan budaya Batak yang dirintis oleh keluarga Simanjuntak pada tahun 2015. Berawal dari keprihatinan melihat semakin sedikitnya penenun tradisional Ulos yang mampu bertahan di era modern, Ibu Tiurma Simanjuntak yang merupakan putri asli Toba, memutuskan untuk membuka usaha kecil di rumahnya di Balige.
-                </p>
-                <p>
-                    Dengan modal awal berupa 5 lembar Ulos warisan keluarga dan keterampilan menenun yang dipelajari dari neneknya, Ibu Tiurma mulai memproduksi Ulos dengan mempertahankan teknik tradisional namun dengan sentuhan desain yang lebih kontemporer. Keunikan ini menarik perhatian wisatawan yang berkunjung ke Danau Toba.
-                </p>
-                <p>
-                    Pada tahun 2018, putra Ibu Tiurma, Mangasi Simanjuntak, yang baru menyelesaikan pendidikan di bidang bisnis, bergabung dan membawa inovasi baru dengan membuka platform online untuk menjangkau pasar yang lebih luas. Nama "Gita" dipilih sebagai penghormatan kepada nenek mereka yang merupakan penenun Ulos terkenal di kampungnya.
-                </p>
-            </div>
-            <div class="image-container animate__zoomIn" style="animation-delay: 0.3s;">
-                <img src="img/ulos/imgaeprofil.jpg" alt="Keluarga Gita Ulos" class="img-fluid rounded shadow">
-            </div>
+<!-- Sejarah Section - Disesuaikan dari Dokumen PA & ToR -->
+<div class="section-container animate__fadeIn" id="sejarahumkm">
+    <h2 class="section-title animate__fadeInUp">Sejarah Berdirinya UMKM Gita Ulos</h2>
+    <div class="content-wrapper">
+        <div class="text-content animate__fadeInLeft">
+            <p>
+                UMKM <strong>Gita Ulos</strong>, yang dikelola oleh <strong>Ibu Tiabur Novita Silalahi</strong>, merupakan usaha mikro kecil dan menengah yang berfokus pada produksi serta penjualan kain ulos khas Batak. Usaha ini berlokasi di <strong>Jl. Lintas Utama Sumatera No. 65, Pasar Porsea, Kecamatan Porsea, Kabupaten Toba, Sumatera Utara</strong>.
+            </p>
+            <p>
+                Gita Ulos lahir dari keinginan untuk melestarikan kekayaan budaya lokal melalui produk-produk ulos seperti Ulos Ragi Hotang, Ulos Sibolang, dan Ulos Sadum. Selama bertahun-tahun, penjualan dilakukan secara langsung melalui toko fisik. Namun, seiring berkembangnya zaman dan terbatasnya jangkauan pasar, UMKM ini menghadapi tantangan dalam pemasaran dan persaingan dengan UMKM digital lainnya.
+            </p>
+            <p>
+                Untuk itu, Gita Ulos memutuskan untuk melakukan transformasi digital melalui pengembangan website. Langkah ini diambil agar produk ulos dapat diakses secara lebih luas, tidak hanya di wilayah sekitar Toba, namun juga ke berbagai daerah bahkan secara nasional. Selain menjadi media pemasaran, website ini juga diharapkan menjadi sarana edukasi budaya kepada masyarakat luas.
+            </p>
+        </div>
+        <div class="image-container animate__zoomIn" style="animation-delay: 0.3s;">
+            <img src="img/ulos/imgaeprofil.jpg" alt="UMKM Gita Ulos" class="img-fluid rounded shadow">
         </div>
     </div>
+</div>
 
-    <!-- Pemilik Section - Lebih seimbang -->
-    <div class="section-container bg-light animate__fadeIn" id="UMKMnya">
-        <h2 class="section-title animate__fadeInUp">Pemilik Gita Ulos</h2>
-        <div class="content-wrapper reverse">
-            <div class="text-content animate__fadeInRight">
-                <p>
-                    Gita Ulos dengan bangga menjalin kemitraan dengan para penenun (partonun) terbaik yang membawa keahlian dan warisan budaya dalam setiap helai tenunan:
-                </p>
-                <div class="owner-card animate__fadeInUp" style="animation-delay: 0.2s;">
-                    <h3 class="owner-name">Nai Tiurma Situmorang (65 tahun)</h3>
-                    <p>
-                        Berasal dari Desa Lumban Suhi-suhi, Samosir, Nai Tiurma telah menenun selama lebih dari 45 tahun. Keahliannya dalam menciptakan motif Ragidup dengan teknik songket tradisional menjadikan karyanya sangat dicari. Proses menenunnya masih menggunakan alat tenun gedogan warisan dari ibunya, dengan pewarna alami dari tumbuhan lokal seperti kulit manggis dan daun sirih. Setiap lembar Ulos buatannya memerlukan waktu pengerjaan hingga dua bulan.
-                    </p>
-                </div>
-            </div>
-            <div class="image-container animate__flipInX" style="animation-delay: 0.2s;">
-                <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik Gita Ulos" class="img-fluid rounded shadow">
-            </div>
-        </div>
-    </div>
 
-    <!-- Visi & Misi Section - Layout standar dengan tampilan card -->
-    <div class="section-container animate__fadeIn">
-        <h2 class="section-title animate__fadeInUp">Visi & Misi Gita Ulos</h2>
-        <div class="row">
-            <div class="col-md-6 mb-4 animate__fadeInUp" style="animation-delay: 0.1s;">
-                <div class="vision-mission-card">
-                    <h3>Visi</h3>
-                    <p>Menjadi pusat pelestarian dan pengembangan Ulos Batak yang diakui secara nasional dan internasional, serta menjadi jembatan penghubung antara warisan budaya tradisional dengan generasi modern.</p>
-                </div>
+
+<!-- Pemilik Section - Disesuaikan dari Dokumen ToR -->
+<div class="section-container bg-light animate__fadeIn" id="UMKMnya">
+    <h2 class="section-title animate__fadeInUp">Pemilik UMKM Gita Ulos</h2>
+    <div class="content-wrapper reverse">
+        <div class="text-content animate__fadeInRight">
+            <p>
+                Gita Ulos merupakan UMKM yang dikelola oleh <strong>Ibu Tiabur Novita Silalahi</strong>, beralamat di Jl. Lintas Utama Sumatera No. 65, Pasar Porsea, Kecamatan Porsea, Kabupaten Toba, Sumatera Utara.
+            </p>
+            <p>
+                Sebagai pemilik usaha, Ibu Tiabur berkomitmen untuk menjaga kelestarian budaya Batak melalui kain ulos dan terus berinovasi agar produknya dapat dikenal luas hingga ke berbagai daerah. Melalui pengembangan website ini, beliau berharap dapat memperluas pasar serta mempermudah masyarakat dalam memperoleh produk ulos khas Toba secara digital.
+            </p>
+            <p>
+                Untuk informasi lebih lanjut atau pemesanan produk, Anda dapat menghubungi langsung melalui WhatsApp di nomor: <strong>0813-6163-9551</strong>.
+            </p>
+        </div>
+        <div class="image-container animate__flipInX" style="animation-delay: 0.2s;">
+            <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik UMKM Gita Ulos" class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+
+
+
+
+ <!-- Visi & Misi Section - Disesuaikan dari Dokumen Pengembangan Produk -->
+<div class="section-container animate__fadeIn">
+    <h2 class="section-title animate__fadeInUp">Visi & Misi UMKM Gita Ulos</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4 animate__fadeInUp" style="animation-delay: 0.1s;">
+            <div class="vision-mission-card">
+                <h3>Visi</h3>
+                <p>
+                    Menjadi UMKM berbasis budaya yang modern, efisien, dan adaptif dalam memasarkan produk ulos khas Batak Toba secara digital, serta turut berperan dalam pelestarian budaya Indonesia melalui platform teknologi.
+                </p>
             </div>
-            <div class="col-md-6 mb-4 animate__fadeInUp" style="animation-delay: 0.2s;">
-                <div class="vision-mission-card">
-                    <h3>Misi</h3>
-                    <ul>
-                        <li>Melestarikan teknik tradisional pembuatan Ulos melalui pelatihan dan dokumentasi.</li>
-                        <li>Memberdayakan para penenun lokal, khususnya perempuan di daerah Danau Toba.</li>
-                        <li>Mengembangkan desain Ulos yang kontemporer tanpa menghilangkan nilai filosofis dan kultural.</li>
-                        <li>Mengedukasi masyarakat luas tentang makna dan nilai sejarah di balik setiap motif Ulos.</li>
-                        <li>Memperluas pasar Ulos ke tingkat nasional dan internasional melalui platform digital.</li>
-                    </ul>
-                </div>
+        </div>
+        <div class="col-md-6 mb-4 animate__fadeInUp" style="animation-delay: 0.2s;">
+            <div class="vision-mission-card">
+                <h3>Misi</h3>
+                <ul>
+                    <li>Menyediakan platform digital untuk pemasaran produk ulos secara luas dan efisien.</li>
+                    <li>Mempermudah pelanggan dalam mengenal dan memesan produk ulos dari berbagai wilayah.</li>
+                    <li>Menyampaikan informasi edukatif terkait sejarah dan nilai budaya ulos Batak.</li>
+                    <li>Memperluas jangkauan pasar UMKM Gita Ulos ke tingkat nasional dan internasional.</li>
+                    <li>Menjadikan website sebagai sarana utama pengelolaan produk, pesanan, dan ulasan secara digital.</li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Location & Contact -->
     <div class="container my-5 animate__fadeIn">
@@ -109,7 +117,7 @@
                         <h5 class="mb-3 text-dark fw-semibold">
                             <i class="bi bi-telephone-fill me-2 text-success"></i>Telepon & WhatsApp
                         </h5>
-                        <p class="ms-4">+62 812 3456 7890</p>
+                        <p class="ms-4">0813-6163-9551</p>
 
                         <h5 class="mb-3 mt-4 text-dark fw-semibold">
                             <i class="bi bi-envelope-fill me-2 text-danger"></i>Email
