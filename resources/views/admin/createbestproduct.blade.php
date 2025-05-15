@@ -7,7 +7,7 @@
             <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Tambah Produk Baru</h4>
         </div>
         <div class="card-body p-4">
-            <form action="{{ route('products.best.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('Admin/products/bestproducts') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-6">
