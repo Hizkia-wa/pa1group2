@@ -18,7 +18,7 @@
 <div class="container-fluid">
     <div class="card shadow-sm border-0 rounded-4">
         <div class="card-body">
-            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('products.storeRegular') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-6">
