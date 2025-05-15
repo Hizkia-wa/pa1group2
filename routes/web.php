@@ -115,5 +115,5 @@ Route::get('/reset-password-baru', [CustomLoginController::class, 'showResetPass
 Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPassword'])->name('reset.password.submit');
 
 Route::get('/test-layout', function () {
-    return view('layouts.admin');
+    return view('layouts.Admin');
 });
