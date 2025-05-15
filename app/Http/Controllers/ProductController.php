@@ -70,7 +70,7 @@ class ProductController extends Controller
         $product->Images = json_encode($imagePaths);
     
         // Tandai sebagai produk terlaris
-        $product->IsBestSeller = $request->has('IsBestSeller');
+        $product->IsBestSeller = $request->has('IsBestSeller', 1);
     
         $product->save();
     
