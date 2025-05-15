@@ -1,4 +1,4 @@
-@extends('Layouts.User')
+@extends('Layouts.user')
 
 @section('content')
 <div class="container py-4">
