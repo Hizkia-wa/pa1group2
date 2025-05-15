@@ -53,7 +53,7 @@
                     <td>{{ $first->Address }}, {{ $first->District }}, {{ $first->City }}, {{ $first->PostalCode }}</td>
                     <td>{{ $totalQty }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Detail</a>
+                        <a href="{{ route('admin.orders.detail', $first->id) }}" class="btn btn-warning">Detail</a>
                     </td>
                     <td>
     <div class="dropdown">
@@ -94,8 +94,6 @@
         </tbody>
     </table>
 </div>
-
-
 
 <style>
  :root {

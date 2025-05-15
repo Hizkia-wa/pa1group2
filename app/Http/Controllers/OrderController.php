@@ -116,4 +116,16 @@ public function store(Request $request)
         $orders = Order::where('OrderStatus', 'Batal')->get();
         return view('admin.ordersbatal', compact('orders'));
     }
+
+    public function detail($id)
+    {
+        // Ambil 1 record pesanan berdasarkan id
+        $order = Order::findOrFail($id);
+    
+        // Kirim langsung ke view
+        return view('admin.orders-detail', compact('order'));
+    }
+    
+    
 }
+
