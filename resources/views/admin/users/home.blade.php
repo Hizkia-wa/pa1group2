@@ -4,7 +4,7 @@
 
 <div class="hero-header animate__fadeIn">
     <div class="hero-image-container">
-        <img src="{{ asset('img/imagehome.jpg') }}" alt="Gambar Budaya Batak" class="hero-image animate__zoomIn">
+        <img src="{{ asset('img/background.png') }}" alt="Gambar Budaya Batak" class="hero-image animate__zoomIn">
     </div>
     <div class="hero-content animate__slideInUp">
     </div>
@@ -79,10 +79,10 @@
             
             <!-- Gambar -->
             <div class="heritage-img-container flex-shrink-0">
-                <img src="{{ asset('img/ulos/uloskitaimage.png') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
+                <img src="{{ asset('img/ulos/imagehome.jpg') }}" class="img-fluid rounded-4" alt="Pengrajin Ulos">
             </div>
 
-          
+            <!-- Konten Teks -->
             <div class="heritage-content text-center text-md-start">
                 <h2 class="fw-bold mb-3" style="color: #8B0000;">Warisan Budaya yang Ditenun dengan Cinta</h2>
                 <p>
@@ -213,7 +213,7 @@
             </a>
         </div>
         <div class="col-md-4 text-center text-md-end mt-4 mt-md-0 animate__fadeInRight">
-            <img src="{{ asset('img/ulos/ulos-atakanta.jpg') }}" 
+            <img src="{{ asset('img/ulos/uloskitaimage.png') }}" 
                  class="img-fluid rounded-4 shadow-sm custom-contact-img" 
                  alt="Contoh Ulos" 
                  style="max-height: 260px; object-fit: cover;">

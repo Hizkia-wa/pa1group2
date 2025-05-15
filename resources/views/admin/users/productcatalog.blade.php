@@ -65,24 +65,27 @@
                 @endphp
                 <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
 
+            <div class="product-card">
+                @php
+                    $images = json_decode($product->Images, true);
+                    $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
+                @endphp
+                <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
+
                 <div class="product-info">
                     <h5 class="product-title">{{ $product->ProductName }}</h5>
                     <p class="product-desc">{{ Str::limit($product->Description, 40) }}</p>
                     <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 
                     <div class="product-actions">
-                        <a href="{{ route('user.product.detail', $product->id) }}" class="btn-buy">Beli</a>
-                        <form action="{{ route('user.cart.add') }}" method="POST" class="form-cart">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $product->id }}">
-                            <input type="hidden" name="quantity" value="1">
-                            <input type="hidden" name="size" value="200 x 50 cm">
-                            <button type="submit" class="btn-cart">
-                                <i class="bi bi-cart-plus"></i> Keranjang
-                            </button>
-                        </form>
+                    <a href="{{ route('login') }}" class="btn-buy flex-grow-1 me-2">Beli</a>
+                    <a href="{{ route('login') }}" class="btn-cart">
+                        <i class="bi bi-cart-plus"></i> Keranjang
+                    </a>
+
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         @empty
