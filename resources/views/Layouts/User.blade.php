@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="{{ asset('img/ulos/logogita.png') }}">
 <title>Gita Ulos - @yield('title')</title>
