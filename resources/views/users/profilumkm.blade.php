@@ -19,11 +19,10 @@
 </div>
 
 
-<!-- Sejarah Section - Disesuaikan dari Dokumen PA & ToR -->
-<div class="section-container animate__fadeIn" id="sejarahumkm">
-    <h2 class="section-title animate__fadeInUp">Sejarah Berdirinya UMKM Gita Ulos</h2>
+<div class="section-container" id="sejarahumkm" data-aos="fade-up" data-aos-duration="1200">
+    <h2 class="section-title" data-aos="flip-left" data-aos-duration="900" data-aos-delay="200">Sejarah Berdirinya UMKM Gita Ulos</h2>
     <div class="content-wrapper">
-        <div class="text-content animate__fadeInLeft">
+        <div class="text-content" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="400">
             <p>
                 UMKM <strong>Gita Ulos</strong>, yang dikelola oleh <strong>Ibu Tiabur Novita Silalahi</strong>, merupakan usaha mikro kecil dan menengah yang berfokus pada produksi serta penjualan kain ulos khas Batak. Usaha ini berlokasi di <strong>Jl. Lintas Utama Sumatera No. 65, Pasar Porsea, Kecamatan Porsea, Kabupaten Toba, Sumatera Utara</strong>.
             </p>
@@ -34,17 +33,20 @@
                 Untuk itu, Gita Ulos memutuskan untuk melakukan transformasi digital melalui pengembangan website. Langkah ini diambil agar produk ulos dapat diakses secara lebih luas, tidak hanya di wilayah sekitar Toba, namun juga ke berbagai daerah bahkan secara nasional. Selain menjadi media pemasaran, website ini juga diharapkan menjadi sarana edukasi budaya kepada masyarakat luas.
             </p>
         </div>
-        <div class="image-container animate__zoomIn" style="animation-delay: 0.3s;">
-            <img src="img/ulos/imgaeprofil.jpg" alt="UMKM Gita Ulos" class="img-fluid rounded shadow">
+        <div class="image-box" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="600">
+            <img src="img/ulos/gitaulos.jpg" alt="UMKM Gita Ulos" class="img-thumbnail-custom">
         </div>
     </div>
 </div>
 
- <!-- Pemilik Section - Disesuaikan dari Dokumen ToR -->
+
+
+
+<!-- Pemilik Section - Disesuaikan dari Dokumen ToR -->
 <div class="section-container bg-light animate__fadeIn" id="UMKMnya">
-    <h2 class="section-title animate__fadeInUp">Pemilik UMKM Gita Ulos</h2>
+    <h2 class="section-title themed-title animate__fadeInUp">Pemilik UMKM Gita Ulos</h2>
     <div class="content-wrapper reverse">
-        <div class="text-content animate__fadeInRight">
+        <div class="text-content animate__fadeInRight custom-text">
             <p>
                 Gita Ulos merupakan UMKM yang dikelola oleh <strong>Ibu Tiabur Novita Silalahi</strong>, beralamat di Jl. Lintas Utama Sumatera No. 65, Pasar Porsea, Kecamatan Porsea, Kabupaten Toba, Sumatera Utara.
             </p>
@@ -56,10 +58,11 @@
             </p>
         </div>
         <div class="image-container animate__flipInX" style="animation-delay: 0.2s;">
-            <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik UMKM Gita Ulos" class="img-fluid rounded shadow">
+            <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik UMKM Gita Ulos" class="img-fluid rounded shadow profile-image">
         </div>
     </div>
 </div>
+
 
  <!-- Visi & Misi Section - Disesuaikan dari Dokumen Pengembangan Produk -->
  <div class="section-container animate__fadeIn">
@@ -339,6 +342,33 @@ p {
 .image-container img:hover {
     transform: scale(1.02);
 }
+
+.image-box {
+    width: 200px; /* Atur ukuran kecil */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.img-thumbnail-custom {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.img-thumbnail-custom:hover {
+    transform: scale(1.04);
+}
+
 
 /* Owner Card */
 .owner-card {
