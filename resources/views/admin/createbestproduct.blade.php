@@ -41,7 +41,11 @@
                     <textarea name="Description" class="form-control shadow-sm" rows="3"></textarea>
                 </div>
 
-                <input type="hidden" name="IsBestSeller" value="1">
+                <div class="mb-3 form-check">
+    <input type="checkbox" name="IsBestSeller" value="1" class="form-check-input" id="IsBestSeller" checked>
+    <label class="form-check-label" for="IsBestSeller">Tandai sebagai Produk Terlaris</label>
+</div>
+
 
                 <div class="row mb-3">
                     <div class="col-md-6">
