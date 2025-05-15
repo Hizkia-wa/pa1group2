@@ -40,7 +40,7 @@ public function store(Request $request)
             'Quantity' => 'required|integer|min:1',
         ]);
 
-        $product = Product::findOrFail($request->ProductId);
+        $product = product::findOrFail($request->ProductId);
 
         if ($product->Quantity < $request->Quantity) {
             return response()->json([
@@ -105,7 +105,7 @@ public function store(Request $request)
     
         // Jika status diubah menjadi 'Batal' dan sebelumnya bukan 'Batal'
         if ($request->status === 'Batal' && $previousStatus !== 'Batal') {
-            $product = Product::find($order->ProductId);
+            $product = product::find($order->ProductId);
             if ($product) {
                 $product->increment('Quantity', $order->Quantity);
             }
