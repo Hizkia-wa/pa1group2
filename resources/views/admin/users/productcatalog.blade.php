@@ -65,13 +65,6 @@
                 @endphp
                 <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
 
-            <div class="product-card">
-                @php
-                    $images = json_decode($product->Images, true);
-                    $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
-                @endphp
-                <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
-
                 <div class="product-info">
                     <h5 class="product-title">{{ $product->ProductName }}</h5>
                     <p class="product-desc">{{ Str::limit($product->Description, 40) }}</p>
