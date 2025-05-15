@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable
 {
-    protected $table = 'Admins';
+    protected $table = 'admins';
 
     protected $fillable = [
         'AdminName',
