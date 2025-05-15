@@ -1,37 +1,32 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 <div class="col-md-3 sidebar">
+    <div>
     <div class="logo-container">
-        <img src="{{ asset('img/ulos/logogita.png') }}" alt="Logo Gita Ulos" class="logo-img">
+        <img src="{{ asset('img/ulos/logogita.png') }}" alt="Logo Gita Ulos" class="logo-img" />
         <span class="logo-text">Gita Ulos</span>
     </div>
-    
     <div class="nav-menu">
-        <a href="{{ route ('admin.homepage') }}" class="nav-link" id="dashboard-link">
+        <a href="{{ route('admin.homepage') }}" class="nav-link" id="dashboard-link">
             <i class="bi bi-grid-1x2-fill"></i>
             <span>Dashboard</span>
         </a>
-        
-        <a href="{{ route ('products.index') }}" class="nav-link" id="product-link">
+        <a href="{{ route('products.index') }}" class="nav-link" id="product-link">
             <i class="bi bi-bag-fill"></i>
             <span>Produk</span>
         </a>
-        
-        <a href="{{ route ('admin.reviews') }}" class="nav-link" id="review-link">
+        <a href="{{ route('admin.reviews') }}" class="nav-link" id="review-link">
             <i class="bi bi-star-fill"></i>
             <span>Ulasan</span>
         </a>
-        
-        <a href="{{ route ('admin.orders') }}" class="nav-link" id="order-link">
+        <a href="{{ route('admin.orders') }}" class="nav-link" id="order-link">
             <i class="bi bi-cart-check-fill"></i>
             <span>Pemesanan</span>
         </a>
-        
-        <a href="{{ route ('homeAdmin') }}" class="nav-link" id="user-view-link">
+        <a href="{{ route('homeAdmin') }}" class="nav-link" id="user-view-link">
             <i class="bi bi-layout-text-window"></i>
             <span>Tampilan User</span>
         </a>
-        
         <div class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="history-link" data-bs-toggle="dropdown">
                 <i class="bi bi-clock-history"></i>
@@ -39,13 +34,13 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="dropdown-item" href="{{ route ('products.riwayat') }}">
+                    <a class="dropdown-item" href="{{ route('products.riwayat') }}">
                         <i class="bi bi-archive-fill me-2"></i>
                         <span>Riwayat Produk</span>
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="{{ route ('admin.reviews.trashed') }}">
+                    <a class="dropdown-item" href="{{ route('admin.reviews.trashed') }}">
                         <i class="bi bi-chat-square-text-fill me-2"></i>
                         <span>Riwayat Ulasan</span>
                     </a>
@@ -53,6 +48,7 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
 
 
