@@ -9,24 +9,16 @@ use App\Models\Product;
 
 class Order extends Model
 {
-    use HasFactory, SoftDeletes;
-
+    use HasFactory;
+    protected $table = 'Orders';
     protected $fillable = [
-        'ProductId',
-        'CustomerName',
-        'Email',
-        'Phone',
-        'City',
-        'District',
-        'Address',
-        'PostalCode',
-        'Size',
-        'Quantity',
-        'OrderStatus',
+        'CustomerName', 'Email', 'Phone',
+        'total_price', 'City', 'District', 'Address', 'PostalCode',
+        'Status',
     ];
 
-    public function product()
+    public function orderItems()
     {
-        return $this->belongsTo(Product::class, 'ProductId');
+        return $this->hasMany(OrderItem::class);
     }
 }

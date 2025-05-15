@@ -71,73 +71,124 @@ class CartController extends Controller
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
-    public function checkout(Request $request)
-    {
-        $selected = $request->input('selected');
-
-        if (!$selected || count($selected) === 0) {
-            return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
-        }
-
-        $items = [];
-        $total = 0;
-
-        foreach ($selected as $value) {
-            list($cartId, $size) = explode('-', $value);
-            $cartItem = Cart::with('product')->find($cartId);
-
-            if ($cartItem) {
-                $items[] = [
-                    'name' => $cartItem->product->ProductName,
-                    'size' => $cartItem->Size,
-                    'quantity' => $cartItem->Quantity,
-                    'price' => $cartItem->product->Price,
-                ];
-
-                $total += $cartItem->Quantity * $cartItem->product->Price;
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'products' => $items,
-            'totalPrice' => $total
-        ]);
+public function checkout(Request $request)
+{
+    $selected = $request->input('selected');
+    if (!$selected || count($selected) === 0) {
+        return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
     }
 
-    public function processCheckout(Request $request)
-    {
-        $userId = $this->getCurrentUserId();
+    $items = [];
+    $total = 0;
 
-        $cartItems = Cart::with('product')->where('UserId', $userId)->get();
-
-        if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Keranjang kosong.');
+    foreach ($selected as $value) {
+        list($cartId, $size) = explode('-', $value);
+        $cartItem = Cart::with('product')->find($cartId);
+        if ($cartItem) {
+            $product = $cartItem->product;
+            $items[] = [
+                'ProductId' => $product->id,
+                'Size' => $cartItem->Size,
+                'Quantity' => $cartItem->Quantity,
+                'Price' => $product->Price,  // Pastikan 'Price' ini kolom yang benar di order_items
+            ];
+            $total += $product->Price * $cartItem->Quantity;
         }
+    }
 
-        $order = Order::create([
-            'UserId' => $userId,
-            'TotalPrice' => $cartItems->sum(function ($item) {
-                return $item->product->Price * $item->Quantity;
-            }),
-            'Status' => 'pending',
+    // Validasi request sebelum simpan order (tambahkan jika diperlukan)
+    $request->validate([
+        'CustomerName' => 'required|string|max:255',
+        'Email' => 'required|email|max:255',
+        'Phone' => 'required|string|max:20',
+        'City' => 'required|string|max:100',
+        'District' => 'required|string|max:100',
+        'Street' => 'required|string|max:255',  // Sesuaikan dengan nama kolom DB
+        'PostalCode' => 'required|string|max:20',
+    ]);
+
+    $order = Order::create([
+        'CustomerName' => $request->CustomerName,
+        'Email' => $request->Email,
+        'Phone' => $request->Phone,
+        'City' => $request->City,
+        'District' => $request->District,
+        'Address' => $request->Street,   // Pastikan kolom di DB bernama 'Address'
+        'PostalCode' => $request->PostalCode,
+        'total_price' => $total,         // Sesuaikan nama kolom 'total_price' di tabel orders
+        'Status' => 'pending',
+    ]);
+
+    foreach ($items as $item) {
+        $order->orderItems()->create($item);
+
+        // Kurangi stok produk
+        Product::where('id', $item['ProductId'])->decrement('Quantity', $item['Quantity']);
+
+        // Hapus produk dari keranjang user
+        Cart::where('ProductId', $item['ProductId'])
+            ->where('Size', $item['Size'])
+            ->delete();
+    }
+
+    return response()->json([
+        'success' => true,
+        'products' => $items,
+        'totalPrice' => $total,
+    ]);
+}
+
+public function processCheckout(Request $request)
+{
+    $userId = $this->getCurrentUserId();
+
+    $cartItems = Cart::with('product')->where('UserId', $userId)->get();
+
+    if ($cartItems->isEmpty()) {
+        return redirect()->back()->with('error', 'Keranjang kosong.');
+    }
+
+    $request->validate([
+        'CustomerName' => 'required|string|max:255',
+        'Email' => 'required|email|max:255',
+        'Phone' => 'required|string|max:20',
+        'City' => 'required|string|max:100',
+        'District' => 'required|string|max:100',
+        'Address' => 'required|string|max:255',
+        'PostalCode' => 'required|string|max:20',
+    ]);
+
+    $totalPrice = $cartItems->sum(function ($item) {
+        return $item->product->Price * $item->Quantity;
+    });
+
+    $order = Order::create([
+        'CustomerName' => $request->CustomerName,
+        'Email' => $request->Email,
+        'Phone' => $request->Phone,
+        'City' => $request->City,
+        'District' => $request->District,
+        'Address' => $request->Address,
+        'PostalCode' => $request->PostalCode,
+        'total_price' => $totalPrice,    // Pastikan kolom ini ada di DB
+        'Status' => 'pending',
+    ]);
+
+    foreach ($cartItems as $item) {
+        $order->orderItems()->create([
+            'ProductId' => $item->ProductId,
+            'Quantity' => $item->Quantity,
+            'Price' => $item->product->Price,  // Pastikan kolom Price ada di tabel order_items
+            'Size' => $item->Size,
         ]);
 
-        foreach ($cartItems as $item) {
-            $order->orderItems()->create([
-                'ProductId' => $item->ProductId,
-                'Quantity' => $item->Quantity,
-                'Price' => $item->product->Price,
-                'Size' => $item->Size,
-            ]);
-
-            $item->product->decrement('Quantity', $item->Quantity);
-        }
-
-        Cart::where('UserId', $userId)->delete();
-
-        return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
+        $item->product->decrement('Quantity', $item->Quantity);
     }
+
+    Cart::where('UserId', $userId)->delete();
+
+    return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
+}
 
     public function updateQuantity(Request $request, $id, $size)
     {

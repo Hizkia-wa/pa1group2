@@ -68,6 +68,7 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->string('PostalCode');
             $table->string('Size');
             $table->integer('Quantity');
+            $table->decimal('total_price', 12, 2)->default(0);
             $table->enum('OrderStatus', ['Diproses', 'Selesai', 'Batal'])->default('Diproses');
             $table->timestamps();
             $table->softDeletes();
