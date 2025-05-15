@@ -113,3 +113,7 @@ Route::get('/verifikasi-otp', [CustomLoginController::class, 'showOTPForm'])->na
 Route::post('/verifikasi-otp', [CustomLoginController::class, 'verifyOTP'])->name('otp.verify');
 Route::get('/reset-password-baru', [CustomLoginController::class, 'showResetPasswordForm'])->name('reset.password.form');
 Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPassword'])->name('reset.password.submit');
+
+Route::get('/test-layout', function () {
+    return view('layouts.admin');
+});
