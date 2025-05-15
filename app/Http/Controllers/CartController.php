@@ -78,64 +78,65 @@ public function checkout(Request $request)
         return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
     }
 
-    $items = [];
     $total = 0;
+    $orderData = [];
 
     foreach ($selected as $value) {
         list($cartId, $size) = explode('-', $value);
         $cartItem = Cart::with('product')->find($cartId);
+
         if ($cartItem) {
             $product = $cartItem->product;
-            $items[] = [
+            $quantity = $cartItem->Quantity;
+            $price = $product->Price;
+            $subtotal = $price * $quantity;
+
+            // Simpan satu order per produk
+            Order::create([
+                'ProductId'    => $product->id,
+                'CustomerName' => $request->CustomerName,
+                'Email'        => $request->Email,
+                'Phone'        => $request->Phone,
+                'City'         => $request->City,
+                'District'     => $request->District,
+                'Address'      => $request->Street,
+                'PostalCode'   => $request->PostalCode,
+                'Size'         => $cartItem->Size,
+                'Quantity'     => $quantity,
+                'total_price'  => $subtotal,
+                'OrderStatus'  => 'Diproses',
+            ]);
+
+            // Kurangi stok produk
+            $product->decrement('Quantity', $quantity);
+
+            // Hapus dari keranjang
+            $cartItem->delete();
+
+            // Tambahkan ke response data
+            $orderData[] = [
                 'ProductId' => $product->id,
                 'Size' => $cartItem->Size,
-                'Quantity' => $cartItem->Quantity,
-                'Price' => $product->Price,  // Pastikan 'Price' ini kolom yang benar di order_items
+                'Quantity' => $quantity,
+                'Price' => $price,
+                'Subtotal' => $subtotal,
             ];
-            $total += $product->Price * $cartItem->Quantity;
+
+            $total += $subtotal;
         }
     }
 
-    // Validasi request sebelum simpan order (tambahkan jika diperlukan)
-    $request->validate([
-        'CustomerName' => 'required|string|max:255',
-        'Email' => 'required|email|max:255',
-        'Phone' => 'required|string|max:20',
-        'City' => 'required|string|max:100',
-        'District' => 'required|string|max:100',
-        'Street' => 'required|string|max:255',  // Sesuaikan dengan nama kolom DB
-        'PostalCode' => 'required|string|max:20',
-    ]);
-
-    $order = Order::create([
-        'CustomerName' => $request->CustomerName,
-        'Email' => $request->Email,
-        'Phone' => $request->Phone,
-        'City' => $request->City,
-        'District' => $request->District,
-        'Address' => $request->Street,   // Pastikan kolom di DB bernama 'Address'
-        'PostalCode' => $request->PostalCode,
-        'total_price' => $total,         // Sesuaikan nama kolom 'total_price' di tabel orders
-        'Status' => 'pending',
-    ]);
-
-    foreach ($items as $item) {
-        $order->orderItems()->create($item);
-
-        // Kurangi stok produk
-        Product::where('id', $item['ProductId'])->decrement('Quantity', $item['Quantity']);
-
-        // Hapus produk dari keranjang user
-        Cart::where('ProductId', $item['ProductId'])
-            ->where('Size', $item['Size'])
-            ->delete();
-    }
-
-    return response()->json([
-        'success' => true,
-        'products' => $items,
-        'totalPrice' => $total,
-    ]);
+return response()->json([
+    'success' => true,
+    'products' => collect($orderData)->map(function ($item) {
+        return [
+            'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
+            'size' => $item['Size'],
+            'quantity' => $item['Quantity'],
+        ];
+    }),
+    'totalPrice' => $total,
+]);
 }
 
 public function processCheckout(Request $request)
@@ -158,28 +159,22 @@ public function processCheckout(Request $request)
         'PostalCode' => 'required|string|max:20',
     ]);
 
-    $totalPrice = $cartItems->sum(function ($item) {
-        return $item->product->Price * $item->Quantity;
-    });
-
-    $order = Order::create([
-        'CustomerName' => $request->CustomerName,
-        'Email' => $request->Email,
-        'Phone' => $request->Phone,
-        'City' => $request->City,
-        'District' => $request->District,
-        'Address' => $request->Address,
-        'PostalCode' => $request->PostalCode,
-        'total_price' => $totalPrice,    // Pastikan kolom ini ada di DB
-        'Status' => 'pending',
-    ]);
-
     foreach ($cartItems as $item) {
-        $order->orderItems()->create([
+        $subtotal = $item->product->Price * $item->Quantity;
+
+        Order::create([
             'ProductId' => $item->ProductId,
-            'Quantity' => $item->Quantity,
-            'Price' => $item->product->Price,  // Pastikan kolom Price ada di tabel order_items
+            'CustomerName' => $request->CustomerName,
+            'Email' => $request->Email,
+            'Phone' => $request->Phone,
+            'City' => $request->City,
+            'District' => $request->District,
+            'Address' => $request->Address,
+            'PostalCode' => $request->PostalCode,
             'Size' => $item->Size,
+            'Quantity' => $item->Quantity,
+            'total_price' => $subtotal,
+            'OrderStatus' => 'Diproses',
         ]);
 
         $item->product->decrement('Quantity', $item->Quantity);
