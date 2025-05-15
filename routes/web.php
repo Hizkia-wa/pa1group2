@@ -47,6 +47,7 @@ Route::prefix('Admin')->middleware('auth:admin')->group(function () {
     Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
     Route::get('/orders/selesai', [OrderController::class, 'selesai'])->name('admin.orders.selesai');
     Route::get('/orders/batal', [OrderController::class, 'ordersBatal'])->name('admin.orders.batal');
+    Route::get('/orders/detail/{id}', [OrderController::class, 'detail'])->name('admin.orders.detail');    
     Route::get('/homeuser', [HomeController::class, 'homeAdmin'])->name('homeAdmin');
     Route::get('/ulos-kita', [UloskitaController::class, 'indexadmin'])->name('admin.uloskita');
     Route::get('/catalog', [ProductController::class, 'showAdminCatalog'])->name('admin.catalog');

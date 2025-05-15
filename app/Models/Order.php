@@ -29,4 +29,9 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class, 'ProductId');
     }
+    public function items()
+    {
+    return $this->hasMany(OrderItem::class, 'order_id'); // ganti jika nama kolom foreign key berbeda
+    }
+
 }
