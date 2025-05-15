@@ -43,7 +43,7 @@
     <div class="alert alert-info mb-4">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                Menampilkan hasil {{ $products->count() }} dari {{ $products->total() }} produk
+               Menampilkan {{ $products->count() }} produk
                 @if(request('search')) untuk pencarian "{{ request('search') }}" @endif
                 @if(request('category')) dalam kategori "{{ request('category') }}" @endif
             </div>
@@ -79,7 +79,6 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
         @empty
         <div class="col-12 text-center py-4">
@@ -90,11 +89,6 @@
             </div>
         </div>
         @endforelse
-    </div>
-
-    {{-- Pagination --}}
-    <div class="d-flex justify-content-center mt-4">
-        {{ $products->appends(request()->query())->links() }}
     </div>
 </div>
 @endsection
@@ -141,6 +135,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        text-decoration: none;
     }
 
     .product-desc {
@@ -182,28 +177,34 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .btn-buy {
-        background-color: #2563eb; 
-        color: white;
         text-decoration: none;
     }
 
-    .btn-buy:hover {
-        background-color: #1d4ed8;
-    }
+ .btn-buy {
+    background-color: #8B0000;
+    color: white;
+    text-decoration: none;
+}
 
-    .btn-cart {
-        background-color: white;
-        color: #2563eb;
-        border: 1px solid #2563eb;
-        gap: 4px;
-    }
+.btn-buy:hover {
+    background-color: #a80000;
+    color: white;
+}
 
-    .btn-cart:hover {
-        background-color: #f0f7ff;
-    }
+.btn-cart {
+    background-color: white;
+    color: #8B0000;
+    border: 1px solid #8B0000;
+    gap: 4px;
+    text-decoration: none;
+}
+
+.btn-cart:hover {
+    background-color: #f0f7ff;
+    color: #8B0000;
+    border-color: #8B0000;
+}
+
     
     .form-cart {
         width: 100%;
