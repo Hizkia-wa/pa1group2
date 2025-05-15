@@ -43,7 +43,7 @@
     <div class="alert alert-info mb-4">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                Menampilkan {{ $products->count() }} produk
+              Menampilkan {{ $products->count() }} produk
                 @if(request('search')) untuk pencarian "{{ request('search') }}" @endif
                 @if(request('category')) dalam kategori "{{ request('category') }}" @endif
             </div>
