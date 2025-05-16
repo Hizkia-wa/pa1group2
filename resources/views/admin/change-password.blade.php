@@ -1,4 +1,4 @@
-@extends('layouts.admin') {{-- Ganti dengan layout admin kamu --}}
+@extends('layouts.Admin') {{-- Ganti dengan layout admin kamu --}}
 
 @section('content')
 <div class="container mt-5">

@@ -61,12 +61,14 @@
             <div class="product-card">
                 @php
                     $images = json_decode($product->Images, true);
-                    $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
+                    $imagePath = isset($images[0]) ? asset('storage/app/public/' . $images[0]) : asset('images/default.png');
                 @endphp
                 <img src="{{ $imagePath }}" class="product-img" alt="{{ $product->ProductName }}">
 
                 <div class="product-info">
-                    <h5 class="product-title">{{ $product->ProductName }}</h5>
+                    <a href="{{ route('user.product.detail', ['id' => $product->id]) }}" style="color: maroon; text-decoration: none;">
+                        <h5 class="card-title">{{ $product->ProductName }}</h5>
+                    </a>
                     <p class="product-desc">{{ Str::limit($product->Description, 40) }}</p>
                     <p class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
 

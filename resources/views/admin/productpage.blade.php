@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.Admin')
 
 @section('content')
 <div class="dashboard-header">
@@ -58,7 +58,7 @@
                 <td>
                     @php $images = json_decode($product->Images, true); @endphp
                     @if (!empty($images) && isset($images[0]))
-                        <img src="{{ asset('storage/' . $images[0]) }}" width="100" class="img-thumbnail shadow-sm" alt="Product Image">
+                        <img src="{{ asset('storage/app/public/' . $images[0]) }}" width="100" class="img-thumbnail shadow-sm" alt="Product Image">
                     @endif
                 </td>
                 <td>

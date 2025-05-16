@@ -70,7 +70,7 @@ class ProductController extends Controller
         $product->Images = json_encode($imagePaths);
     
         // Tandai sebagai produk terlaris
-        $product->IsBestSeller = $request->has('IsBestSeller');
+        $product->IsBestSeller = $request->has('IsBestSeller', 1);
     
         $product->save();
     
@@ -150,10 +150,10 @@ class ProductController extends Controller
             $imageName = time() . '_' . $request->file('ImageMain')->getClientOriginalName();
             
             // Simpan file ke folder public
-            $request->file('ImageMain')->move(public_path('images/products'), $imageName);
+            $request->file('ImageMain')->move(public_path('storage/app/public/'), $imageName);
             
             // Simpan path relatif ke database
-            $product->image_path = 'images/products/' . $imageName;
+            $product->image_path = 'storage/app/public/' . $imageName;
         }
 
         if ($request->hasFile('ImageOthers')) {
@@ -232,13 +232,13 @@ class ProductController extends Controller
         
         // Tambahkan path lengkap untuk gambar utama
         if ($product->image) {
-            $product->main_image_url = asset('storage/' . $product->image);
+            $product->main_image_url = asset('storage/app/public/' . $product->image);
         } else {
             $product->main_image_url = asset('images/no-image.png');
         }
         
         $product->all_images = collect($product->image_array)->map(function($img) {
-            return asset('storage/' . $img);
+            return asset('storage/app/public/' . $img);
         })->toArray();
 
         // Jika ada gambar utama, tambahkan ke array all_images jika belum ada
@@ -266,13 +266,13 @@ class ProductController extends Controller
         
         // Tambahkan path lengkap untuk gambar utama
         if ($product->image) {
-            $product->main_image_url = asset('storage/' . $product->image);
+            $product->main_image_url = asset('storage/app/public/' . $product->image);
         } else {
             $product->main_image_url = asset('images/no-image.png');
         }
         
         $product->all_images = collect($product->image_array)->map(function($img) {
-            return asset('storage/' . $img);
+            return asset('storage/app/public/' . $img);
         })->toArray();
 
         // Jika ada gambar utama, tambahkan ke array all_images jika belum ada
@@ -451,6 +451,6 @@ class ProductController extends Controller
                     ->pluck('Category');
         
         // Kirim parameter pencarian kembali ke tampilan untuk mempertahankan status
-        return view('Admin.users.productcatalog', compact('products', 'categories'));
+        return view('admin.users.productcatalog', compact('products', 'categories'));
     }
 }

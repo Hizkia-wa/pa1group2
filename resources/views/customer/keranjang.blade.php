@@ -10,7 +10,7 @@
     @php
         $product = $item->product;
         $images = json_decode($product->Images, true);
-        $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
+        $imagePath = isset($images[0]) ? asset('storage/app/public/' . $images[0]) : asset('images/default.png');
     @endphp
 
     <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">

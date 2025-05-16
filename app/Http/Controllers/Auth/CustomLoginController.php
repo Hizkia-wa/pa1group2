@@ -112,7 +112,7 @@ class CustomLoginController extends Controller
         $otp = random_int(100000, 999999);
     
         // Gunakan tabel dengan nama sesuai migration
-        DB::table('PasswordResets')->updateOrInsert(
+        DB::table('passwordresets')->updateOrInsert(
             ['Email' => $email],  // Menggunakan nama kolom yang benar
             ['Otp' => $otp, 'CreatedAt' => now()]  // Menyesuaikan dengan kolom di tabel
         );
@@ -141,7 +141,7 @@ class CustomLoginController extends Controller
         ]);
     
         // Ambil record berdasarkan email yang diberikan
-        $record = DB::table('PasswordResets')->where('Email', $request->email)->first();
+        $record = DB::table('passwordresets')->where('Email', $request->email)->first();
     
         // Cek apakah record ditemukan dan OTP cocok
         if (!$record || $record->Otp != $request->otp) {
@@ -175,7 +175,7 @@ class CustomLoginController extends Controller
         $customer->save();
     
         // Hapus record OTP setelah password di-reset
-        DB::table('PasswordResets')->where('Email', $request->email)->delete();
+        DB::table('passwordresets')->where('Email', $request->email)->delete();
     
         return redirect()->route('login')->with('success', 'Password berhasil direset.');
     }    

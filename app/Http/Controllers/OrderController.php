@@ -20,7 +20,7 @@ public function index()
                 . '|' . $item->created_at->format('Y-m-d H:i:s'); // waktu lengkap sampai detik
         });
 
-    return view('admin.orders', compact('orders'));
+    return view('admin.Orders', compact('orders'));
 }
     
 public function store(Request $request)

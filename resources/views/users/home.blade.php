@@ -36,7 +36,7 @@
                         
                         <div class="product-image-container">
                             @if($mainImage)
-                                <img src="{{ asset('storage/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
+                                <img src="{{ asset('storage/app/public/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
                             @else
                                 <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top product-image" alt="No Image Available" loading="lazy">
                             @endif
