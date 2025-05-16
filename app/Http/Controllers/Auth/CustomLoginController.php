@@ -175,7 +175,7 @@ class CustomLoginController extends Controller
         $customer->save();
     
         // Hapus record OTP setelah password di-reset
-        DB::table('PasswordResets')->where('Email', $request->email)->delete();
+        DB::table('passwordresets')->where('Email', $request->email)->delete();
     
         return redirect()->route('login')->with('success', 'Password berhasil direset.');
     }    
