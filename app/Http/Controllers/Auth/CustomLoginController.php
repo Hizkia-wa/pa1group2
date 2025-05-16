@@ -112,7 +112,7 @@ class CustomLoginController extends Controller
         $otp = random_int(100000, 999999);
     
         // Gunakan tabel dengan nama sesuai migration
-        DB::table('passwordResets')->updateOrInsert(
+        DB::table('passwordresets')->updateOrInsert(
             ['Email' => $email],  // Menggunakan nama kolom yang benar
             ['Otp' => $otp, 'CreatedAt' => now()]  // Menyesuaikan dengan kolom di tabel
         );
