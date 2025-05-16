@@ -150,10 +150,10 @@ class ProductController extends Controller
             $imageName = time() . '_' . $request->file('ImageMain')->getClientOriginalName();
             
             // Simpan file ke folder public
-            $request->file('ImageMain')->move(public_path('images/products'), $imageName);
+            $request->file('ImageMain')->move(public_path('storage/app/public/'), $imageName);
             
             // Simpan path relatif ke database
-            $product->image_path = 'images/products/' . $imageName;
+            $product->image_path = 'storage/app/public/' . $imageName;
         }
 
         if ($request->hasFile('ImageOthers')) {
