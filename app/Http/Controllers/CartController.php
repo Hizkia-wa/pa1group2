@@ -80,6 +80,7 @@ public function checkout(Request $request)
 
     $total = 0;
     $orderData = [];
+    $outOfStockProducts = [];
 
     foreach ($selected as $value) {
         list($cartId, $size) = explode('-', $value);
@@ -90,6 +91,13 @@ public function checkout(Request $request)
             $quantity = $cartItem->Quantity;
             $price = $product->Price;
             $subtotal = $price * $quantity;
+
+            // Cek apakah stok produk mencukupi
+            if ($product->Quantity < $quantity) {
+                // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
+                $outOfStockProducts[] = $product->ProductName;
+                continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
+            }
 
             // Simpan satu order per produk
             Order::create([
@@ -126,17 +134,26 @@ public function checkout(Request $request)
         }
     }
 
-return response()->json([
-    'success' => true,
-    'products' => collect($orderData)->map(function ($item) {
-        return [
-            'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
-            'size' => $item['Size'],
-            'quantity' => $item['Quantity'],
-        ];
-    }),
-    'totalPrice' => $total,
-]);
+    // Jika ada produk yang stoknya tidak mencukupi
+    if (!empty($outOfStockProducts)) {
+        $outOfStockMessage = implode(', ', $outOfStockProducts);
+        return response()->json([
+            'success' => false,
+            'message' => 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage . '. Proses pemesanan gagal.'
+        ], 422);
+    }
+
+    return response()->json([
+        'success' => true,
+        'products' => collect($orderData)->map(function ($item) {
+            return [
+                'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
+                'size' => $item['Size'],
+                'quantity' => $item['Quantity'],
+            ];
+        }),
+        'totalPrice' => $total,
+    ]);
 }
 
 public function processCheckout(Request $request)

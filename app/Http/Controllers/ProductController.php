@@ -234,7 +234,7 @@ class ProductController extends Controller
         if ($product->image) {
             $product->main_image_url = asset('storage/app/public/' . $product->image);
         } else {
-            $product->main_image_url = asset('images/no-image.png');
+            $product->main_image_url = asset('storage/app/public/');
         }
         
         $product->all_images = collect($product->image_array)->map(function($img) {
@@ -268,7 +268,7 @@ class ProductController extends Controller
         if ($product->image) {
             $product->main_image_url = asset('storage/app/public/' . $product->image);
         } else {
-            $product->main_image_url = asset('images/no-image.png');
+            $product->main_image_url = asset('storage/app/public/');
         }
         
         $product->all_images = collect($product->image_array)->map(function($img) {
