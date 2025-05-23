@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Cart;
@@ -19,8 +18,7 @@ class CartController extends Controller
     public function index()
     {
         $userId = $this->getCurrentUserId();
-
-        $cartItems = cart::with('product')
+        $cartItems = Cart::with('product')
             ->where('UserId', $userId)
             ->get();
 
@@ -37,7 +35,7 @@ class CartController extends Controller
         $userId = $this->getCurrentUserId();
 
         // Cek apakah produk sudah ada di keranjang user
-        $cartItem = cart::where('UserId', $userId)
+        $cartItem = Cart::where('UserId', $userId)
             ->where('ProductId', $request->ProductId)
             ->first();
 
@@ -47,7 +45,7 @@ class CartController extends Controller
             $cartItem->save();
         } else {
             // Jika belum ada, buat entri baru
-            cart::create([
+            Cart::create([
                 'UserId' => $userId,
                 'ProductId' => $request->ProductId,
                 'Quantity' => $request->Quantity,
@@ -61,148 +59,146 @@ class CartController extends Controller
     {
         $userId = $this->getCurrentUserId();
 
-        cart::where('id', $id)
+        Cart::where('id', $id)
             ->where('UserId', $userId)
             ->delete();
 
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
-public function checkout(Request $request)
-{
-    $selected = $request->input('selected');
-    if (!$selected || count($selected) === 0) {
-        return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
-    }
-
-    $total = 0;
-    $orderData = [];
-    $outOfStockProducts = [];
-
-    foreach ($selected as $value) {
-        list($cartId) = explode('-', $value); // Menghapus Size dari data
-        $cartItem = cart::with('product')->find($cartId);
-
-        if ($cartItem) {
-            $product = $cartItem->product;
-            $quantity = $cartItem->Quantity;
-            $price = $product->Price;
-            $subtotal = $price * $quantity;
-
-            // Cek apakah stok produk mencukupi
-            if ($product->Quantity < $quantity) {
-                // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
-                $outOfStockProducts[] = $product->ProductName;
-                continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
-            }
-
-            // Simpan satu order per produk tanpa menyertakan Size
-            Order::create([
-                'ProductId'    => $product->id,
-                'CustomerName' => $request->CustomerName,
-                'Email'        => $request->Email,
-                'Phone'        => $request->Phone,
-                'City'         => $request->City,
-                'District'     => $request->District,
-                'Address'      => $request->Street,
-                'PostalCode'   => $request->PostalCode,
-                'Quantity'     => $quantity,
-                'total_price'  => $subtotal,
-                'OrderStatus'  => 'Diproses',
-            ]);
-
-            // Kurangi stok produk
-            $product->decrement('Quantity', $quantity);
-
-            // Hapus dari keranjang
-            $cartItem->delete();
-
-            // Tambahkan ke response data
-            $orderData[] = [
-                'ProductId' => $product->id,
-                'Quantity' => $quantity,
-                'Price' => $price,
-                'Subtotal' => $subtotal,
-            ];
-
-            $total += $subtotal;
+    public function checkout(Request $request)
+    {
+        $selected = $request->input('selected');
+        if (!$selected || count($selected) === 0) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
         }
-    }
 
-    // Jika ada produk yang stoknya tidak mencukupi
-    if (!empty($outOfStockProducts)) {
-        $outOfStockMessage = implode(', ', $outOfStockProducts);
+        $total = 0;
+        $orderData = [];
+        $outOfStockProducts = [];
+
+        foreach ($selected as $value) {
+            $cartItem = Cart::with('product')->find($value); // Menggunakan hanya ID produk yang dipilih
+
+            if ($cartItem) {
+                $product = $cartItem->product;
+                $quantity = $cartItem->Quantity;
+                $price = $product->Price;
+                $subtotal = $price * $quantity;
+
+                // Cek apakah stok produk mencukupi
+                if ($product->Quantity < $quantity) {
+                    // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
+                    $outOfStockProducts[] = $product->ProductName;
+                    continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
+                }
+
+                // Simpan satu order per produk
+                Order::create([
+                    'ProductId'    => $product->id,
+                    'CustomerName' => $request->CustomerName,
+                    'Email'        => $request->Email,
+                    'Phone'        => $request->Phone,
+                    'City'         => $request->City,
+                    'District'     => $request->District,
+                    'Address'      => $request->Street,
+                    'PostalCode'   => $request->PostalCode,
+                    'Quantity'     => $quantity,
+                    'total_price'  => $subtotal,
+                    'OrderStatus'  => 'Diproses',
+                ]);
+
+                // Kurangi stok produk
+                $product->decrement('Quantity', $quantity);
+
+                // Hapus dari keranjang
+                $cartItem->delete();
+
+                // Tambahkan ke response data
+                $orderData[] = [
+                    'ProductId' => $product->id,
+                    'Quantity' => $quantity,
+                    'Price' => $price,
+                    'Subtotal' => $subtotal,
+                ];
+
+                $total += $subtotal;
+            }
+        }
+
+        // Jika ada produk yang stoknya tidak mencukupi
+        if (!empty($outOfStockProducts)) {
+            $outOfStockMessage = implode(', ', $outOfStockProducts);
+            return response()->json([
+                'success' => false,
+                'message' => 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage . '. Proses pemesanan gagal.'
+            ], 422);
+        }
+
+        // Jika semua produk berhasil diproses, kirimkan data sukses
         return response()->json([
-            'success' => false,
-            'message' => 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage . '. Proses pemesanan gagal.'
-        ], 422);
-    }
-
-    // Jika semua produk berhasil diproses, kirimkan data sukses
-    return response()->json([
-        'success' => true,
-        'products' => collect($orderData)->map(function ($item) {
-            return [
-                'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
-                'quantity' => $item['Quantity'],
-            ];
-        }),
-        'totalPrice' => $total,
-    ]);
-}
-
-public function processCheckout(Request $request)
-{
-    $userId = $this->getCurrentUserId();
-
-    $cartItems = cart::with('product')->where('UserId', $userId)->get();
-
-    if ($cartItems->isEmpty()) {
-        return redirect()->back()->with('error', 'Keranjang kosong.');
-    }
-
-    $request->validate([
-        'CustomerName' => 'required|string|max:255',
-        'Email' => 'required|email|max:255',
-        'Phone' => 'required|string|max:20',
-        'City' => 'required|string|max:100',
-        'District' => 'required|string|max:100',
-        'Address' => 'required|string|max:255',
-        'PostalCode' => 'required|string|max:20',
-    ]);
-
-    foreach ($cartItems as $item) {
-        $subtotal = $item->product->Price * $item->Quantity;
-
-        Order::create([
-            'ProductId' => $item->ProductId,
-            'CustomerName' => $request->CustomerName,
-            'Email' => $request->Email,
-            'Phone' => $request->Phone,
-            'City' => $request->City,
-            'District' => $request->District,
-            'Address' => $request->Address,
-            'PostalCode' => $request->PostalCode,
-            'Quantity' => $item->Quantity,
-            'total_price' => $subtotal,
-            'OrderStatus' => 'Diproses',
+            'success' => true,
+            'products' => collect($orderData)->map(function ($item) {
+                return [
+                    'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
+                    'quantity' => $item['Quantity'],
+                ];
+            }),
+            'totalPrice' => $total,
         ]);
-
-        $item->product->decrement('Quantity', $item->Quantity);
     }
 
-    cart::where('UserId', $userId)->delete();
-
-    return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
-}
-
-    public function updateQuantity(Request $request, $id, $size)
+    public function processCheckout(Request $request)
     {
         $userId = $this->getCurrentUserId();
 
-        $cartItem = cart::where('id', $id)
+        $cartItems = Cart::with('product')->where('UserId', $userId)->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Keranjang kosong.');
+        }
+
+        $request->validate([
+            'CustomerName' => 'required|string|max:255',
+            'Email' => 'required|email|max:255',
+            'Phone' => 'required|string|max:20',
+            'City' => 'required|string|max:100',
+            'District' => 'required|string|max:100',
+            'Address' => 'required|string|max:255',
+            'PostalCode' => 'required|string|max:20',
+        ]);
+
+        foreach ($cartItems as $item) {
+            $subtotal = $item->product->Price * $item->Quantity;
+
+            Order::create([
+                'ProductId' => $item->ProductId,
+                'CustomerName' => $request->CustomerName,
+                'Email' => $request->Email,
+                'Phone' => $request->Phone,
+                'City' => $request->City,
+                'District' => $request->District,
+                'Address' => $request->Address,
+                'PostalCode' => $request->PostalCode,
+                'Quantity' => $item->Quantity,
+                'total_price' => $subtotal,
+                'OrderStatus' => 'Diproses',
+            ]);
+
+            $item->product->decrement('Quantity', $item->Quantity);
+        }
+
+        Cart::where('UserId', $userId)->delete();
+
+        return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
+    }
+
+    public function updateQuantity(Request $request, $id)
+    {
+        $userId = $this->getCurrentUserId();
+
+        $cartItem = Cart::where('id', $id)
             ->where('UserId', $userId)
-            ->where('Size', $size)
             ->first();
 
         if (!$cartItem) {
