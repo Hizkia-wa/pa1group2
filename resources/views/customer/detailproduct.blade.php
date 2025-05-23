@@ -229,4 +229,47 @@
         fetch("{{ route('user.product.order') }}", {
             method: "POST",
             headers: {
-                "Content-Type": "applicati
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": formData._token
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal kirim data");
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                const order = data.order;
+                document.getElementById('product-stock').innerText = data.newStock;
+                form.reset();
+                const message = `Halo Admin, saya ingin memesan produk:
+
+📦 *{{ $product->ProductName }}*
+📁 Kategori: {{ $product->Category }}
+💵 Harga: Rp {{ number_format($product->Price, 0, ',', '.') }}
+
+👤 Nama: ${formData.name}
+📱 Telepon: ${formData.phone}
+📧 Email: ${formData.email}
+🏠 Alamat: ${formData.address}, ${formData.district}, ${formData.city}, ${formData.postal_code}
+📐 Ukuran: ${formData.size}
+🔢 Jumlah: ${formData.Quantity}
+
+Mohon segera diproses ya 🙏`;
+
+                const nomorAdmin = document.getElementById('waButton').dataset.admin;
+                const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
+                window.open(waLink, '_blank');
+            } else {
+                alert("Terjadi kesalahan, coba lagi.");
+            }
+        })
+        .catch(err => {
+            alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
+            console.error(err);
+        });
+    });
+</script>
+
+@endsection
