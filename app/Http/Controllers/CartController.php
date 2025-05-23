@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Cart;
 
 class CartController extends Controller
 {
+    // Helper untuk ambil ID dari user aktif (customer atau admin/user)
     private function getCurrentUserId()
     {
         return auth('customer')->check() ? auth('customer')->id() : auth('web')->id();
@@ -17,6 +19,8 @@ class CartController extends Controller
     public function index()
     {
         $userId = $this->getCurrentUserId();
+
+        // Ambil data keranjang beserta produk
         $cartItems = Cart::with('product')
             ->where('UserId', $userId)
             ->get();
@@ -32,14 +36,18 @@ class CartController extends Controller
         ]);
 
         $userId = $this->getCurrentUserId();
+
+        // Cek apakah produk sudah ada di keranjang user
         $cartItem = Cart::where('UserId', $userId)
             ->where('ProductId', $request->ProductId)
             ->first();
 
         if ($cartItem) {
+            // Jika sudah ada, update quantity
             $cartItem->Quantity += $request->Quantity;
             $cartItem->save();
         } else {
+            // Jika belum ada, buat entri baru
             Cart::create([
                 'UserId' => $userId,
                 'ProductId' => $request->ProductId,
@@ -53,6 +61,8 @@ class CartController extends Controller
     public function removeFromCart($id)
     {
         $userId = $this->getCurrentUserId();
+
+        // Hapus item keranjang berdasarkan ID
         Cart::where('id', $id)
             ->where('UserId', $userId)
             ->delete();
@@ -71,8 +81,9 @@ class CartController extends Controller
         $orderData = [];
         $outOfStockProducts = [];
 
+        // Looping untuk setiap produk yang dipilih
         foreach ($selected as $value) {
-            $cartItem = Cart::with('product')->find($value);
+            $cartItem = Cart::with('product')->find($value);  // Mengambil data cart berdasarkan ID
 
             if ($cartItem) {
                 $product = $cartItem->product;
@@ -80,11 +91,14 @@ class CartController extends Controller
                 $price = $product->Price;
                 $subtotal = $price * $quantity;
 
+                // Cek apakah stok produk mencukupi
                 if ($product->Quantity < $quantity) {
+                    // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
                     $outOfStockProducts[] = $product->ProductName;
-                    continue;
+                    continue;  // Lewati produk ini dan lanjutkan ke produk berikutnya
                 }
 
+                // Simpan order untuk produk
                 Order::create([
                     'ProductId'    => $product->id,
                     'CustomerName' => $request->CustomerName,
@@ -99,9 +113,13 @@ class CartController extends Controller
                     'OrderStatus'  => 'Diproses',
                 ]);
 
+                // Kurangi stok produk
                 $product->decrement('Quantity', $quantity);
+
+                // Hapus produk dari keranjang
                 $cartItem->delete();
 
+                // Tambahkan ke data response
                 $orderData[] = [
                     'ProductId' => $product->id,
                     'Quantity' => $quantity,
@@ -113,6 +131,7 @@ class CartController extends Controller
             }
         }
 
+        // Jika ada produk yang stoknya tidak mencukupi
         if (!empty($outOfStockProducts)) {
             $outOfStockMessage = implode(', ', $outOfStockProducts);
             return response()->json([
@@ -121,6 +140,7 @@ class CartController extends Controller
             ], 422);
         }
 
+        // Kirimkan data produk yang berhasil diproses
         return response()->json([
             'success' => true,
             'products' => collect($orderData)->map(function ($item) {
@@ -136,12 +156,14 @@ class CartController extends Controller
     public function processCheckout(Request $request)
     {
         $userId = $this->getCurrentUserId();
+
         $cartItems = Cart::with('product')->where('UserId', $userId)->get();
 
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Keranjang kosong.');
         }
 
+        // Validasi data pengiriman
         $request->validate([
             'CustomerName' => 'required|string|max:255',
             'Email' => 'required|email|max:255',
@@ -155,6 +177,7 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             $subtotal = $item->product->Price * $item->Quantity;
 
+            // Simpan pesanan ke database
             Order::create([
                 'ProductId' => $item->ProductId,
                 'CustomerName' => $request->CustomerName,
@@ -169,18 +192,21 @@ class CartController extends Controller
                 'OrderStatus' => 'Diproses',
             ]);
 
+            // Kurangi stok produk
             $item->product->decrement('Quantity', $item->Quantity);
         }
 
+        // Hapus semua produk dari keranjang setelah checkout
         Cart::where('UserId', $userId)->delete();
 
         return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
     }
-    
+
     public function updateQuantity(Request $request, $id)
     {
         $userId = $this->getCurrentUserId();
 
+        // Update jumlah produk di keranjang
         $cartItem = Cart::where('id', $id)
             ->where('UserId', $userId)
             ->first();

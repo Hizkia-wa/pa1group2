@@ -153,9 +153,6 @@
 
         const formData = new FormData(form);
 
-        // Log data yang dikirim
-        console.log("Form Data yang dikirim:", formData);
-
         fetch("{{ route('user.cart.checkout') }}", {
             method: "POST",
             headers: {
@@ -164,12 +161,10 @@
             body: formData
         })
         .then(response => {
-            console.log('Response:', response); // Log response untuk debugging
             if (!response.ok) throw new Error("Gagal mengirim data.");
             return response.json();
         })
         .then(data => {
-            console.log('Response Data:', data); // Log data yang diterima
             if (data.success) {
                 const message = `Halo Admin, saya ingin memesan produk:
 
@@ -194,7 +189,7 @@ Mohon segera diproses ya 🙏`;
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error(error);
             alert('Terjadi kesalahan saat memproses checkout.');
         });
     });
