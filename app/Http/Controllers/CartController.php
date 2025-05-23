@@ -32,7 +32,6 @@ class CartController extends Controller
         $request->validate([
             'ProductId' => 'required|exists:products,id',
             'Quantity' => 'required|integer|min:1',
-            'Size' => 'required|string',
         ]);
 
         $userId = $this->getCurrentUserId();
@@ -40,7 +39,6 @@ class CartController extends Controller
         // Cek apakah produk sudah ada di keranjang user
         $cartItem = cart::where('UserId', $userId)
             ->where('ProductId', $request->ProductId)
-            ->where('Size', $request->Size)
             ->first();
 
         if ($cartItem) {
@@ -53,7 +51,6 @@ class CartController extends Controller
                 'UserId' => $userId,
                 'ProductId' => $request->ProductId,
                 'Quantity' => $request->Quantity,
-                'Size' => $request->Size,
             ]);
         }
 
@@ -83,7 +80,7 @@ public function checkout(Request $request)
     $outOfStockProducts = [];
 
     foreach ($selected as $value) {
-        list($cartId, $size) = explode('-', $value);
+        list($cartId) = explode('-', $value); // Menghapus Size dari data
         $cartItem = cart::with('product')->find($cartId);
 
         if ($cartItem) {
@@ -99,7 +96,7 @@ public function checkout(Request $request)
                 continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
             }
 
-            // Simpan satu order per produk
+            // Simpan satu order per produk tanpa menyertakan Size
             Order::create([
                 'ProductId'    => $product->id,
                 'CustomerName' => $request->CustomerName,
@@ -109,7 +106,6 @@ public function checkout(Request $request)
                 'District'     => $request->District,
                 'Address'      => $request->Street,
                 'PostalCode'   => $request->PostalCode,
-                'Size'         => $cartItem->Size,
                 'Quantity'     => $quantity,
                 'total_price'  => $subtotal,
                 'OrderStatus'  => 'Diproses',
@@ -124,7 +120,6 @@ public function checkout(Request $request)
             // Tambahkan ke response data
             $orderData[] = [
                 'ProductId' => $product->id,
-                'Size' => $cartItem->Size,
                 'Quantity' => $quantity,
                 'Price' => $price,
                 'Subtotal' => $subtotal,
@@ -149,7 +144,6 @@ public function checkout(Request $request)
         'products' => collect($orderData)->map(function ($item) {
             return [
                 'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
-                'size' => $item['Size'],
                 'quantity' => $item['Quantity'],
             ];
         }),
@@ -189,7 +183,6 @@ public function processCheckout(Request $request)
             'District' => $request->District,
             'Address' => $request->Address,
             'PostalCode' => $request->PostalCode,
-            'Size' => $item->Size,
             'Quantity' => $item->Quantity,
             'total_price' => $subtotal,
             'OrderStatus' => 'Diproses',
