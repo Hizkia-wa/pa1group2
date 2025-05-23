@@ -94,6 +94,7 @@ public function checkout(Request $request)
 
             // Cek apakah stok produk mencukupi
             if ($product->Quantity < $quantity) {
+                // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
                 $outOfStockProducts[] = $product->ProductName;
                 continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
             }
@@ -114,9 +115,13 @@ public function checkout(Request $request)
                 'OrderStatus'  => 'Diproses',
             ]);
 
+            // Kurangi stok produk
             $product->decrement('Quantity', $quantity);
+
+            // Hapus dari keranjang
             $cartItem->delete();
 
+            // Tambahkan ke response data
             $orderData[] = [
                 'ProductId' => $product->id,
                 'Size' => $cartItem->Size,
@@ -138,6 +143,7 @@ public function checkout(Request $request)
         ], 422);
     }
 
+    // Jika semua produk berhasil diproses, kirimkan data sukses
     return response()->json([
         'success' => true,
         'products' => collect($orderData)->map(function ($item) {
