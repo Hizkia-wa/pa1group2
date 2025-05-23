@@ -58,7 +58,7 @@
             </p>
         </div>
         <div class="image-container animate__flipInX" style="animation-delay: 0.2s;">
-            <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik UMKM Gita Ulos" class="img-fluid rounded shadow">
+            <img src="img/ulos/imgaeprofil.jpg" alt="Pemilik UMKM Gita Ulos" class="img-fluid rounded shadow"> 
         </div>
     </div>
 </div>

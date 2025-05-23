@@ -81,7 +81,6 @@ class CreateGitaUlosProdukTableFix extends Migration
             $table->id();
             $table->string('ReviewerName', 255);
             $table->unsignedTinyInteger('Rating');
-            $table->longText('Picture')->nullable();
             $table->text('Comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
