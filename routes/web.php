@@ -90,7 +90,7 @@ Route::prefix('customer')->middleware('auth:customer')->group(function () {
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('customer.cart.checkout');
     Route::post('/cart/process-checkout', [CartController::class, 'processCheckout'])->name('customer.cart.processCheckout');
-    Route::post('/cart/update-quantity/{id}/{size}', [CartController::class, 'updateQuantity'])->name('customer.cart.updateQuantity');
+    Route::post('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity'])->name('customer.cart.updateQuantity');
 });
 
 // ==================== Public Routes ====================
