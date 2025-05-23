@@ -71,7 +71,7 @@ Route::prefix('user')->group(function () {
     Route::post('/keranjang/tambah', [CartController::class, 'addToCart'])->name('user.cart.add');
     Route::post('/keranjang/hapus/{id}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
     Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
-    Route::put('/keranjang/update/{id}/{size}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+    Route::put('/keranjang/update/{id}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
 });
 
 // ==================== Customer Routes ====================
