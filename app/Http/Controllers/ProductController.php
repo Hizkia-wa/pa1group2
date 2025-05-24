@@ -140,6 +140,7 @@ class ProductController extends Controller
             'Price' => 'required|numeric',
             'Category' => 'required|string',
             'Description' => 'nullable|string',
+            'Quantity' => 'required|numeric',
         ]);
 
         $images = json_decode($product->Images, true) ?? [];
@@ -167,6 +168,7 @@ class ProductController extends Controller
             'Price' => $request->Price,
             'Category' => $request->Category,
             'Description' => $request->Description,
+            'Quantity' => $request->Quantity,
             'Images' => json_encode($images),
         ]);
 
