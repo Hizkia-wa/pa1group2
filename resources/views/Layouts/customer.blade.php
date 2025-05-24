@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Gita Ulos - @yield('title')</title>
 
+    <script src="{{ asset('build/assets/app-eMHK6VFw.js') }}"></script>
+
     <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
