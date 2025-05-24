@@ -20,7 +20,7 @@
                 <input 
                     type="checkbox" 
                     name="selected[]" 
-                    value="{{ $item->id }}" 
+                    value="{{ $item->id }}-{{ $item->Size }}" 
                     class="form-check-input cart-checkbox"
                 >
             </div>
@@ -34,9 +34,10 @@
             <div class="flex-grow-1">
                 <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
                 <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
+                <div class="mb-2">Ukuran: {{ $item->Size }}</div>
 
                 <!-- Kontrol Jumlah -->
-                <form action="{{ route('user.cart.update', [$item->id]) }}" method="POST" class="d-flex align-items-center">
+                <form action="{{ route('user.cart.update', [$item->id, $item->Size]) }}" method="POST" class="d-flex align-items-center">
                     @csrf
                     @method('PUT')
                     <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
@@ -116,20 +117,6 @@
                 total += qty;
             }
         });
-        document.getElementById('totalQuantity').value = total;
-    }
-
-    function prepareSelectedItems() {
-        const selected = document.querySelectorAll('.cart-checkbox:checked');
-        const wrapper = document.getElementById('selectedItemsWrapper');
-        wrapper.innerHTML = '';
-        selected.forEach(cb => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'selected[]';
-            input.value = cb.value;
-            wrapper.appendChild(input);
-        });
     }
 
     document.querySelectorAll('.cart-checkbox').forEach(cb => {
@@ -149,6 +136,7 @@
             return;
         }
 
+        prepareSelectedItems(); // siapkan selected[] di form
         prepareSelectedItems(); // Siapkan selected[] di form
 
         const formData = new FormData(form);
@@ -169,7 +157,7 @@
                 const message = `Halo Admin, saya ingin memesan produk:
 
 🛒 *Keranjang Belanja*:
-${data.products.map(item => `- ${item.name} x${item.quantity}`).join('\n')}
+${data.products.map(item => `- ${item.name} (${item.size}) x${item.quantity}`).join('\n')}
 
 💵 *Total Harga*: Rp ${data.totalPrice.toLocaleString('id-ID')}
 

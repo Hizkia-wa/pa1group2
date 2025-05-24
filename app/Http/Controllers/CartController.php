@@ -20,7 +20,6 @@ class CartController extends Controller
     {
         $userId = $this->getCurrentUserId();
 
-        // Ambil data keranjang beserta produk
         $cartItems = Cart::with('product')
             ->where('UserId', $userId)
             ->get();
@@ -33,6 +32,7 @@ class CartController extends Controller
         $request->validate([
             'ProductId' => 'required|exists:products,id',
             'Quantity' => 'required|integer|min:1',
+            'Size' => 'required|string',
         ]);
 
         $userId = $this->getCurrentUserId();
@@ -40,6 +40,7 @@ class CartController extends Controller
         // Cek apakah produk sudah ada di keranjang user
         $cartItem = Cart::where('UserId', $userId)
             ->where('ProductId', $request->ProductId)
+            ->where('Size', $request->Size)
             ->first();
 
         if ($cartItem) {
@@ -52,6 +53,7 @@ class CartController extends Controller
                 'UserId' => $userId,
                 'ProductId' => $request->ProductId,
                 'Quantity' => $request->Quantity,
+                'Size' => $request->Size,
             ]);
         }
 
@@ -62,7 +64,6 @@ class CartController extends Controller
     {
         $userId = $this->getCurrentUserId();
 
-        // Hapus item keranjang berdasarkan ID
         Cart::where('id', $id)
             ->where('UserId', $userId)
             ->delete();
@@ -81,9 +82,9 @@ class CartController extends Controller
         $orderData = [];
         $outOfStockProducts = [];
 
-        // Looping untuk setiap produk yang dipilih
         foreach ($selected as $value) {
-            $cartItem = Cart::with('product')->find($value);  // Mengambil data cart berdasarkan ID
+            list($cartId, $size) = explode('-', $value);
+            $cartItem = Cart::with('product')->find($cartId);
 
             if ($cartItem) {
                 $product = $cartItem->product;
@@ -95,10 +96,10 @@ class CartController extends Controller
                 if ($product->Quantity < $quantity) {
                     // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
                     $outOfStockProducts[] = $product->ProductName;
-                    continue;  // Lewati produk ini dan lanjutkan ke produk berikutnya
+                    continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
                 }
 
-                // Simpan order untuk produk
+                // Simpan satu order per produk
                 Order::create([
                     'ProductId'    => $product->id,
                     'CustomerName' => $request->CustomerName,
@@ -108,6 +109,7 @@ class CartController extends Controller
                     'District'     => $request->District,
                     'Address'      => $request->Street,
                     'PostalCode'   => $request->PostalCode,
+                    'Size'         => $cartItem->Size,
                     'Quantity'     => $quantity,
                     'total_price'  => $subtotal,
                     'OrderStatus'  => 'Diproses',
@@ -116,12 +118,13 @@ class CartController extends Controller
                 // Kurangi stok produk
                 $product->decrement('Quantity', $quantity);
 
-                // Hapus produk dari keranjang
+                // Hapus dari keranjang
                 $cartItem->delete();
 
-                // Tambahkan ke data response
+                // Tambahkan ke response data
                 $orderData[] = [
                     'ProductId' => $product->id,
+                    'Size' => $cartItem->Size,
                     'Quantity' => $quantity,
                     'Price' => $price,
                     'Subtotal' => $subtotal,
@@ -140,12 +143,12 @@ class CartController extends Controller
             ], 422);
         }
 
-        // Kirimkan data produk yang berhasil diproses
         return response()->json([
             'success' => true,
             'products' => collect($orderData)->map(function ($item) {
                 return [
                     'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
+                    'size' => $item['Size'],
                     'quantity' => $item['Quantity'],
                 ];
             }),
@@ -163,7 +166,6 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Keranjang kosong.');
         }
 
-        // Validasi data pengiriman
         $request->validate([
             'CustomerName' => 'required|string|max:255',
             'Email' => 'required|email|max:255',
@@ -177,7 +179,6 @@ class CartController extends Controller
         foreach ($cartItems as $item) {
             $subtotal = $item->product->Price * $item->Quantity;
 
-            // Simpan pesanan ke database
             Order::create([
                 'ProductId' => $item->ProductId,
                 'CustomerName' => $request->CustomerName,
@@ -187,28 +188,27 @@ class CartController extends Controller
                 'District' => $request->District,
                 'Address' => $request->Address,
                 'PostalCode' => $request->PostalCode,
+                'Size' => $item->Size,
                 'Quantity' => $item->Quantity,
                 'total_price' => $subtotal,
                 'OrderStatus' => 'Diproses',
             ]);
 
-            // Kurangi stok produk
             $item->product->decrement('Quantity', $item->Quantity);
         }
 
-        // Hapus semua produk dari keranjang setelah checkout
         Cart::where('UserId', $userId)->delete();
 
         return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
     }
 
-    public function updateQuantity(Request $request, $id)
+    public function updateQuantity(Request $request, $id, $size)
     {
         $userId = $this->getCurrentUserId();
 
-        // Update jumlah produk di keranjang
         $cartItem = Cart::where('id', $id)
             ->where('UserId', $userId)
+            ->where('Size', $size)
             ->first();
 
         if (!$cartItem) {
