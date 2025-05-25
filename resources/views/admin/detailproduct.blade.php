@@ -159,15 +159,15 @@
             @php $images = json_decode($product->Images, true); @endphp
             @if (!empty($images))
                 <img id="mainImage"
-                     src="{{ asset('storage/' . $images[0]) }}"
+                     src="{{ asset('storage/app/public/' . $images[0]) }}"
                      class="main-image"
                      alt="Produk">
 
                 <div class="thumbnails">
                     @foreach ($images as $img)
-                        <img src="{{ asset('storage/' . $img) }}"
+                        <img src="{{ asset('storage/app/public/' . $img) }}"
                              class="thumbnail-img"
-                             data-img="{{ asset('storage/' . $img) }}"
+                             data-img="{{ asset('storage/app/public/' . $img) }}"
                              alt="Thumbnail">
                     @endforeach
                 </div>

@@ -16,7 +16,7 @@
 
         <div class="mb-4 border-bottom pb-3">
             <div class="d-flex align-items-center gap-3">
-            <img src="{{ asset('storage/' . $order->product->ImagePath) }}" 
+            <img src="{{ asset('storage/app/public/' . $order->product->ImagePath) }}" 
             alt="Gambar Produk" 
      style="width: 100px; height: auto; border-radius: 10px;">
 
