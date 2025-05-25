@@ -22,6 +22,9 @@
                     name="selected[]" 
                     value="{{ $item->id }}" 
                     class="form-check-input cart-checkbox"
+                    data-quantity="{{ $item->Quantity }}" 
+                    data-product-name="{{ $product->ProductName }}"
+                    data-product-price="{{ $product->Price }}"
                 >
             </div>
 
@@ -34,6 +37,7 @@
             <div class="flex-grow-1">
                 <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
                 <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
+                <div class="mb-2">Jumlah: {{ $item->Quantity }}</div>
 
                 <!-- Kontrol Jumlah -->
                 <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
@@ -107,25 +111,26 @@
 </div>
 
 <script>
+    // Update jumlah total berdasarkan checkbox yang dipilih
     function updateQuantity() {
         let total = 0;
         const checkboxes = document.querySelectorAll('.cart-checkbox');
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
-                const qty = parseInt(checkbox.closest('.card').querySelector('.quantity-value').innerText);
-                total += qty;
+                const quantity = parseInt(checkbox.dataset.quantity);  // Ambil quantity dari checkbox
+                total += quantity;  // Tambahkan quantity ke total
             }
         });
+        // Update jumlah total pada form
+        document.getElementById('totalQuantity').value = total;
     }
 
+    // Set event listener pada setiap checkbox
     document.querySelectorAll('.cart-checkbox').forEach(cb => {
         cb.addEventListener('change', updateQuantity);
     });
 
-    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
-        prepareSelectedItems();
-    });
-
+    // Submit form ketika button WhatsApp diklik
     document.getElementById('waButton').addEventListener('click', function () {
         const form = document.getElementById('checkoutForm');
         const selected = document.querySelectorAll('.cart-checkbox:checked');
@@ -135,7 +140,8 @@
             return;
         }
 
-        prepareSelectedItems(); // siapkan selected[] di form
+        // Prepare selected products before submitting
+        prepareSelectedItems(); // Siapkan selected[] di form
 
         const formData = new FormData(form);
 
