@@ -11,17 +11,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('IsBestSeller', false)->get();
+        $products = Product::where('IsBestSeller', 0)->get();
         return view('admin.productpage', compact('products'));
     }
 
-    public function bestSellers()
+    public function bestProducts()
     {
-        $products = Product::withCount('orderItems') // pastikan relasi 'orderItems' ada
-                    ->orderBy('order_items_count', 'desc')
-                    ->take(10)
-                    ->get();
-
+        $products = Product::where('IsBestSeller', 1)->get();
         return view('admin.bestproductpage', compact('products'));
     }
 
@@ -70,7 +66,7 @@ class ProductController extends Controller
         $product->Images = json_encode($imagePaths);
     
         // Tandai sebagai produk terlaris
-        $product->IsBestSeller = $request->has('IsBestSeller', 1);
+        $product->IsBestSeller = 1; 
     
         $product->save();
     
@@ -112,7 +108,7 @@ class ProductController extends Controller
     $product->Images = json_encode($imagePaths);
 
     // Tandai sebagai produk biasa (bukan best seller)
-    $product->IsBestSeller = false;
+    $product->IsBestSeller = 0;
 
     $product->save();
 
@@ -184,12 +180,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete(); // soft delete
         return redirect()->back()->with('success', 'Produk berhasil dihapus.');
-    }
-    // Tampilkan produk terlaris (misalnya: berdasarkan kriteria manual, atau Category = 'Terlaris')
-    public function bestProducts()
-    {
-        $products = Product::where('IsBestSeller', true)->get();
-        return view('admin.bestproductpage', compact('products'));
     }
     
     public function createBestProduct()
@@ -455,4 +445,24 @@ class ProductController extends Controller
         // Kirim parameter pencarian kembali ke tampilan untuk mempertahankan status
         return view('admin.users.productcatalog', compact('products', 'categories'));
     }
+
+// Menampilkan produk terlaris di halaman customer
+public function showCustomerBestSellers()
+{
+    // Ambil semua produk yang memiliki 'IsBestSeller' bernilai 1 (produk terlaris)
+    $bestSellerProducts = Product::where('IsBestSeller', 1)->get();
+
+    // Kirim data produk terlaris ke tampilan customer.bestproductpage
+    return view('customer.bestproductpage', compact('bestSellerProducts'));
+}
+
+// Menampilkan produk terlaris di halaman user
+public function showUserBestSellers()
+{
+    // Ambil semua produk yang memiliki 'IsBestSeller' bernilai 1 (produk terlaris)
+    $bestSellerProducts = Product::where('IsBestSeller', 1)->get();
+
+    // Kirim data produk terlaris ke tampilan user.bestproductpage
+    return view('user.bestproductpage', compact('bestSellerProducts'));
+}
 }

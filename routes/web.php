@@ -72,6 +72,7 @@ Route::prefix('user')->group(function () {
     Route::post('/keranjang/hapus/{id}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
     Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
     Route::put('/keranjang/update/{id}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+    Route::get('/best-products', [ProductController::class, 'showUserBestSellers'])->name('user.bestproductpage');
 });
 
 // ==================== Customer Routes ====================
@@ -91,6 +92,7 @@ Route::prefix('customer')->middleware('auth:customer')->group(function () {
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('customer.cart.checkout');
     Route::post('/cart/process-checkout', [CartController::class, 'processCheckout'])->name('customer.cart.processCheckout');
     Route::post('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity'])->name('customer.cart.updateQuantity');
+    Route::get('/best-products', [ProductController::class, 'showCustomerBestSellers'])->name('customer.bestproductpage');
 });
 
 // ==================== Public Routes ====================
