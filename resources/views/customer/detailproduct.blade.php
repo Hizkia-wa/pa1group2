@@ -179,20 +179,6 @@
             </div>
 
             <div class="form-group">
-                <label>Ukuran</label>
-                <div class="size-options">
-                    <input type="radio" id="size1" name="size" value="200 x 50 cm" checked>
-                    <label for="size1">200 x 50 cm</label>
-
-                    <input type="radio" id="size2" name="size" value="300 x 50 cm">
-                    <label for="size2">300 x 50 cm</label>
-
-                    <input type="radio" id="size3" name="size" value="200 x 60 cm">
-                    <label for="size3">200 x 60 cm</label>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label>Jumlah</label>
                 <input type="number" name="Quantity" value="1" min="1" required>
             </div>
@@ -211,39 +197,38 @@
 
 <script>
     document.getElementById('waButton').addEventListener('click', function () {
-        const form = document.getElementById('orderForm');
-        const formData = {
-            _token: '{{ csrf_token() }}',
-            ProductId: '{{ $product->id }}',
-            name: form.name.value,
-            email: form.email.value,
-            phone: form.phone.value,
-            city: form.city.value,
-            district: form.district.value,
-            address: form.address.value,
-            postal_code: form.postal_code.value,
-            size: form.size.value,
-            Quantity: form.Quantity.value
-        };
+    const form = document.getElementById('orderForm');
+    const formData = {
+        _token: '{{ csrf_token() }}',
+        ProductId: '{{ $product->id }}',
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        city: form.city.value,
+        district: form.district.value,
+        address: form.address.value,
+        postal_code: form.postal_code.value,
+        Quantity: form.Quantity.value
+    };
 
-        fetch("{{ route('user.product.order') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": formData._token
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Gagal kirim data");
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                const order = data.order;
-                document.getElementById('product-stock').innerText = data.newStock;
-                form.reset();
-                const message = `Halo Admin, saya ingin memesan produk:
+    fetch("{{ route('user.product.order') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": formData._token
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Gagal kirim data");
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const order = data.order;
+            document.getElementById('product-stock').innerText = data.newStock;
+            form.reset();
+            const message = `Halo Admin, saya ingin memesan produk:
 
 📦 *{{ $product->ProductName }}*
 📁 Kategori: {{ $product->Category }}
@@ -253,23 +238,23 @@
 📱 Telepon: ${formData.phone}
 📧 Email: ${formData.email}
 🏠 Alamat: ${formData.address}, ${formData.district}, ${formData.city}, ${formData.postal_code}
-📐 Ukuran: ${formData.size}
 🔢 Jumlah: ${formData.Quantity}
 
 Mohon segera diproses ya 🙏`;
 
-                const nomorAdmin = document.getElementById('waButton').dataset.admin;
-                const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
-                window.open(waLink, '_blank');
-            } else {
-                alert("Terjadi kesalahan, coba lagi.");
-            }
-        })
-        .catch(err => {
-            alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
-            console.error(err);
-        });
+            const nomorAdmin = document.getElementById('waButton').dataset.admin;
+            const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
+            window.open(waLink, '_blank');
+        } else {
+            alert("Terjadi kesalahan, coba lagi.");
+        }
+    })
+    .catch(err => {
+        alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
+        console.error(err);
     });
+});
+
 </script>
 
 @endsection

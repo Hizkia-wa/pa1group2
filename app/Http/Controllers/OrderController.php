@@ -36,12 +36,12 @@ public function store(Request $request)
             'district' => 'required|string',
             'address' => 'required|string',
             'postal_code' => 'required|string',
-            'size' => 'required|string',
             'Quantity' => 'required|integer|min:1',
         ]);
 
         $product = Product::findOrFail($request->ProductId);
 
+        // Cek apakah stok cukup
         if ($product->Quantity < $request->Quantity) {
             return response()->json([
                 'success' => false,
@@ -52,7 +52,6 @@ public function store(Request $request)
         // Kurangi stok produk
         $product->decrement('Quantity', $request->Quantity);
 
-        
         // Simpan pesanan ke database
         $order = Order::create([
             'ProductId'    => $request->ProductId,
@@ -63,7 +62,6 @@ public function store(Request $request)
             'District'     => $request->district,
             'Address'      => $request->address,
             'PostalCode'   => $request->postal_code,
-            'Size'         => $request->size,
             'Quantity'     => $request->Quantity,
             'total_price'  => $product->Price * $request->Quantity,
             'OrderStatus'  => 'Diproses',
@@ -73,7 +71,7 @@ public function store(Request $request)
         return response()->json([
             'success' => true,
             'order' => $order,
-            'newStock' => $product->Quantity  // << ini penting untuk frontend  // Mengirimkan data pesanan yang baru dibuat
+            'newStock' => $product->Quantity  // Mengirimkan stok terbaru setelah pengurangan
         ]);
     } catch (\Exception $e) {
         // Jika terjadi error, tangkap dan kembalikan error
@@ -96,24 +94,23 @@ public function store(Request $request)
         return view('admin.ordersselesai', compact('orders'));
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $order = Order::findOrFail($id);
-        $previousStatus = $order->OrderStatus;
-        $order->OrderStatus = $request->status;
-        $order->save();
-    
-        // Jika status diubah menjadi 'Batal' dan sebelumnya bukan 'Batal'
-        if ($request->status === 'Batal' && $previousStatus !== 'Batal') {
-            $product = Product::find($order->ProductId);
-            if ($product) {
-                $product->increment('Quantity', $order->Quantity);
-            }
+public function updateStatus(Request $request, $id)
+{
+    $order = Order::findOrFail($id);
+    $previousStatus = $order->OrderStatus;
+    $order->OrderStatus = $request->status;
+    $order->save();
+
+    // Jika status diubah menjadi 'Batal' dan sebelumnya bukan 'Batal'
+    if ($request->status === 'Batal' && $previousStatus !== 'Batal') {
+        $product = Product::find($order->ProductId);
+        if ($product) {
+            $product->increment('Quantity', $order->Quantity);
         }
-    
-        return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
     }
-    
+
+    return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
+}  
 
     public function ordersBatal()
     {

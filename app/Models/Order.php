@@ -20,7 +20,6 @@ class Order extends Model
         'District',
         'Address',
         'PostalCode',
-        'Size',
         'Quantity',
         'total_price',
         'OrderStatus',
