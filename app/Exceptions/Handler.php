@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -42,23 +43,33 @@ class Handler extends ExceptionHandler
             // Bisa menambahkan log atau pengiriman email jika terjadi error tertentu
             Log::error($e->getMessage());
         });
+    }
 
-        // Error handling untuk 404, 403, 500, dll
-        $this->renderable(function (NotFoundHttpException $e, Request $request) {
+    /**
+     * Convert an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Throwable $exception)
+    {
+        // Menangani error 404
+        if ($exception instanceof NotFoundHttpException) {
             return response()->view('errors.custom', [], 404); // Halaman 404 custom
-        });
+        }
 
-        $this->renderable(function (UnauthorizedHttpException $e, Request $request) {
+        // Menangani error 403
+        if ($exception instanceof UnauthorizedHttpException || $exception instanceof AccessDeniedHttpException) {
             return response()->view('errors.custom', [], 403); // Halaman 403 custom
-        });
+        }
 
-        $this->renderable(function (AccessDeniedHttpException $e, Request $request) {
-            return response()->view('errors.custom', [], 403); // Halaman 403 custom
-        });
-
-        // Error umum untuk 500 dan lainnya
-        $this->renderable(function (Exception $e, Request $request) {
+        // Menangani error 500 dan lainnya
+        if ($exception instanceof Exception) {
             return response()->view('errors.custom', ['message' => 'Something went wrong!'], 500); // Halaman 500 custom
-        });
+        }
+
+        // Untuk error lainnya yang tidak tertangani
+        return parent::render($request, $exception);
     }
 }
