@@ -73,96 +73,69 @@ class CartController extends Controller
 
 public function checkout(Request $request)
 {
-    $userId = $this->getCurrentUserId();
-
-    $cartItems = Cart::with('product')->where('UserId', $userId)->get();
-
-    if ($cartItems->isEmpty()) {
-        return redirect()->back()->with('error', 'Keranjang kosong.');
-    }
-
-    // Validate customer information
-    $request->validate([
-        'CustomerName' => 'required|string|max:255',
-        'Email' => 'required|email|max:255',
-        'Phone' => 'required|string|max:20',
-        'City' => 'required|string|max:100',
-        'District' => 'required|string|max:100',
-        'Address' => 'required|string|max:255',
-        'PostalCode' => 'required|string|max:20',
-    ]);
-
-    $orderData = [];
-    $totalPrice = 0;
-
-    foreach ($cartItems as $item) {
-        $product = $item->product;
-        $quantity = $item->Quantity;
-        $subtotal = $product->Price * $quantity;
-
-        // Get the size for this item, default to 'Medium' if not provided
-        $size = $request->input('size_' . $item->id, 'Medium');
-
-        // Check stock availability
-        if ($product->Quantity < $quantity) {
-            return redirect()->back()->with('error', 'Stok produk "' . $product->ProductName . '" tidak mencukupi.');
-        }
-
-        // Store the order in the database
-        Order::create([
-            'ProductId' => $item->ProductId,
-            'CustomerName' => $request->CustomerName,
-            'Email' => $request->Email,
-            'Phone' => $request->Phone,
-            'City' => $request->City,
-            'District' => $request->District,
-            'Address' => $request->Address,
-            'PostalCode' => $request->PostalCode,
-            'Quantity' => $quantity,
-            'Size' => $size,
-            'total_price' => $subtotal,
-            'OrderStatus' => 'Diproses',
+    try {
+        // Validasi input yang diterima
+        $request->validate([
+            'ProductId' => 'required|exists:products,id',
+            'name' => 'required|string|max:100',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'city' => 'required|string',
+            'district' => 'required|string',
+            'address' => 'required|string',
+            'postal_code' => 'required|string',
+            'Quantity' => 'required|integer|min:1',
         ]);
 
-        // Decrement product stock
-        $product->decrement('Quantity', $quantity);
+        // Ambil produk berdasarkan ProductId
+        $product = Product::findOrFail($request->ProductId);
 
-        // Add order data to prepare the WhatsApp message
-        $orderData[] = [
-            'ProductName' => $product->ProductName,
-            'Quantity' => $quantity,
-            'Price' => $product->Price,
-            'Subtotal' => $subtotal,
-            'Size' => $size,
-        ];
+        // Cek apakah stok cukup
+        if ($product->Quantity < $request->Quantity) {
+            return redirect()->back()->withErrors(['Stok tidak mencukupi']);
+        }
 
-        $totalPrice += $subtotal;
+        // Kurangi stok produk
+        $product->decrement('Quantity', $request->Quantity);
+
+        // Tentukan nilai default untuk 'Size' jika tidak ada nilai yang dikirim
+        $size = 'Medium'; // Nilai default
+
+        // Simpan pesanan ke database
+        $order = Order::create([
+            'ProductId'    => $request->ProductId,
+            'CustomerName' => $request->name,
+            'Email'        => $request->email,
+            'Phone'        => $request->phone,
+            'City'         => $request->city,
+            'District'     => $request->district,
+            'Address'      => $request->address,
+            'PostalCode'   => $request->postal_code,
+            'Quantity'     => $request->Quantity,
+            'Size'         => $size,  // Menambahkan kolom 'Size' dengan nilai default
+            'total_price'  => $product->Price * $request->Quantity,
+            'OrderStatus'  => 'Diproses',
+        ]);
+
+        // Kirim pesan WhatsApp ke admin
+        $message = "Halo Admin, saya ingin memesan produk:\n\n";
+        $message .= "📦 *" . $product->ProductName . "*\n";
+        $message .= "📁 Kategori: " . $product->Category . "\n";
+        $message .= "💵 Harga: Rp " . number_format($product->Price, 0, ',', '.') . "\n";
+        $message .= "👤 Nama: " . $request->name . "\n";
+        $message .= "📱 Telepon: " . $request->phone . "\n";
+        $message .= "📧 Email: " . $request->email . "\n";
+        $message .= "🏠 Alamat: " . $request->address . ", " . $request->district . ", " . $request->city . ", " . $request->postal_code . "\n";
+        $message .= "🔢 Jumlah: " . $request->Quantity . "\n\n";
+        $message .= "Mohon segera diproses ya 🙏";
+
+        $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
+
+        return redirect($waLink);
+    } catch (\Exception $e) {
+        // Jika terjadi error, tangkap dan kembalikan error
+        return redirect()->back()->withErrors(['message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
-
-    // Remove all items from the cart after checkout
-    Cart::where('UserId', $userId)->delete();
-
-    // Prepare message for WhatsApp
-    $message = "Halo Admin, saya ingin memesan produk:\n\n";
-    foreach ($orderData as $order) {
-        $message .= "📦 *" . $order['ProductName'] . "*\n";
-        $message .= "💵 Harga: Rp " . number_format($order['Price'], 0, ',', '.') . "\n";
-        $message .= "🔢 Jumlah: " . $order['Quantity'] . "\n";
-        $message .= "📏 Ukuran: " . $order['Size'] . "\n";
-        $message .= "💵 Subtotal: Rp " . number_format($order['Subtotal'], 0, ',', '.') . "\n\n";
-    }
-    $message .= "👤 *Nama*: " . $request->CustomerName . "\n";
-    $message .= "📱 *Telepon*: " . $request->Phone . "\n";
-    $message .= "📧 *Email*: " . $request->Email . "\n";
-    $message .= "🏠 *Alamat*: " . $request->Address . ", " . $request->District . ", " . $request->City . " - " . $request->PostalCode . "\n";
-    $message .= "💵 *Total Harga*: Rp " . number_format($totalPrice, 0, ',', '.') . "\n\n";
-    $message .= "Mohon segera diproses ya 🙏";
-
-    // WhatsApp link
-    $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
-
-    // Redirect to WhatsApp with the order details
-    return redirect($waLink);
 }
 
     public function updateQuantity(Request $request, $id)
