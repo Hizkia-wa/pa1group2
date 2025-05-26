@@ -1,70 +1,73 @@
 @extends('layouts.customer')
 
 @section('content')
-<div class="container mt-5 d-flex">
-    {{-- Daftar Produk di Keranjang --}}
-    <div class="w-50 me-4">
-        <h3 class="mb-4 fw-bold">Keranjang</h3>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between">
+        {{-- Daftar Produk di Keranjang --}}
+        <div class="w-50 me-4">
+            <h3 class="mb-4 fw-bold">Keranjang</h3>
 
-        <form action="{{ route('customer.cart.checkout') }}" method="POST">
-            @csrf
-            @foreach ($cartWithProduct as $item)
-            @php
-                $product = $item->product;
-                $images = json_decode($product->Images, true);
-                $imagePath = isset($images[0]) ? asset('storage/app/public/' . $images[0]) : asset('images/default.png');
-            @endphp
+            <form action="{{ route('customer.cart.checkout') }}" method="POST">
+                @csrf
+                @foreach ($cartWithProduct as $item)
+                @php
+                    $product = $item->product;
+                    $images = json_decode($product->Images, true);
+                    $imagePath = isset($images[0]) ? asset('storage/app/public/' . $images[0]) : asset('images/default.png');
+                @endphp
 
-            <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
-                
-                <!-- Checkbox -->
-                <div class="form-check me-3">
-                    <input 
-                        type="checkbox" 
-                        name="selected[]" 
-                        value="{{ $item->id }}" 
-                        class="form-check-input cart-checkbox"
-                    >
-                </div>
+                <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
+                    
+                    <!-- Checkbox -->
+                    <div class="form-check me-3">
+                        <input 
+                            type="checkbox" 
+                            name="selected[]" 
+                            value="{{ $item->id }}" 
+                            class="form-check-input cart-checkbox"
+                        >
+                    </div>
 
-                <!-- Gambar Produk -->
-                <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
-                    <img src="{{ $imagePath }}" alt="{{ $product->ProductName }}" class="w-100 h-100 object-fit-cover">
-                </div>
+                    <!-- Gambar Produk -->
+                    <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
+                        <img src="{{ $imagePath }}" alt="{{ $product->ProductName }}" class="w-100 h-100 object-fit-cover">
+                    </div>
 
-                <!-- Detail Produk -->
-                <div class="flex-grow-1">
-                    <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
-                    <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
-                    <div class="mb-2">Jumlah: {{ $item->Quantity }}</div>
+                    <!-- Detail Produk -->
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
+                        <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
+                        <div class="mb-2">Jumlah: {{ $item->Quantity }}</div>
 
-                    <!-- Kontrol Jumlah -->
-                    <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
+                        <!-- Kontrol Jumlah -->
+                        <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
+                            <span class="fw-bold quantity-value">{{ $item->Quantity }}</span>
+                            <input type="hidden" name="quantity" value="{{ $item->Quantity }}">
+                            <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
+                        </form>
+                    </div>
+
+                    <!-- Hapus -->
+                    <form action="{{ route('user.cart.remove', $item->id) }}" method="POST" class="ms-3">
                         @csrf
-                        @method('PUT')
-                        <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
-                        <span class="fw-bold quantity-value">{{ $item->Quantity }}</span>
-                        <input type="hidden" name="quantity" value="{{ $item->Quantity }}">
-                        <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
+                        <button class="btn btn-outline-danger btn-sm">Hapus</button>
                     </form>
                 </div>
+                @endforeach
 
-                <!-- Hapus -->
-                <form action="{{ route('user.cart.remove', $item->id) }}" method="POST" class="ms-3">
-                    @csrf
-                    <button class="btn btn-outline-danger btn-sm">Hapus</button>
-                </form>
-            </div>
-            @endforeach
+                {{-- Form untuk Menampilkan Total Jumlah --}}
+                <h6 class="fw-bold">Informasi Pemesanan</h6>
+                <div class="mb-3">
+                    <label>Jumlah :</label>
+                    <input type="number" id="totalQuantity" name="totalQuantity" class="form-control w-25" readonly value="0">
+                </div>
+        </div>
 
-            {{-- Form untuk Menampilkan Total Jumlah --}}
-            <h6 class="fw-bold">Informasi Pemesanan</h6>
-            <div class="mb-3">
-                <label>Jumlah :</label>
-                <input type="number" id="totalQuantity" name="totalQuantity" class="form-control w-25" readonly value="0">
-            </div>
-
-            {{-- Form Pemesanan --}}
+        {{-- Form Pemesanan --}}
+        <div class="w-50">
             <h4 class="fw-bold mb-4">Form Pemesanan</h4>
             <h6 class="fw-bold">Informasi Pembeli</h6>
             <div class="mb-2">
@@ -101,6 +104,7 @@
                 Kategori: Ulos
             </small>
         </form>
+        </div>
     </div>
 </div>
 
