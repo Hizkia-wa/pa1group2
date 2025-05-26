@@ -43,10 +43,7 @@ public function store(Request $request)
 
         // Cek apakah stok cukup
         if ($product->Quantity < $request->Quantity) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Stok tidak mencukupi.',
-            ], 400);
+            return redirect()->back()->withErrors(['Stok tidak mencukupi']);
         }
 
         // Kurangi stok produk
@@ -67,18 +64,24 @@ public function store(Request $request)
             'OrderStatus'  => 'Diproses',
         ]);
 
-        // Mengembalikan respons sukses
-        return response()->json([
-            'success' => true,
-            'order' => $order,
-            'newStock' => $product->Quantity  // Mengirimkan stok terbaru setelah pengurangan
-        ]);
+        // Membuat pesan WhatsApp untuk admin
+        $message = "Halo Admin, saya ingin memesan produk:\n\n";
+        $message .= "📦 *" . $product->ProductName . "*\n";
+        $message .= "📁 Kategori: " . $product->Category . "\n";
+        $message .= "💵 Harga: Rp " . number_format($product->Price, 0, ',', '.') . "\n";
+        $message .= "👤 Nama: " . $request->name . "\n";
+        $message .= "📱 Telepon: " . $request->phone . "\n";
+        $message .= "📧 Email: " . $request->email . "\n";
+        $message .= "🏠 Alamat: " . $request->address . ", " . $request->district . ", " . $request->city . ", " . $request->postal_code . "\n";
+        $message .= "🔢 Jumlah: " . $request->Quantity . "\n\n";
+        $message .= "Mohon segera diproses ya 🙏";
+
+        // Kirimkan pesan WhatsApp ke admin
+        $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
+        return redirect($waLink);
     } catch (\Exception $e) {
         // Jika terjadi error, tangkap dan kembalikan error
-        return response()->json([
-            'success' => false,
-            'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
-        ], 500);
+        return redirect()->back()->withErrors(['message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
 }
 

@@ -73,27 +73,6 @@
         border-radius: 5px;
     }
 
-    .order-form .size-options {
-        display: flex;
-        gap: 10px;
-    }
-
-    .order-form .size-options label {
-        padding: 8px 12px;
-        border: 1px solid #007bff;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .order-form .size-options input[type="radio"] {
-        display: none;
-    }
-
-    .order-form .size-options input[type="radio"]:checked + label {
-        background-color: #007bff;
-        color: white;
-    }
-
     .btn-submit {
         background-color: #25d366;
         color: white;
@@ -137,7 +116,7 @@
 
     <!-- Form Pemesanan -->
     <div class="order-form">
-        <form id="orderForm" method="POST">
+        <form id="orderForm" action="{{ route('customer.product.order') }}" method="POST">
             @csrf
             <input type="hidden" name="ProductId" value="{{ $product->id }}">
 
@@ -183,7 +162,7 @@
                 <input type="number" name="Quantity" value="1" min="1" required>
             </div>
 
-            <button type="button" class="btn-submit" id="waButton" data-admin="6282274398996">
+            <button type="submit" class="btn-submit">
                 <i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp
             </button>
 
@@ -194,67 +173,5 @@
         </form>
     </div>
 </div>
-
-<script>
-    document.getElementById('waButton').addEventListener('click', function () {
-    const form = document.getElementById('orderForm');
-    const formData = {
-        _token: '{{ csrf_token() }}',
-        ProductId: '{{ $product->id }}',
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        city: form.city.value,
-        district: form.district.value,
-        address: form.address.value,
-        postal_code: form.postal_code.value,
-        Quantity: form.Quantity.value
-    };
-
-    fetch("{{ route('customer.product.order') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": formData._token
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (!response.ok) throw new Error("Gagal kirim data");
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            const order = data.order;
-            document.getElementById('product-stock').innerText = data.newStock;
-            form.reset();
-            const message = `Halo Admin, saya ingin memesan produk:
-
-📦 *{{ $product->ProductName }}*
-📁 Kategori: {{ $product->Category }}
-💵 Harga: Rp {{ number_format($product->Price, 0, ',', '.') }}
-
-👤 Nama: ${formData.name}
-📱 Telepon: ${formData.phone}
-📧 Email: ${formData.email}
-🏠 Alamat: ${formData.address}, ${formData.district}, ${formData.city}, ${formData.postal_code}
-🔢 Jumlah: ${formData.Quantity}
-
-Mohon segera diproses ya 🙏`;
-
-            const nomorAdmin = document.getElementById('waButton').dataset.admin;
-            const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
-            window.open(waLink, '_blank');
-        } else {
-            alert("Terjadi kesalahan, coba lagi.");
-        }
-    })
-    .catch(err => {
-        alert("Terjadi kesalahan saat mengirim pesanan. Silakan coba lagi.");
-        console.error(err);
-    });
-});
-
-</script>
 
 @endsection
