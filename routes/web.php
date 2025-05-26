@@ -120,3 +120,17 @@ Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPas
 Route::get('/test-layout', function () {
     return view('layouts.Admin');
 });
+
+Route::get('/test-404', function () {
+    abort(404); // Will trigger a 404 error
+});
+
+// Test route for 403
+Route::get('/test-403', function () {
+    abort(403); // Will trigger a 403 error
+});
+
+// Test route for 500
+Route::get('/test-500', function () {
+    abort(500); // Will trigger a 500 error
+});
