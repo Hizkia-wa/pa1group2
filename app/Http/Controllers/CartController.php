@@ -71,86 +71,143 @@ class CartController extends Controller
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
-public function store(Request $request)
+public function checkout(Request $request)
 {
-    try {
-        // Validasi input yang diterima
-        $request->validate([
-            'ProductId' => 'required|exists:products,id',
-            'name' => 'required|string|max:100',
-            'email' => 'required|email',
-            'phone' => 'required|string',
-            'city' => 'required|string',
-            'district' => 'required|string',
-            'address' => 'required|string',
-            'postal_code' => 'required|string',
-            'Quantity' => 'required|integer|min:1',
-            'selected' => 'required|array',  // Mengharuskan ada produk yang dipilih
-        ]);
+    $selectedItems = $request->input('selected', []);
+    if (empty($selectedItems)) {
+        return redirect()->back()->with('error', 'Tidak ada produk yang dipilih.');
+    }
 
-        $totalQuantity = 0;
-        $totalPrice = 0;
+    $totalQuantity = 0;
+    $totalPrice = 0;
+    $orderData = [];
+    $outOfStockProducts = [];
 
-        // Loop melalui produk yang dipilih
-        foreach ($request->selected as $productId) {
-            // Ambil produk dari keranjang
-            $cartItem = Cart::where('UserId', auth()->id())
-                            ->where('ProductId', $productId)
-                            ->first();
+    // Loop untuk memproses setiap produk yang dipilih
+    foreach ($selectedItems as $cartId) {
+        $cartItem = Cart::with('product')->find($cartId);
 
-            if ($cartItem) {
-                $product = $cartItem->product;
-                $quantity = $cartItem->Quantity;
-                $subtotal = $product->Price * $quantity;
+        if ($cartItem) {
+            $product = $cartItem->product;
+            $quantity = $cartItem->Quantity;
+            $subtotal = $product->Price * $quantity;
 
-                // Cek apakah stok cukup
-                if ($product->Quantity < $quantity) {
-                    return redirect()->back()->withErrors(['Stok produk "' . $product->ProductName . '" tidak mencukupi']);
-                }
-
-                // Kurangi stok produk
-                $product->decrement('Quantity', $quantity);
-
-                // Simpan pesanan
-                Order::create([
-                    'ProductId'    => $product->id,
-                    'CustomerName' => $request->name,
-                    'Email'        => $request->email,
-                    'Phone'        => $request->phone,
-                    'City'         => $request->city,
-                    'District'     => $request->district,
-                    'Address'      => $request->address,
-                    'PostalCode'   => $request->postal_code,
-                    'Quantity'     => $quantity,
-                    'Size'         => 'Medium',  // Nilai default
-                    'total_price'  => $subtotal,
-                    'OrderStatus'  => 'Diproses',
-                ]);
-
-                // Tambahkan ke total
-                $totalQuantity += $quantity;
-                $totalPrice += $subtotal;
-
-                // Hapus item dari keranjang
-                $cartItem->delete();
+            // Cek apakah stok cukup
+            if ($product->Quantity < $quantity) {
+                $outOfStockProducts[] = $product->ProductName;
+                continue;
             }
+
+            // Simpan data untuk pesanan
+            $orderData[] = [
+                'ProductName' => $product->ProductName,
+                'Quantity' => $quantity,
+                'Subtotal' => $subtotal,
+            ];
+
+            // Hitung total harga
+            $totalQuantity += $quantity;
+            $totalPrice += $subtotal;
+
+            // Kurangi stok produk
+            $product->decrement('Quantity', $quantity);
+
+            // Hapus item dari keranjang
+            $cartItem->delete();
+        }
+    }
+
+    // Jika ada produk yang stoknya tidak mencukupi
+    if (!empty($outOfStockProducts)) {
+        $outOfStockMessage = implode(', ', $outOfStockProducts);
+        return redirect()->back()->with('error', 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage);
+    }
+
+    // Simpan pesanan
+    $order = Order::create([
+        'ProductId' => $product->id, // Ambil produk terakhir untuk pesanan
+        'CustomerName' => $request->CustomerName,
+        'Email' => $request->Email,
+        'Phone' => $request->Phone,
+        'City' => $request->City,
+        'District' => $request->District,
+        'Address' => $request->Street,
+        'PostalCode' => $request->PostalCode,
+        'Quantity' => $totalQuantity,
+        'total_price' => $totalPrice,
+        'OrderStatus' => 'Diproses',
+    ]);
+
+    // Kirim pesan WhatsApp ke admin
+    $message = "Halo Admin, saya ingin memesan produk:\n\n";
+    foreach ($orderData as $data) {
+        $message .= "📦 *" . $data['ProductName'] . "* - Jumlah: " . $data['Quantity'] . " - Subtotal: Rp " . number_format($data['Subtotal'], 0, ',', '.') . "\n";
+    }
+    $message .= "💵 *Total Harga*: Rp " . number_format($totalPrice, 0, ',', '.') . "\n";
+    $message .= "👤 *Nama*: " . $request->CustomerName . "\n";
+    $message .= "📱 *Telepon*: " . $request->Phone . "\n";
+    $message .= "📧 *Email*: " . $request->Email . "\n";
+    $message .= "🏠 *Alamat*: " . $request->Street . ", " . $request->District . ", " . $request->City . " - " . $request->PostalCode . "\n";
+
+    // Membuka link WhatsApp untuk mengirim pesan
+    $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
+    return redirect($waLink);
+}
+
+public function processCheckout(Request $request)
+{
+    $userId = $this->getCurrentUserId();
+
+    $cartItems = Cart::with('product')->where('UserId', $userId)->get();
+
+    if ($cartItems->isEmpty()) {
+        return redirect()->back()->with('error', 'Keranjang kosong.');
+    }
+
+    $request->validate([
+        'CustomerName' => 'required|string|max:255',
+        'Email' => 'required|email|max:255',
+        'Phone' => 'required|string|max:20',
+        'City' => 'required|string|max:100',
+        'District' => 'required|string|max:100',
+        'Address' => 'required|string|max:255',
+        'PostalCode' => 'required|string|max:20',
+    ]);
+
+    // Loop untuk proses checkout
+    foreach ($cartItems as $item) {
+        $product = $item->product;
+        $quantity = $item->Quantity;
+        $subtotal = $product->Price * $quantity;
+
+        // Cek apakah stok cukup
+        if ($product->Quantity < $quantity) {
+            return redirect()->back()->with('error', 'Stok produk "' . $product->ProductName . '" tidak mencukupi.');
         }
 
-        // Kirim pesan WhatsApp ke admin
-        $message = "Halo Admin, saya ingin memesan produk:\n\n";
-        $message .= "Jumlah: $totalQuantity\n";
-        $message .= "Total Harga: Rp " . number_format($totalPrice, 0, ',', '.') . "\n";
-        $message .= "Pesanan dari: " . $request->name . "\n";
-        $message .= "Telepon: " . $request->phone . "\n";
-        $message .= "Alamat: " . $request->address . ", " . $request->district . ", " . $request->city . "\n";
+        // Simpan pesanan
+        Order::create([
+            'ProductId' => $item->ProductId,
+            'CustomerName' => $request->CustomerName,
+            'Email' => $request->Email,
+            'Phone' => $request->Phone,
+            'City' => $request->City,
+            'District' => $request->District,
+            'Address' => $request->Address,
+            'PostalCode' => $request->PostalCode,
+            'Quantity' => $quantity,
+            'total_price' => $subtotal,
+            'OrderStatus' => 'Diproses',
+        ]);
 
-        $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
-
-        return redirect($waLink);
-    } catch (\Exception $e) {
-        // Jika terjadi error, tangkap dan kembalikan error
-        return redirect()->back()->withErrors(['message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        // Kurangi stok produk
+        $product->decrement('Quantity', $quantity);
     }
+
+    // Hapus semua item dari keranjang setelah checkout
+    Cart::where('UserId', $userId)->delete();
+
+    return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
 }
 
     public function updateQuantity(Request $request, $id)
