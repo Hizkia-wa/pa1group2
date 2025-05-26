@@ -71,91 +71,87 @@ class CartController extends Controller
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
-public function checkout(Request $request)
+    public function checkout(Request $request)
 {
-    // Get selected products from the form
-    $selectedItems = $request->input('selected', []);
-    
-    if (empty($selectedItems)) {
-        return redirect()->back()->with('error', 'Tidak ada produk yang dipilih.');
+    $selected = $request->input('selected');
+    if (!$selected || count($selected) === 0) {
+        return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
     }
 
-    $totalQuantity = 0;
-    $totalPrice = 0;
+    $total = 0;
     $orderData = [];
     $outOfStockProducts = [];
 
-    // Process each selected product
-    foreach ($selectedItems as $cartId) {
+    foreach ($selected as $value) {
+        list($cartId) = explode('-', $value);
         $cartItem = Cart::with('product')->find($cartId);
 
         if ($cartItem) {
             $product = $cartItem->product;
-            $quantity = $cartItem->Quantity; // Get the quantity selected
-            $subtotal = $product->Price * $quantity;
+            $quantity = $cartItem->Quantity;
+            $price = $product->Price;
+            $subtotal = $price * $quantity;
 
-            // Check stock availability
+            // Cek apakah stok produk mencukupi
             if ($product->Quantity < $quantity) {
+                // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
                 $outOfStockProducts[] = $product->ProductName;
-                continue; // Skip if product is out of stock
+                continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
             }
 
-            // Save order data
+            // Simpan satu order per produk
+            Order::create([
+                'ProductId'    => $product->id,
+                'CustomerName' => $request->CustomerName,
+                'Email'        => $request->Email,
+                'Phone'        => $request->Phone,
+                'City'         => $request->City,
+                'District'     => $request->District,
+                'Address'      => $request->Street,
+                'PostalCode'   => $request->PostalCode,
+                'Quantity'     => $quantity,
+                'total_price'  => $subtotal,
+                'OrderStatus'  => 'Diproses',
+            ]);
+
+            // Kurangi stok produk
+            $product->decrement('Quantity', $quantity);
+
+            // Hapus dari keranjang
+            $cartItem->delete();
+
+            // Tambahkan ke response data
             $orderData[] = [
-                'ProductName' => $product->ProductName,
+                'ProductId' => $product->id,
                 'Quantity' => $quantity,
+                'Price' => $price,
                 'Subtotal' => $subtotal,
             ];
 
-            // Calculate total price and quantity
-            $totalQuantity += $quantity;
-            $totalPrice += $subtotal;
-
-            // Decrease product stock
-            $product->decrement('Quantity', $quantity);
-
-            // Remove item from cart after checkout
-            $cartItem->delete();
+            $total += $subtotal;
         }
     }
 
-    // If there are out of stock products
+    // Jika ada produk yang stoknya tidak mencukupi
     if (!empty($outOfStockProducts)) {
         $outOfStockMessage = implode(', ', $outOfStockProducts);
-        return redirect()->back()->with('error', 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage);
+        return response()->json([
+            'success' => false,
+            'message' => 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage . '. Proses pemesanan gagal.'
+        ], 422);
     }
 
-    // Save the order in the database
-    $order = Order::create([
-        'ProductId' => $product->id, // Take the last product for the order (change this logic if needed)
-        'CustomerName' => $request->CustomerName,
-        'Email' => $request->Email,
-        'Phone' => $request->Phone,
-        'City' => $request->City,
-        'District' => $request->District,
-        'Address' => $request->Street,
-        'PostalCode' => $request->PostalCode,
-        'Quantity' => $totalQuantity,
-        'total_price' => $totalPrice,
-        'OrderStatus' => 'Diproses',
+    return response()->json([
+        'success' => true,
+        'products' => collect($orderData)->map(function ($item) {
+            return [
+                'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
+                'quantity' => $item['Quantity'],
+            ];
+        }),
+        'totalPrice' => $total,
     ]);
-
-    // Send WhatsApp message to the admin
-    $message = "Halo Admin, saya ingin memesan produk:\n\n";
-    foreach ($orderData as $data) {
-        $message .= "📦 *" . $data['ProductName'] . "* - Jumlah: " . $data['Quantity'] . " - Subtotal: Rp " . number_format($data['Subtotal'], 0, ',', '.') . "\n";
-    }
-    $message .= "💵 *Total Harga*: Rp " . number_format($totalPrice, 0, ',', '.') . "\n";
-    $message .= "👤 *Nama*: " . $request->CustomerName . "\n";
-    $message .= "📱 *Telepon*: " . $request->Phone . "\n";
-    $message .= "📧 *Email*: " . $request->Email . "\n";
-    $message .= "🏠 *Alamat*: " . $request->Street . ", " . $request->District . ", " . $request->City . " - " . $request->PostalCode . "\n";
-
-    // Redirect to WhatsApp to send the message
-    $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
-    return redirect($waLink);
 }
-
 
 public function processCheckout(Request $request)
 {
@@ -177,13 +173,12 @@ public function processCheckout(Request $request)
         'PostalCode' => 'required|string|max:20',
     ]);
 
-    // Loop untuk proses checkout
     foreach ($cartItems as $item) {
         $product = $item->product;
         $quantity = $item->Quantity;
         $subtotal = $product->Price * $quantity;
 
-        // Cek apakah stok cukup
+        // Cek apakah stok produk mencukupi
         if ($product->Quantity < $quantity) {
             return redirect()->back()->with('error', 'Stok produk "' . $product->ProductName . '" tidak mencukupi.');
         }
