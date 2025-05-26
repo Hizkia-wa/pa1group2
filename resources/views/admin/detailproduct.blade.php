@@ -180,6 +180,7 @@
             <h4 class="product-price">Rp {{ number_format($product->Price, 0, ',', '.') }}</h4>
             <p><strong>Kategori:</strong> {{ $product->Category }}</p>
             <p><strong>Deskripsi:</strong><br>{{ $product->Description }}</p>
+            <p><strong>Jumlah Stok:</strong> {{ $product->Quantity }}</p>
 
             <div style="margin-top: 20px;">
                 <a href="{{ route('products.index') }}" class="btn btn-secondary">Kembali</a>
