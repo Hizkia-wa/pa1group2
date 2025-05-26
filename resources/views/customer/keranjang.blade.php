@@ -37,6 +37,16 @@
                     <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
                     <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
                     <div class="mb-2">Jumlah: {{ $item->Quantity }}</div>
+
+                    <!-- Kontrol Jumlah -->
+                    <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
+                        <span class="fw-bold quantity-value">{{ $item->Quantity }}</span>
+                        <input type="hidden" name="quantity" value="{{ $item->Quantity }}">
+                        <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
+                    </form>
                 </div>
 
                 <!-- Hapus -->
