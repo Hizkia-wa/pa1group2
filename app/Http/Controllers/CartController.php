@@ -71,8 +71,9 @@ class CartController extends Controller
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
-    public function checkout(Request $request)
+public function checkout(Request $request)
 {
+    // Validate selected items and customer info
     $selected = $request->input('selected');
     if (!$selected || count($selected) === 0) {
         return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
@@ -82,6 +83,7 @@ class CartController extends Controller
     $orderData = [];
     $outOfStockProducts = [];
 
+    // Process each selected item
     foreach ($selected as $value) {
         list($cartId) = explode('-', $value);
         $cartItem = Cart::with('product')->find($cartId);
@@ -92,14 +94,16 @@ class CartController extends Controller
             $price = $product->Price;
             $subtotal = $price * $quantity;
 
-            // Cek apakah stok produk mencukupi
+            // Check product stock
             if ($product->Quantity < $quantity) {
-                // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
                 $outOfStockProducts[] = $product->ProductName;
-                continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
+                continue;
             }
 
-            // Simpan satu order per produk
+            // Set default size if not specified
+            $size = 'Medium'; // Default size
+
+            // Save order in the database
             Order::create([
                 'ProductId'    => $product->id,
                 'CustomerName' => $request->CustomerName,
@@ -110,17 +114,18 @@ class CartController extends Controller
                 'Address'      => $request->Street,
                 'PostalCode'   => $request->PostalCode,
                 'Quantity'     => $quantity,
+                'Size'         => $size,
                 'total_price'  => $subtotal,
                 'OrderStatus'  => 'Diproses',
             ]);
 
-            // Kurangi stok produk
+            // Decrease product stock
             $product->decrement('Quantity', $quantity);
 
-            // Hapus dari keranjang
+            // Remove from cart
             $cartItem->delete();
 
-            // Tambahkan ke response data
+            // Prepare order data
             $orderData[] = [
                 'ProductId' => $product->id,
                 'Quantity' => $quantity,
@@ -132,7 +137,7 @@ class CartController extends Controller
         }
     }
 
-    // Jika ada produk yang stoknya tidak mencukupi
+    // If there are out-of-stock products
     if (!empty($outOfStockProducts)) {
         $outOfStockMessage = implode(', ', $outOfStockProducts);
         return response()->json([
@@ -141,16 +146,21 @@ class CartController extends Controller
         ], 422);
     }
 
-    return response()->json([
-        'success' => true,
-        'products' => collect($orderData)->map(function ($item) {
-            return [
-                'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
-                'quantity' => $item['Quantity'],
-            ];
-        }),
-        'totalPrice' => $total,
-    ]);
+    // Prepare WhatsApp message
+    $message = "Halo Admin, saya ingin memesan produk:\n\n";
+    foreach ($orderData as $item) {
+        $message .= "🛒 *" . Product::find($item['ProductId'])->ProductName . "* x" . $item['Quantity'] . "\n";
+    }
+
+    $message .= "💵 *Total Harga*: Rp " . number_format($total, 0, ',', '.') . "\n";
+    $message .= "👤 *Nama*: " . $request->CustomerName . "\n";
+    $message .= "📱 *Telepon*: " . $request->Phone . "\n";
+    $message .= "📧 *Email*: " . $request->Email . "\n";
+    $message .= "🏠 *Alamat*: " . $request->Street . ", " . $request->District . ", " . $request->City . ", " . $request->PostalCode . "\n";
+
+    // WhatsApp link
+    $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
+    return redirect($waLink);
 }
 
 public function processCheckout(Request $request)
