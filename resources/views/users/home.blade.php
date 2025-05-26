@@ -430,7 +430,7 @@
 }
 
 .btn-cart:hover {
-    background-color: #8B0000;
+    background-color: blue;
     color: white;
 }
 
