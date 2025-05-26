@@ -120,3 +120,11 @@ Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPas
 Route::get('/test-layout', function () {
     return view('layouts.Admin');
 });
+
+Route::get('/test-404', function () {
+    abort(404); // Memicu error 404
+});
+
+Route::get('/test-500', function () {
+    abort(500); // Memicu error 500
+});

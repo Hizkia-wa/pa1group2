@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oops! Something went wrong</title>
+    <title>Error Occurred</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -25,13 +25,8 @@
             max-width: 600px;
             width: 100%;
         }
-        .error-container img {
-            width: 120px;
-            height: auto;
-            margin-bottom: 20px;
-        }
         .error-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             color: #f57c00;
             margin-bottom: 10px;
@@ -59,10 +54,9 @@
 <body>
 
     <div class="error-container">
-        <img src="{{ asset('img/oops-image.png') }}" alt="Error Image">
-        <h1 class="error-title">Maaf atas ketidaknyamanannya</h1>
+        <h1 class="error-title">Oops! Something went wrong</h1>
         <p class="error-message">Sorry for the inconvenience. We are currently experiencing some issues. Please try again later.</p>
-        <a href="{{ url('/') }}" class="error-button">Kembali ke Beranda</a>
+        <a href="{{ url('/') }}" class="error-button">Back to Home</a>
     </div>
 
 </body>
