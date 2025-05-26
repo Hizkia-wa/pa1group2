@@ -211,7 +211,7 @@
         Quantity: form.Quantity.value
     };
 
-    fetch("{{ route('user.product.order') }}", {
+    fetch("{{ route('customer.product.order') }}", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

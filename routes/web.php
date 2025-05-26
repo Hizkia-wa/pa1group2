@@ -63,8 +63,6 @@ Route::prefix('user')->group(function () {
     Route::get('/reviews', [ReviewController::class, 'index'])->name('user.reviews');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('user.reviews.store');
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('user.reviews.destroy');
-    Route::post('/produk/order', [OrderController::class, 'store'])->name('user.product.order');
-    Route::get('/admin/orders/riwayat', [OrderController::class, 'riwayat'])->name('orders.riwayat');
     Route::get('/produk', [ProductController::class, 'showUserCatalog'])->name('user.product.catalog');
     Route::get('/produk/{id}', [ProductController::class, 'showUserDetail'])->name('user.product.detail');
     Route::get('/keranjang', [CartController::class, 'index'])->name('user.cart.index');
@@ -93,6 +91,8 @@ Route::prefix('customer')->middleware('auth:customer')->group(function () {
     Route::post('/cart/process-checkout', [CartController::class, 'processCheckout'])->name('customer.cart.processCheckout');
     Route::post('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity'])->name('customer.cart.updateQuantity');
     Route::get('/best-products', [ProductController::class, 'showCustomerBestSellers'])->name('customer.bestproductpage');
+    Route::post('/order', [OrderController::class, 'store'])->name('customer.product.order');
+
 });
 
 // ==================== Public Routes ====================
