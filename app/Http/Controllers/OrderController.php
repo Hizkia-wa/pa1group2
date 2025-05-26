@@ -50,6 +50,9 @@ public function store(Request $request)
         // Kurangi stok produk
         $product->decrement('Quantity', $request->Quantity);
 
+        // Tentukan nilai default untuk 'Size' jika tidak ada nilai yang dikirim
+        $size = $request->input('size', 'Medium'); // Misalnya, 'Medium' sebagai default
+
         // Simpan pesanan ke database
         $order = Order::create([
             'ProductId'    => $request->ProductId,
@@ -61,11 +64,12 @@ public function store(Request $request)
             'Address'      => $request->address,
             'PostalCode'   => $request->postal_code,
             'Quantity'     => $request->Quantity,
+            'Size'         => $size,  // Menambahkan kolom 'Size' dengan nilai default
             'total_price'  => $product->Price * $request->Quantity,
             'OrderStatus'  => 'Diproses',
         ]);
 
-        // Membuat pesan WhatsApp untuk admin
+        // Kirim pesan WhatsApp ke admin
         $message = "Halo Admin, saya ingin memesan produk:\n\n";
         $message .= "📦 *" . $product->ProductName . "*\n";
         $message .= "📁 Kategori: " . $product->Category . "\n";
@@ -77,16 +81,15 @@ public function store(Request $request)
         $message .= "🔢 Jumlah: " . $request->Quantity . "\n\n";
         $message .= "Mohon segera diproses ya 🙏";
 
-        // Membuat link WhatsApp
         $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
 
-        // Redirect ke WhatsApp
         return redirect($waLink);
     } catch (\Exception $e) {
-        // Tangani error dan tampilkan pesan kesalahan
+        // Jika terjadi error, tangkap dan kembalikan error
         return redirect()->back()->withErrors(['message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
 }
+
     public function riwayat()
     {
         $orders = Order::onlyTrashed()->get();
