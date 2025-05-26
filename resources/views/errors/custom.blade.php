@@ -59,7 +59,7 @@
 <body>
 
     <div class="error-container">
-        <img src="{{ asset('img/oops-image.png') }}" alt="Error Image">
+        <img src="{{ asset('public/img/oops-image.png') }}" alt="Error Image">
         <h1 class="error-title">Maaf atas ketidaknyamanannya</h1>
         <p class="error-message">Sorry for the inconvenience. We are currently experiencing some issues. Please try again later.</p>
         <a href="{{ url('/') }}" class="error-button">Kembali ke Beranda</a>
