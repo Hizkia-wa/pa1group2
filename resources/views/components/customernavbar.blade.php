@@ -1,10 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm px-4">
     <div class="container-fluid">
-         <a class="navbar-brand d-flex align-items-center glowing-brand" href="{{ route('homeGuest') }}">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center glowing-brand" href="{{ route('homeGuest') }}">
             <img src="{{ asset('img/ulos/logogita.png') }}" alt="Gita Ulos Logo" height="40" class="d-inline-block align-text-top me-2">
             <span class="brand-text">G𝓲𝓽𝓪 𝓤𝓵𝓸𝓼</span>
         </a>
 
+        <!-- Tombol Hamburger untuk layar kecil -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu Navbar -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav flex-row-reverse gap-3 fw-semibold align-items-center">
                 <li class="nav-item">
@@ -12,7 +19,6 @@
                         <i class="bi bi-cart-fill cart-icon"></i>
                     </a>
                 </li>
-             
                 <li class="nav-item">
                     <a href="{{ route('customer.uloskita') }}" class="nav-link nav-item-link {{ request()->routeIs('customer.uloskita') ? 'active' : '' }}">Ulos Kita</a>
                 </li>
@@ -45,7 +51,6 @@
     --highlight: #f2d2b1;
 }
 
-
 .cart-icon {
     font-size: 2rem;
     color: #ff6b00;
@@ -55,15 +60,6 @@
 .cart-icon-wrapper:hover .cart-icon {
     color: #d9480f;
     transform: scale(1.2) rotate(-5deg);
-}
-
-.cart-badge {
-    background: linear-gradient(45deg, #d9480f, #ffa94d);
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    border: 1px solid white;
 }
 
 .navbar-brand img {
@@ -84,36 +80,7 @@
     text-shadow: 0 0 10px var(--coklat-tua);
 }
 
-/* Button Alay - Coklat Style */
-.sparkle-button {
-    transition: all 0.3s ease;
-    border-color: var(--coklat-tua);
-    color: var(--coklat-tua);
-}
-
-.sparkle-button:hover {
-    background-color: var(--coklat-tua);
-    color: #fff;
-    transform: rotate(-1deg) scale(1.05);
-}
-
-/* Custom Outline */
-.btn-outline-batik {
-    border: 2px solid var(--coklat-tua);
-    color: var(--coklat-tua);
-}
-
-.btn-outline-batik:hover {
-    background-color: var(--coklat-tua);
-    color: white;
-}
-
-/* Badge */
-.bg-batik {
-    background-color: var(--coklat-tua) !important;
-}
-
-/* Nav Item Gaya - Modifikasi untuk garis bawah active */
+/* Custom Nav Item */
 .nav-item-link {
     color: #343a40;
     position: relative;
@@ -130,7 +97,6 @@
     font-weight: bold;
 }
 
-/* Garis di bawah untuk active */
 .nav-item-link.active::after {
     content: '';
     position: absolute;
@@ -141,16 +107,16 @@
     background-color: var(--coklat-tua);
 }
 
-/* Responsive */
+/* Responsive Styles */
 @media (max-width: 991px) {
     .navbar-nav {
         flex-direction: column-reverse !important;
         align-items: flex-end;
         gap: 0.75rem;
     }
-    
-    .nav-item-link.active::after {
-        bottom: -5px;
+
+    .navbar-nav .nav-item-link {
+        padding: 1rem;
     }
 }
 </style>
