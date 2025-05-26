@@ -85,14 +85,14 @@ public function store(Request $request)
 
         // Kirimkan pesan WhatsApp ke admin
         $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
-
         return redirect($waLink);
     } catch (\Exception $e) {
         // Jika terjadi error, tangkap dan kembalikan error
-        \Log::error('Pesanan gagal disimpan: ', $e->getMessage());
+        \Log::error('Pesanan gagal disimpan:', ['error' => $e->getMessage()]);
         return redirect()->back()->withErrors(['message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
 }
+
 
     public function riwayat()
     {
