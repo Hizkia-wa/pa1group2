@@ -39,6 +39,7 @@ public function store(Request $request)
             'Quantity' => 'required|integer|min:1',
         ]);
 
+        // Ambil produk berdasarkan ProductId
         $product = Product::findOrFail($request->ProductId);
 
         // Cek apakah stok cukup
@@ -64,6 +65,9 @@ public function store(Request $request)
             'OrderStatus'  => 'Diproses',
         ]);
 
+        // Log untuk memastikan pesanan disimpan
+        \Log::info('Pesanan berhasil disimpan:', $order->toArray());
+
         // Membuat pesan WhatsApp untuk admin
         $message = "Halo Admin, saya ingin memesan produk:\n\n";
         $message .= "📦 *" . $product->ProductName . "*\n";
@@ -76,11 +80,16 @@ public function store(Request $request)
         $message .= "🔢 Jumlah: " . $request->Quantity . "\n\n";
         $message .= "Mohon segera diproses ya 🙏";
 
+        // Log untuk memeriksa URL WhatsApp yang terbentuk
+        \Log::info('URL WhatsApp:', ['url' => $message]);
+
         // Kirimkan pesan WhatsApp ke admin
         $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
+
         return redirect($waLink);
     } catch (\Exception $e) {
         // Jika terjadi error, tangkap dan kembalikan error
+        \Log::error('Pesanan gagal disimpan: ', $e->getMessage());
         return redirect()->back()->withErrors(['message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
 }
