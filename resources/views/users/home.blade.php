@@ -491,6 +491,27 @@
     }
 }
 
+    @media (max-width: 768px) {
+        .product-card-wrapper {
+            flex: 1 1 200px;
+        }
+
+        .scroll-nav {
+            display: none;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .product-card-wrapper {
+            flex: 1 1 150px;
+        }
+
+        .product-image-container img {
+            max-height: 150px;
+            object-fit: cover;
+        }
+    }
+
 .custom-culture-image {
     max-width: 500%; 
     max-height: 500%;           
