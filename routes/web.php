@@ -88,6 +88,7 @@ Route::prefix('customer')->middleware('auth:customer')->group(function () {
     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('customer.cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('customer.cart.checkout');
+    Route::post('/cart/process-checkout', [CartController::class, 'processCheckout'])->name('customer.cart.processCheckout');
     Route::post('/cart/update-quantity/{id}', [CartController::class, 'updateQuantity'])->name('customer.cart.updateQuantity');
     Route::get('/best-products', [ProductController::class, 'showCustomerBestSellers'])->name('customer.bestproductpage');
     Route::post('/order', [OrderController::class, 'store'])->name('customer.product.order');

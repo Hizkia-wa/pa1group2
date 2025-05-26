@@ -25,6 +25,9 @@
                             name="selected[]" 
                             value="{{ $item->id }}" 
                             class="form-check-input cart-checkbox"
+                            data-quantity="{{ $item->Quantity }}" 
+                            data-product-name="{{ $product->ProductName }}"
+                            data-product-price="{{ $product->Price }}"
                         >
                     </div>
 
@@ -98,11 +101,6 @@
             <button type="submit" class="btn btn-success w-100 mb-3">
                 <i class="bi bi-whatsapp"></i> Pesan Melalui WA
             </button>
-
-            <small class="d-block text-muted">
-                SKU: RELH-423-UU <br>
-                Kategori: Ulos
-            </small>
         </form>
         </div>
     </div>
