@@ -71,89 +71,7 @@ class CartController extends Controller
         return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
-    public function checkout(Request $request)
-{
-    $selected = $request->input('selected');
-    if (!$selected || count($selected) === 0) {
-        return response()->json(['success' => false, 'message' => 'Tidak ada produk yang dipilih.'], 422);
-    }
-
-    $total = 0;
-    $orderData = [];
-    $outOfStockProducts = [];
-
-    foreach ($selected as $value) {
-        list($cartId) = explode('-', $value);
-        $cartItem = Cart::with('product')->find($cartId);
-
-        if ($cartItem) {
-            $product = $cartItem->product;
-            $quantity = $cartItem->Quantity;
-            $price = $product->Price;
-            $subtotal = $price * $quantity;
-
-            // Cek apakah stok produk mencukupi
-            if ($product->Quantity < $quantity) {
-                // Jika stok tidak mencukupi, simpan nama produk yang tidak mencukupi
-                $outOfStockProducts[] = $product->ProductName;
-                continue; // Lewati produk ini dan lanjutkan dengan produk berikutnya
-            }
-
-            // Simpan satu order per produk
-            Order::create([
-                'ProductId'    => $product->id,
-                'CustomerName' => $request->CustomerName,
-                'Email'        => $request->Email,
-                'Phone'        => $request->Phone,
-                'City'         => $request->City,
-                'District'     => $request->District,
-                'Address'      => $request->Street,
-                'PostalCode'   => $request->PostalCode,
-                'Quantity'     => $quantity,
-                'total_price'  => $subtotal,
-                'OrderStatus'  => 'Diproses',
-            ]);
-
-            // Kurangi stok produk
-            $product->decrement('Quantity', $quantity);
-
-            // Hapus dari keranjang
-            $cartItem->delete();
-
-            // Tambahkan ke response data
-            $orderData[] = [
-                'ProductId' => $product->id,
-                'Quantity' => $quantity,
-                'Price' => $price,
-                'Subtotal' => $subtotal,
-            ];
-
-            $total += $subtotal;
-        }
-    }
-
-    // Jika ada produk yang stoknya tidak mencukupi
-    if (!empty($outOfStockProducts)) {
-        $outOfStockMessage = implode(', ', $outOfStockProducts);
-        return response()->json([
-            'success' => false,
-            'message' => 'Stok produk berikut tidak mencukupi: ' . $outOfStockMessage . '. Proses pemesanan gagal.'
-        ], 422);
-    }
-
-    return response()->json([
-        'success' => true,
-        'products' => collect($orderData)->map(function ($item) {
-            return [
-                'name' => Product::find($item['ProductId'])->ProductName ?? 'Produk',
-                'quantity' => $item['Quantity'],
-            ];
-        }),
-        'totalPrice' => $total,
-    ]);
-}
-
-public function processCheckout(Request $request)
+public function checkout(Request $request)
 {
     $userId = $this->getCurrentUserId();
 
@@ -163,6 +81,7 @@ public function processCheckout(Request $request)
         return redirect()->back()->with('error', 'Keranjang kosong.');
     }
 
+    // Validate customer information
     $request->validate([
         'CustomerName' => 'required|string|max:255',
         'Email' => 'required|email|max:255',
@@ -176,21 +95,20 @@ public function processCheckout(Request $request)
     $orderData = [];
     $totalPrice = 0;
 
-    // Iterate through each item in the cart
     foreach ($cartItems as $item) {
         $product = $item->product;
         $quantity = $item->Quantity;
         $subtotal = $product->Price * $quantity;
 
-        // Get the size for this item
-        $size = $request->input('size_' . $item->id, 'Medium'); // Default to 'Medium' if no size is provided
+        // Get the size for this item, default to 'Medium' if not provided
+        $size = $request->input('size_' . $item->id, 'Medium');
 
-        // Cek apakah stok produk mencukupi
+        // Check stock availability
         if ($product->Quantity < $quantity) {
             return redirect()->back()->with('error', 'Stok produk "' . $product->ProductName . '" tidak mencukupi.');
         }
 
-        // Simpan pesanan
+        // Store the order in the database
         Order::create([
             'ProductId' => $item->ProductId,
             'CustomerName' => $request->CustomerName,
@@ -201,34 +119,36 @@ public function processCheckout(Request $request)
             'Address' => $request->Address,
             'PostalCode' => $request->PostalCode,
             'Quantity' => $quantity,
-            'Size' => $size,  // Store the selected size
+            'Size' => $size,
             'total_price' => $subtotal,
             'OrderStatus' => 'Diproses',
         ]);
 
-        // Kurangi stok produk
+        // Decrement product stock
         $product->decrement('Quantity', $quantity);
 
-        // Tambahkan ke response data
+        // Add order data to prepare the WhatsApp message
         $orderData[] = [
             'ProductName' => $product->ProductName,
             'Quantity' => $quantity,
             'Price' => $product->Price,
             'Subtotal' => $subtotal,
+            'Size' => $size,
         ];
 
         $totalPrice += $subtotal;
     }
 
-    // Hapus semua item dari keranjang setelah checkout
+    // Remove all items from the cart after checkout
     Cart::where('UserId', $userId)->delete();
 
-    // Kirim ke halaman sukses atau WhatsApp link
+    // Prepare message for WhatsApp
     $message = "Halo Admin, saya ingin memesan produk:\n\n";
     foreach ($orderData as $order) {
         $message .= "📦 *" . $order['ProductName'] . "*\n";
         $message .= "💵 Harga: Rp " . number_format($order['Price'], 0, ',', '.') . "\n";
         $message .= "🔢 Jumlah: " . $order['Quantity'] . "\n";
+        $message .= "📏 Ukuran: " . $order['Size'] . "\n";
         $message .= "💵 Subtotal: Rp " . number_format($order['Subtotal'], 0, ',', '.') . "\n\n";
     }
     $message .= "👤 *Nama*: " . $request->CustomerName . "\n";
@@ -238,9 +158,11 @@ public function processCheckout(Request $request)
     $message .= "💵 *Total Harga*: Rp " . number_format($totalPrice, 0, ',', '.') . "\n\n";
     $message .= "Mohon segera diproses ya 🙏";
 
+    // WhatsApp link
     $waLink = "https://wa.me/6282274398996?text=" . urlencode($message);
 
-    return redirect($waLink);  // Redirect to WhatsApp with the order details
+    // Redirect to WhatsApp with the order details
+    return redirect($waLink);
 }
 
     public function updateQuantity(Request $request, $id)

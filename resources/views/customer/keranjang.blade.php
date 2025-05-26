@@ -6,7 +6,7 @@
     <div class="w-50 me-4">
         <h3 class="mb-4 fw-bold">Keranjang</h3>
 
-        <form action="{{ route('customer.cart.processCheckout') }}" method="POST">
+        <form action="{{ route('user.cart.checkout') }}" method="POST">
             @csrf
             @foreach ($cartWithProduct as $item)
             @php
@@ -34,7 +34,7 @@
             </div>
             @endforeach
 
-            <button type="submit" class="btn btn-success w-100 mb-3">Checkout</button>
+            <button type="submit" class="btn btn-success w-100 mb-3">Pesan Melalui WhatsApp</button>
         </form>
     </div>
 
