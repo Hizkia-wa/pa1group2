@@ -31,7 +31,6 @@
                     <h5>Gita Ulos</h5>
                     <p>Menyediakan berbagai jenis ulos berkualitas dengan desain tradisional yang dijaga keasliannya.</p>
                     <div class="footer-logos">
-                        <img src="{{ asset('img/ulos/logodel.jpg') }}" alt="Logo Gita Ulos" class="footer-logo me-3">
                         <img src="{{ asset('img/ulos/logogita.png') }}" alt="Logo Sertifikasi" class="footer-logo">
                     </div>
                 </div>
