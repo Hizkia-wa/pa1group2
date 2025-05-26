@@ -25,21 +25,6 @@
         border-radius: 8px;
     }
 
-    .product-detail .thumbnail-group {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-        flex-wrap: wrap;
-    }
-
-    .product-detail .thumbnail-group img {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-    }
-
     .order-form {
         flex: 1;
         background-color: #fff;
@@ -84,32 +69,15 @@
         width: 100%;
         margin-top: 20px;
     }
-
-    .product-meta {
-        margin-top: 15px;
-        font-size: 0.9rem;
-        color: #666;
-    }
-
-    .product-meta div {
-        margin-bottom: 5px;
-    }
 </style>
 
 <div class="container">
     <!-- Detail Produk -->
     <div class="product-detail">
         <img src="{{ $product->all_images[0] ?? asset('images/no-image.png') }}" class="main-image" alt="Foto Produk">
-        <div class="thumbnail-group">
-            @foreach ($product->all_images as $image)
-                <img src="{{ $image }}" alt="Gambar Tambahan">
-            @endforeach
-        </div>
-
         <h3 class="mt-3">{{ $product->ProductName }}</h3>
         <p style="color: red; font-size: 1.2rem;">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
         <p><strong>Stok:</strong> <span id="product-stock">{{ $product->Quantity }}</span></p>
-
         <h4>Deskripsi Produk</h4>
         <p>{{ $product->Description }}</p>
     </div>
@@ -165,11 +133,6 @@
             <button type="submit" class="btn-submit">
                 <i class="bi bi-whatsapp me-2"></i>Pesan Melalui WhatsApp
             </button>
-
-            <div class="product-meta">
-                <div>SKU: REUH-4234-UU</div>
-                <div>Kategori: {{ $product->Category }}</div>
-            </div>
         </form>
     </div>
 </div>
