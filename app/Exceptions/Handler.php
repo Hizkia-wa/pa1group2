@@ -40,7 +40,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Exception $e) {
-            // Bisa menambahkan log atau pengiriman email jika terjadi error tertentu
             Log::error($e->getMessage());
         });
     }
@@ -54,22 +53,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        // Menangani error 404
+        // Handle 404 Not Found
         if ($exception instanceof NotFoundHttpException) {
-            return response()->view('errors.custom', [], 404); // Halaman 404 custom
+            return response()->view('errors.custom', [], 404);
         }
 
-        // Menangani error 403
+        // Handle 403 Forbidden
         if ($exception instanceof UnauthorizedHttpException || $exception instanceof AccessDeniedHttpException) {
-            return response()->view('errors.custom', [], 403); // Halaman 403 custom
+            return response()->view('errors.custom', [], 403);
         }
 
-        // Menangani error 500 dan lainnya
+        // Handle 500 Internal Server Error
         if ($exception instanceof Exception) {
-            return response()->view('errors.custom', ['message' => 'Something went wrong!'], 500); // Halaman 500 custom
+            return response()->view('errors.custom', ['message' => 'Something went wrong!'], 500);
         }
 
-        // Untuk error lainnya yang tidak tertangani
+        // For all other exceptions
         return parent::render($request, $exception);
     }
 }
