@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('IsBestSeller', 0)->get();
+        $products = Product::where('IsBestSeller', false)->get();
         return view('admin.productpage', compact('products'));
     }
 
@@ -108,7 +108,7 @@ class ProductController extends Controller
     $product->Images = json_encode($imagePaths);
 
     // Tandai sebagai produk biasa (bukan best seller)
-    $product->IsBestSeller = 0;
+    $product->IsBestSeller = false;
 
     $product->save();
 
