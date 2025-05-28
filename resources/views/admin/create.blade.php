@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('products.best') }}" class="btn btn-secondary shadow-sm">
+                    <a href="{{ route('products.index') }}" class="btn btn-secondary shadow-sm">
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
                     <button type="submit" class="btn btn-maroon shadow-sm">
