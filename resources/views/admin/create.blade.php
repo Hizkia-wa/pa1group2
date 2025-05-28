@@ -52,7 +52,7 @@
                     <textarea name="Description" class="form-control shadow-sm" rows="3"></textarea>
                 </div>
 
-                <input type="hidden" name="IsBestSeller" value="1">
+                <input type="hidden" name="IsBestSeller" value="0">
 
                 <div class="row mb-3">
                     <div class="col-md-6">
