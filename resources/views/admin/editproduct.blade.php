@@ -32,7 +32,7 @@
                 <input type="file" name="ImageMain" class="form-control">
                 @php $images = json_decode($product->Images, true); @endphp
                 @if(!empty($images) && isset($images[0]))
-                    <img src="{{ asset('storage/' . $images[0]) }}" width="80" class="mt-2">
+                    <img src="{{ asset('storage/app/public/' . $images[0]) }}" width="80" class="mt-2">
                 @endif
             </div>
         </div>
@@ -52,7 +52,7 @@
                 @if(!empty($images))
                     <div class="d-flex flex-wrap mt-2">
                         @foreach(array_slice($images, 1) as $img)
-                            <img src="{{ asset('storage/' . $img) }}" width="60" class="me-2 mb-2">
+                            <img src="{{ asset('storage/app/public/' . $img) }}" width="60" class="me-2 mb-2">
                         @endforeach
                     </div>
                 @endif

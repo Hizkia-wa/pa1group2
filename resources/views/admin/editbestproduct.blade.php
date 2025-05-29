@@ -63,7 +63,7 @@
                 @if(!empty($images))
                     @foreach($images as $img)
                         <div class="col-md-2 mb-2">
-                            <img src="{{ asset('storage/' . $img) }}" class="img-fluid rounded">
+                            <img src="{{ asset('storage/app/public/' . $img) }}" class="img-fluid rounded">
                         </div>
                     @endforeach
                 @endif
