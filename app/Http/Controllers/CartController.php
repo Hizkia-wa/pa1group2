@@ -27,38 +27,55 @@ class CartController extends Controller
         return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
     }
 
-    public function addToCart(Request $request)
-    {
-        $request->validate([
-            'ProductId' => 'required|exists:products,id',
-            'Quantity' => 'required|integer|min:1',
-            'Size' => 'required|string',
-        ]);
+public function addToCart(Request $request)
+{
+    $request->validate([
+        'ProductId' => 'required|exists:products,id',
+        'Quantity' => 'required|integer|min:1',
+        'Size' => 'required|string',
+    ]);
 
-        $userId = $this->getCurrentUserId();
+    // Jika pengguna belum login, simpan produk di sesi
+    if (!Auth::check()) {
+        // Simpan produk ke dalam sesi sementara
+        $cart = session()->get('cart', []);
+        $cart[] = [
+            'ProductId' => $request->ProductId,
+            'Quantity' => $request->Quantity,
+            'Size' => $request->Size,
+        ];
+        session()->put('cart', $cart);
 
-        // Cek apakah produk sudah ada di keranjang user
-        $cartItem = Cart::where('UserId', $userId)
-            ->where('ProductId', $request->ProductId)
-            ->where('Size', $request->Size)
-            ->first();
-
-        if ($cartItem) {
-            // Jika sudah ada, update quantity
-            $cartItem->Quantity += $request->Quantity;
-            $cartItem->save();
-        } else {
-            // Jika belum ada, buat entri baru
-            Cart::create([
-                'UserId' => $userId,
-                'ProductId' => $request->ProductId,
-                'Quantity' => $request->Quantity,
-                'Size' => $request->Size,
-            ]);
-        }
-
-        return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+        // Redirect ke halaman login
+        return redirect()->route('login')->with('success', 'Silakan login untuk melanjutkan pembelian.');
     }
+
+    // Jika pengguna sudah login
+    $userId = Auth::id();
+
+    // Cek apakah produk sudah ada di keranjang user
+    $cartItem = Cart::where('UserId', $userId)
+        ->where('ProductId', $request->ProductId)
+        ->where('Size', $request->Size)
+        ->first();
+
+    if ($cartItem) {
+        // Jika sudah ada, update quantity
+        $cartItem->Quantity += $request->Quantity;
+        $cartItem->save();
+    } else {
+        // Jika belum ada, buat entri baru
+        Cart::create([
+            'UserId' => $userId,
+            'ProductId' => $request->ProductId,
+            'Quantity' => $request->Quantity,
+            'Size' => $request->Size,
+        ]);
+    }
+
+    return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+}
+
 
     public function removeFromCart($id)
     {
