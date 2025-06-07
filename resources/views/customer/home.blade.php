@@ -34,11 +34,7 @@
                             $mainImage = !empty($images) ? $images[0] : null;
                         @endphp
                         
-                                     </a>
-                            <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
-                            <div class="mt-2">
-                                <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
-                <div class="product-image-container">
+                        <div class="product-image-container">
                             @if($mainImage)
                                 <img src="{{ asset('storage/app/public/' . $mainImage) }}" class="card-img-top product-image" alt="{{ $product->ProductName }}" loading="lazy">
                             @else
@@ -49,8 +45,12 @@
                         <div class="card-body p-3">
                             <a href="{{ route('user.product.detail', ['id' => $product->id]) }}" style="color: maroon; text-decoration: none;">
                                 <h5 class="card-title">{{ $product->ProductName }}</h5>
-                               <div class="d-flex product-buttons">
-                                    <a href="{{ route('customer.product.detail', $product->id) }}" class="btn-buy">Beli</a>
+                            </a>
+                            <p class="card-text small mb-2 product-desc">{{ Str::limit($product->Description, 40) }}</p>
+                            <div class="mt-2">
+                                <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
+                                <div class="d-flex product-buttons">
+                                    <a href="{{ route('customer.product.detail', $product->id) }}" class="btn-buy flex-grow-1 me-2">Beli</a>
                                     <form action="{{ route('customer.cart.add') }}" method="POST" class="form-cart">
                                         @csrf
                                         <input type="hidden" name="ProductId" value="{{ $product->id }}">

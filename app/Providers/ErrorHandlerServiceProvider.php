@@ -12,7 +12,7 @@ class ErrorHandlerServiceProvider extends ServiceProvider
     {
         $this->app->bind(ExceptionRenderer::class, function () {
             return new class implements ExceptionRenderer {
-                public function render(Throwable $e, $request)
+                public function render(Throwable $throwable)
                 {
                     $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
                     $message = $e->getMessage() ?: 'Terjadi kesalahan.';

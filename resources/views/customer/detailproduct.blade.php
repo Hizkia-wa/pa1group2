@@ -92,12 +92,14 @@
 
             <div class="form-group">
                 <label>Nama</label>
-                <input type="text" name="name" required>
+                <!-- Isi kolom dengan nama yang sudah terdaftar, tetapi tetap bisa diubah -->
+                <input type="text" name="name" value="{{ Auth::user()->CustomerName }}" required>
             </div>
 
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="email" required>
+                <!-- Isi kolom dengan email yang sudah terdaftar, tetapi tetap bisa diubah -->
+                <input type="email" name="email" value="{{ Auth::user()->Email }}" required>
             </div>
 
             <div class="form-group">
