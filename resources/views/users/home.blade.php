@@ -51,9 +51,13 @@
                                 <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
                                 <div class="d-flex product-buttons">
                                     <a href="{{ route('login') }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
-                                    <a href="{{ route('addToCart') }}" class="btn-cart">
+                                     <form action="{{ route('addToCart') }}" method="POST">
+                                        @csrf <!-- Jangan lupa menyertakan token CSRF untuk proteksi -->
+                                        <input type="text" name="ProductId" value="123" required>
+                                        <input type="number" name="Quantity" value="1" required>
+                                        <input type="text" name="Size" value="M" required>
                                         <i class="bi bi-cart-plus"></i> Keranjang
-                                    </a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
