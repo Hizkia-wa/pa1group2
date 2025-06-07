@@ -74,7 +74,7 @@
 
                     <div class="product-actions">
                     <a href="{{ route('login') }}" class="btn-buy flex-grow-1 me-2">Beli</a>
-                    <a href="{{ route('customer.cart.add') }}" class="btn-cart">
+                    <a href="{{ route('addToCart') }}" class="btn-cart">
                         <i class="bi bi-cart-plus"></i> Keranjang
                     </a>
 

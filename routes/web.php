@@ -120,3 +120,6 @@ Route::post('/reset-password-baru', [CustomLoginController::class, 'submitNewPas
 Route::get('/test-layout', function () {
     return view('layouts.Admin');
 });
+
+// Route untuk menambahkan produk ke keranjang
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
