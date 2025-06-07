@@ -21,37 +21,46 @@ class CustomLoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'Email' => 'required|email',
-            'Password' => 'required',
-        ], [
-            'Email.required' => 'Email wajib diisi.',
-            'Email.email' => 'Format email tidak valid. Pastikan menggunakan "@" dan domain yang benar.',
-            'Password.required' => 'Password wajib diisi.',
-        ]);
-        
+public function login(Request $request)
+{
+    $request->validate([
+        'Email' => 'required|email',
+        'Password' => 'required',
+    ], [
+        'Email.required' => 'Email wajib diisi.',
+        'Email.email' => 'Format email tidak valid. Pastikan menggunakan "@" dan domain yang benar.',
+        'Password.required' => 'Password wajib diisi.',
+    ]);
 
-        $email = $request->Email;
-        $password = $request->Password;
+    $email = $request->Email;
+    $password = $request->Password;
 
-        // Cek login sebagai Admin
-        $admin = Admin::where('Email', $email)->first();
-        if ($admin && Hash::check($password, $admin->Password)) {
+    // Cek login sebagai Admin
+    $admin = Admin::where('Email', $email)->first();
+    if ($admin) {
+        if (Hash::check($password, $admin->Password)) {
             Auth::guard('admin')->login($admin);
             return redirect()->route('admin.homepage');
-        }        
+        } else {
+            return back()->with('error', 'Email atau password salah. Harap coba lagi.');
+        }
+    }
 
-        // Cek login sebagai Customer
-        $customer = Customer::where('Email', $email)->first();
-        if ($customer && Hash::check($password, $customer->Password)) {
+    // Cek login sebagai Customer
+    $customer = Customer::where('Email', $email)->first();
+    if ($customer) {
+        if (Hash::check($password, $customer->Password)) {
             Auth::guard('customer')->login($customer);
             return redirect()->route('homeCustomer');
+        } else {
+            return back()->with('error', 'Email atau password salah. Harap coba lagi.');
         }
-
-        return back()->with('error', 'Email atau password salah.');
     }
+
+    // Jika tidak ditemukan Admin atau Customer dengan email yang dimasukkan
+    return back()->with('error', 'Email atau password tidak ditemukan, harap lakukan registrasi terlebih dahulu.');
+}
+
 
     public function showRegistrationForm(): View
     {
