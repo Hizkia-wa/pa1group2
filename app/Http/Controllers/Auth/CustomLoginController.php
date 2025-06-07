@@ -51,7 +51,37 @@ public function login(Request $request)
     if ($customer) {
         if (Hash::check($password, $customer->Password)) {
             Auth::guard('customer')->login($customer);
-            return redirect()->route('homeCustomer');
+
+            // Setelah login, pindahkan produk yang ada di sesi ke keranjang pengguna
+            $userId = $this->getCurrentUserId(); // Mendapatkan ID pengguna yang sedang login
+            $cart = session()->get('cart', []); // Ambil data produk yang disimpan di sesi
+
+            foreach ($cart as $cartItem) {
+                $existingCartItem = Cart::where('UserId', $userId)
+                    ->where('ProductId', $cartItem['ProductId'])
+                    ->where('Size', $cartItem['Size'])
+                    ->first();
+
+                if ($existingCartItem) {
+                    // Jika produk sudah ada, update quantity
+                    $existingCartItem->Quantity += $cartItem['Quantity'];
+                    $existingCartItem->save();
+                } else {
+                    // Jika produk belum ada, buat entri baru di database
+                    Cart::create([
+                        'UserId' => $userId,
+                        'ProductId' => $cartItem['ProductId'],
+                        'Quantity' => $cartItem['Quantity'],
+                        'Size' => $cartItem['Size'],
+                    ]);
+                }
+            }
+
+            // Hapus data keranjang dari sesi setelah berhasil dipindahkan ke database
+            session()->forget('cart');
+
+            // Arahkan pengguna ke halaman keranjang
+            return redirect()->route('customer.cart')->with('success', 'Keranjang berhasil dipulihkan.');
         } else {
             return back()->with('error', 'Email atau password salah. Harap coba lagi.');
         }
@@ -60,6 +90,7 @@ public function login(Request $request)
     // Jika tidak ditemukan Admin atau Customer dengan email yang dimasukkan
     return back()->with('error', 'Email atau password tidak ditemukan, harap lakukan registrasi terlebih dahulu.');
 }
+
 
 
     public function showRegistrationForm(): View
