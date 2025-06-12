@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav flex-row-reverse gap-3 fw-semibold align-items-center">
                 <li class="nav-item">
-                    <a class="btn position-relative cart-icon-wrapper" href="{{ route('customer.cart') }}">
+                    <a class="btn position-relative cart-icon-wrapper" href="{{ route('user.cart.index') }}">
                         <i class="bi bi-cart-fill cart-icon"></i>
                     </a>
                 </li>
