@@ -53,35 +53,40 @@ public function login(Request $request)
         Auth::guard('customer')->login($customer);
 
         // Cek apakah ada produk yang tersimpan di session (pending_cart)
-        if (session()->has('pending_cart')) {
-            // Ambil data produk dari session
-            $pending = session()->get('pending_cart');
-            $userId = $customer->id;
+        // Cek apakah ada produk yang tersimpan di session (pending_cart)
+if (session()->has('pending_cart')) {
+    // Ambil data produk dari session
+    $pending = session()->get('pending_cart');
+    if (!isset($pending['ProductId'], $pending['Quantity'], $pending['Size'])) {
+        // Tangani jika data incomplete atau rusak
+        return redirect()->route('customer.cart')->with('error', 'Data produk tidak lengkap.');
+    }
+    $userId = $customer->id;
 
-            // Cek apakah produk sudah ada di keranjang
-            $cartItem = Cart::where('UserId', $userId)
-                ->where('ProductId', $pending['ProductId'])
-                ->where('Size', $pending['Size'])
-                ->first();
+    // Cek apakah produk sudah ada di keranjang
+    $cartItem = Cart::where('UserId', $userId)
+        ->where('ProductId', $pending['ProductId'])
+        ->where('Size', $pending['Size'])
+        ->first();
 
-            // Jika produk sudah ada di keranjang, update jumlah
-            if ($cartItem) {
-                $cartItem->Quantity += $pending['Quantity'];
-                $cartItem->save();
-            } else {
-                // Jika produk belum ada di keranjang, buat entri baru
-                Cart::create([
-                    'UserId' => $userId,
-                    'ProductId' => $pending['ProductId'],
-                    'Quantity' => $pending['Quantity'],
-                    'Size' => $pending['Size'],
-                ]);
-            }
+    // Jika produk sudah ada di keranjang, update jumlah
+    if ($cartItem) {
+        $cartItem->Quantity += $pending['Quantity'];
+        $cartItem->save();
+    } else {
+        // Jika produk belum ada di keranjang, buat entri baru
+        Cart::create([
+            'UserId' => $userId,
+            'ProductId' => $pending['ProductId'],
+            'Quantity' => $pending['Quantity'],
+            'Size' => $pending['Size'],
+        ]);
+    }
 
-            // Hapus data pending_cart setelah ditambahkan ke keranjang
-            session()->forget('pending_cart');
-            return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
-        }
+    // Hapus data pending_cart setelah ditambahkan ke keranjang
+    session()->forget('pending_cart');
+    return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+}
 
         // Jika tidak ada produk pending, redirect ke halaman home customer
         return redirect()->route('homeCustomer');

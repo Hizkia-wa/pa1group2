@@ -16,16 +16,17 @@ class CartController extends Controller
         return auth('customer')->check() ? auth('customer')->id() : auth('web')->id();
     }
 
-    public function index()
-    {
-        $userId = $this->getCurrentUserId();
+public function index()
+{
+    $userId = $this->getCurrentUserId();
 
-        $cartItems = Cart::with('product')
-            ->where('UserId', $userId)
-            ->get();
+    // Mendapatkan data produk yang ada di keranjang pengguna
+    $cartItems = Cart::with('product')
+        ->where('UserId', $userId)
+        ->get();
 
-        return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
-    }
+    return view('customer.keranjang', ['cartItems' => $cartItems]);
+}
 
     public function addToCart(Request $request)
     {
@@ -227,7 +228,7 @@ public function processCheckout(Request $request)
     return redirect()->route('orders')->with('success', 'Pesanan berhasil dibuat.');
 }
 
-    public function updateQuantity(Request $request, $id)
+public function updateQuantity(Request $request, $id)
 {
     $userId = $this->getCurrentUserId();
 
@@ -242,7 +243,7 @@ public function processCheckout(Request $request)
 
     // Ambil produk terkait dari cart item
     $product = $cartItem->product;
-    
+
     // Periksa apakah action untuk menambah atau mengurangi jumlah
     if ($request->action === 'increase') {
         // Cek jika quantity yang diinginkan melebihi stok
@@ -261,5 +262,4 @@ public function processCheckout(Request $request)
 
     return back()->with('success', 'Jumlah produk diperbarui.');
 }
-
 }

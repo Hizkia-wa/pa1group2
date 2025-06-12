@@ -132,22 +132,22 @@
     });
 
     // Fungsi untuk menyiapkan produk yang dipilih
-    function prepareSelectedItems() {
-        const selectedItemsWrapper = document.getElementById('selectedItemsWrapper');
-        selectedItemsWrapper.innerHTML = ''; // Bersihkan elemen sebelumnya
+function prepareSelectedItems() {
+    const selectedItemsWrapper = document.getElementById('selectedItemsWrapper');
+    selectedItemsWrapper.innerHTML = ''; // Bersihkan elemen sebelumnya
 
-        // Ambil semua checkbox yang dipilih
-        const selectedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
+    // Ambil semua checkbox yang dipilih
+    const selectedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
 
-        selectedCheckboxes.forEach(checkbox => {
-            const cartId = checkbox.value;
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'selected[]'; // Nama input untuk menerima array
-            hiddenInput.value = cartId; // Set nilai input dengan ID produk yang dipilih
-            selectedItemsWrapper.appendChild(hiddenInput); // Tambahkan ke wrapper
-        });
-    }
+    selectedCheckboxes.forEach(checkbox => {
+        const cartId = checkbox.value;
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'selected[]'; // Nama input untuk menerima array
+        hiddenInput.value = cartId; // Set nilai input dengan ID produk yang dipilih
+        selectedItemsWrapper.appendChild(hiddenInput); // Tambahkan ke wrapper
+    });
+}
 
     // Submit form ketika button WhatsApp diklik
     document.getElementById('waButton').addEventListener('click', function () {
