@@ -60,7 +60,7 @@ class CartController extends Controller
         return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
-        public function addToCartBeforeLogin(Request $request)
+    public function addToCartBeforeLogin(Request $request)
 {
     // Validasi input
     $request->validate([
@@ -81,6 +81,7 @@ class CartController extends Controller
     // Redirect ke halaman login
     return redirect()->route('login');
 }
+
 
     public function removeFromCart($id)
     {
