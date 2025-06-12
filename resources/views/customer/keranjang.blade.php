@@ -10,13 +10,11 @@
         @foreach($cartItems as $item)
         @php
             $product = $item->product;
-            // Memastikan gambar diambil dari folder storage
             $images = json_decode($product->Images, true);
             $imagePath = isset($images[0]) ? asset('storage/app/public/' . $images[0]) : asset('images/default.png');
         @endphp
 
-        <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
-
+        <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
             <!-- Checkbox -->
             <div class="form-check me-3">
                 <input 
@@ -118,38 +116,34 @@
         const checkboxes = document.querySelectorAll('.cart-checkbox');
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
-                const quantity = parseInt(checkbox.dataset.quantity);  // Ambil quantity dari checkbox
-                total += quantity;  // Tambahkan quantity ke total
+                const quantity = parseInt(checkbox.dataset.quantity);
+                total += quantity;
             }
         });
-        // Update jumlah total pada form
         document.getElementById('totalQuantity').value = total;
     }
 
-    // Set event listener pada setiap checkbox
     document.querySelectorAll('.cart-checkbox').forEach(cb => {
         cb.addEventListener('change', updateQuantity);
     });
 
-    // Fungsi untuk menyiapkan produk yang dipilih
+    // Prepare selected items
     function prepareSelectedItems() {
         const selectedItemsWrapper = document.getElementById('selectedItemsWrapper');
-        selectedItemsWrapper.innerHTML = ''; // Bersihkan elemen sebelumnya
-
-        // Ambil semua checkbox yang dipilih
+        selectedItemsWrapper.innerHTML = '';
         const selectedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
 
         selectedCheckboxes.forEach(checkbox => {
             const cartId = checkbox.value;
             const hiddenInput = document.createElement('input');
             hiddenInput.type = 'hidden';
-            hiddenInput.name = 'selected[]'; // Nama input untuk menerima array
-            hiddenInput.value = cartId; // Set nilai input dengan ID produk yang dipilih
-            selectedItemsWrapper.appendChild(hiddenInput); // Tambahkan ke wrapper
+            hiddenInput.name = 'selected[]';
+            hiddenInput.value = cartId;
+            selectedItemsWrapper.appendChild(hiddenInput);
         });
     }
 
-    // Submit form ketika button WhatsApp diklik
+    // Handle the WhatsApp button click
     document.getElementById('waButton').addEventListener('click', function () {
         const form = document.getElementById('checkoutForm');
         const selected = document.querySelectorAll('.cart-checkbox:checked');
@@ -159,11 +153,9 @@
             return;
         }
 
-        // Siapkan selected[] di form
         prepareSelectedItems();
 
         const formData = new FormData(form);
-
         fetch("{{ route('user.cart.checkout') }}", {
             method: "POST",
             headers: {
@@ -171,27 +163,10 @@
             },
             body: formData
         })
-        .then(response => {
-            if (!response.ok) throw new Error("Gagal mengirim data.");
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const message = `Halo Admin, saya ingin memesan produk:
-
-🛒 *Keranjang Belanja*:
-${data.products.map(item => `- ${item.name} x${item.quantity}`).join('\n')}
-
-💵 *Total Harga*: Rp ${data.totalPrice.toLocaleString('id-ID')}
-
-👤 *Nama*: ${formData.get('CustomerName')}
-📱 *Telepon*: ${formData.get('Phone')}
-📧 *Email*: ${formData.get('Email')}
-🏠 *Alamat*: ${formData.get('Street')}, ${formData.get('District')}, ${formData.get('City')} - ${formData.get('PostalCode')}
-🔢 *Jumlah*: ${formData.get('totalQuantity')}
-
-Mohon segera diproses ya 🙏`;
-
+                const message = `Halo Admin, saya ingin memesan produk:\n\n🛒 *Keranjang Belanja*: ${data.products.map(item => `- ${item.name} x${item.quantity}`).join('\n')}\n💵 *Total Harga*: Rp ${data.totalPrice.toLocaleString('id-ID')}\n👤 *Nama*: ${formData.get('CustomerName')}\n📱 *Telepon*: ${formData.get('Phone')}\n📧 *Email*: ${formData.get('Email')}\n🏠 *Alamat*: ${formData.get('Street')}, ${formData.get('District')}, ${formData.get('City')} - ${formData.get('PostalCode')}\n🔢 *Jumlah*: ${formData.get('totalQuantity')}\n\nMohon segera diproses ya 🙏`;
                 const nomorAdmin = document.getElementById('waButton').dataset.admin;
                 const waLink = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
                 window.open(waLink, '_blank');
@@ -199,11 +174,7 @@ Mohon segera diproses ya 🙏`;
                 alert('Gagal checkout. Coba lagi.');
             }
         })
-        .catch(error => {
-            console.error(error);
-            alert('Terjadi kesalahan saat memproses checkout.');
-        });
+        .catch(error => alert('Terjadi kesalahan saat memproses checkout.'));
     });
 </script>
-
 @endsection
