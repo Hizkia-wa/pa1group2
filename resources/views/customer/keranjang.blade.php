@@ -23,8 +23,8 @@
             </div>
 
             <!-- Gambar Produk -->
-            <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
-                <img src="{{ $imagePath }}" alt="{{ $product->ProductName }}" class="w-100 h-100 object-fit-cover">
+            <div class="me-3" style="width: 100px; height: 100px; overflow: hidden;">
+                <img src="{{ $item->product->image_path }}" alt="{{ $item->product->name }}" class="w-100 h-100 object-fit-cover">
             </div>
 
             <!-- Detail Produk -->
