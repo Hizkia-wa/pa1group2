@@ -60,7 +60,7 @@
         </div>
 
         {{-- Form Pemesanan --}}
-        <div class="w-50">
+        <div class="w-50 ms-4"> <!-- Added margin-left here -->
             <h4 class="fw-bold mb-4">Form Pemesanan</h4>
             <form action="{{ route('user.cart.checkout') }}" method="POST" id="checkoutForm">
                 @csrf
