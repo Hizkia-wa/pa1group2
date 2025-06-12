@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Customer;
+use App\Models\Cart;
 
 class CustomLoginController extends Controller
 {
@@ -23,6 +24,7 @@ class CustomLoginController extends Controller
 
 public function login(Request $request)
 {
+    // Validasi input
     $request->validate([
         'Email' => 'required|email',
         'Password' => 'required',
@@ -51,6 +53,35 @@ public function login(Request $request)
     if ($customer) {
         if (Hash::check($password, $customer->Password)) {
             Auth::guard('customer')->login($customer);
+
+            // Setelah login, cek apakah ada produk yang disimpan dalam sesi
+            if (session()->has('product_to_add')) {
+                $product = session('product_to_add');
+
+                // Cek apakah produk sudah ada di keranjang
+                $cartItem = Cart::where('UserId', $customer->id)
+                    ->where('ProductId', $product['ProductId'])
+                    ->where('Size', $product['Size'])
+                    ->first();
+
+                if ($cartItem) {
+                    // Jika sudah ada, update quantity
+                    $cartItem->Quantity += $product['Quantity'];
+                    $cartItem->save();
+                } else {
+                    // Jika belum ada, buat entri baru
+                    Cart::create([
+                        'UserId' => $customer->id,
+                        'ProductId' => $product['ProductId'],
+                        'Quantity' => $product['Quantity'],
+                        'Size' => $product['Size'],
+                    ]);
+                }
+
+                // Hapus data produk dari sesi setelah ditambahkan ke keranjang
+                session()->forget('product_to_add');
+            }
+
             return redirect()->route('homeCustomer');
         } else {
             return back()->with('error', 'Email atau password salah. Harap coba lagi.');
@@ -58,7 +89,7 @@ public function login(Request $request)
     }
 
     // Jika tidak ditemukan Admin atau Customer dengan email yang dimasukkan
-    return back()->with('error', 'Email atau password tidak ditemukan, harap lakukan registrasi terlebih dahulu.');
+    return back()->with('error', 'Email dan password tidak ditemukan, harap lakukan registrasi terlebih dahulu.');
 }
 
 

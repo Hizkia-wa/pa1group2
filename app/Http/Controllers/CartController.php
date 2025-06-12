@@ -60,6 +60,28 @@ class CartController extends Controller
         return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
+        public function addToCartBeforeLogin(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'ProductId' => 'required|exists:products,id',
+        'Quantity' => 'required|integer|min:1',
+        'Size' => 'required|string',
+    ]);
+
+    // Simpan data produk ke dalam sesi
+    session([
+        'product_to_add' => [
+            'ProductId' => $request->ProductId,
+            'Quantity' => $request->Quantity,
+            'Size' => $request->Size,
+        ]
+    ]);
+
+    // Redirect ke halaman login
+    return redirect()->route('login');
+}
+
     public function removeFromCart($id)
     {
         $userId = $this->getCurrentUserId();
