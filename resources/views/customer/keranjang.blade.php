@@ -1,75 +1,68 @@
 @extends('layouts.customer')
 
 @section('content')
-<div class="container mt-5 d-flex">
+<div class="container mt-5 d-flex flex-wrap">
     {{-- Daftar Produk di Keranjang --}}
-    <div class="w-50 me-4">
-        <h3 class="mb-4 fw-bold">Keranjang</h3>
+    <div class="w-100 w-md-50 me-md-4 mb-4 mb-md-0">
+        <h3 class="mb-4 fw-bold">Keranjang Belanja</h3>
 
         <!-- Looping untuk menampilkan item keranjang -->
         @foreach($cartItems as $item)
-            <div class="cart-item">
-                <p>Produk: {{ $item->product->name }}</p>
-                <p>Jumlah: {{ $item->quantity }}</p>
-                <p>Ukuran: {{ $item->size }}</p>
+        <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
 
-                <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
-                    
-                    <!-- Checkbox -->
-                    <div class="form-check me-3">
-                        <input 
-                            type="checkbox" 
-                            name="selected[]" 
-                            value="{{ $item->id }}" 
-                            class="form-check-input cart-checkbox"
-                            data-quantity="{{ $item->quantity }}" 
-                            data-product-name="{{ $item->product->name }}"
-                            data-product-price="{{ $item->product->price }}"
-                        >
-                    </div>
-
-                    <!-- Gambar Produk -->
-                    <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
-                        <img src="{{ $item->product->image_path }}" alt="{{ $item->product->name }}" class="w-100 h-100 object-fit-cover">
-                    </div>
-
-                    <!-- Detail Produk -->
-                    <div class="flex-grow-1">
-                        <h5 class="fw-bold mb-1">{{ $item->product->name }}</h5>
-                        <div class="text-danger fw-bold mb-1">Rp.{{ number_format($item->product->price, 0, ',', '.') }}</div>
-                        <div class="mb-2">Jumlah: {{ $item->quantity }}</div>
-
-                        <!-- Kontrol Jumlah -->
-                        <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
-                            <span class="fw-bold quantity-value">{{ $item->quantity }}</span>
-                            <input type="hidden" name="quantity" value="{{ $item->quantity }}">
-                            <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
-                        </form>
-                    </div>
-
-                    <!-- Hapus -->
-                    <form action="{{ route('user.cart.remove', $item->id) }}" method="POST" class="ms-3">
-                        @csrf
-                        <button class="btn btn-outline-danger btn-sm">Hapus</button>
-                    </form>
-                </div>
+            <!-- Checkbox -->
+            <div class="form-check me-3">
+                <input 
+                    type="checkbox" 
+                    name="selected[]" 
+                    value="{{ $item->id }}" 
+                    class="form-check-input cart-checkbox"
+                    data-quantity="{{ $item->quantity }}" 
+                    data-product-name="{{ $item->product->name }}"
+                    data-product-price="{{ $item->product->price }}">
             </div>
+
+            <!-- Gambar Produk -->
+            <div class="me-3" style="width: 100px; height: 100px; overflow: hidden;">
+                <img src="{{ $item->product->image_path }}" alt="{{ $item->product->name }}" class="w-100 h-100 object-fit-cover">
+            </div>
+
+            <!-- Detail Produk -->
+            <div class="flex-grow-1">
+                <h5 class="fw-bold mb-1">{{ $item->product->name }}</h5>
+                <div class="text-danger fw-bold mb-1">Rp.{{ number_format($item->product->price, 0, ',', '.') }}</div>
+                <div class="mb-2">Jumlah: {{ $item->quantity }}</div>
+
+                <!-- Kontrol Jumlah -->
+                <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
+                    <span class="fw-bold quantity-value">{{ $item->quantity }}</span>
+                    <input type="hidden" name="quantity" value="{{ $item->quantity }}">
+                    <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
+                </form>
+            </div>
+
+            <!-- Hapus -->
+            <form action="{{ route('user.cart.remove', $item->id) }}" method="POST" class="ms-3">
+                @csrf
+                <button class="btn btn-outline-danger btn-sm">Hapus</button>
+            </form>
+        </div>
         @endforeach
     </div>
 
     {{-- Form Pemesanan --}}
-    <div class="w-50">
+    <div class="w-100 w-md-50">
         <h4 class="fw-bold mb-4">Form Pemesanan</h4>
         <form action="{{ route('user.cart.checkout') }}" method="POST" id="checkoutForm">
             @csrf
             <h6 class="fw-bold">Informasi Pembeli</h6>
-            <div class="mb-2">
+            <div class="mb-3">
                 <input type="text" name="CustomerName" value="{{ Auth::user()->CustomerName }}" class="form-control" placeholder="Nama" required>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <input type="email" name="Email" value="{{ Auth::user()->Email }}" class="form-control" placeholder="Email" required>
             </div>
             <div class="mb-3">
@@ -77,13 +70,13 @@
             </div>
 
             <h6 class="fw-bold">Informasi Pengiriman</h6>
-            <div class="mb-2">
+            <div class="mb-3">
                 <input type="text" name="City" class="form-control" placeholder="Kabupaten/Kota" required>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <input type="text" name="District" class="form-control" placeholder="Kecamatan" required>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <input type="text" name="Street" class="form-control" placeholder="Jalan" required>
             </div>
             <div class="mb-3">
@@ -92,7 +85,7 @@
 
             <h6 class="fw-bold">Informasi Pemesanan</h6>
             <div class="mb-3">
-                <label>Jumlah :</label>
+                <label for="totalQuantity">Jumlah :</label>
                 <input type="number" id="totalQuantity" name="totalQuantity" class="form-control w-25" readonly value="0">
             </div>
 
@@ -132,22 +125,22 @@
     });
 
     // Fungsi untuk menyiapkan produk yang dipilih
-function prepareSelectedItems() {
-    const selectedItemsWrapper = document.getElementById('selectedItemsWrapper');
-    selectedItemsWrapper.innerHTML = ''; // Bersihkan elemen sebelumnya
+    function prepareSelectedItems() {
+        const selectedItemsWrapper = document.getElementById('selectedItemsWrapper');
+        selectedItemsWrapper.innerHTML = ''; // Bersihkan elemen sebelumnya
 
-    // Ambil semua checkbox yang dipilih
-    const selectedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
+        // Ambil semua checkbox yang dipilih
+        const selectedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
 
-    selectedCheckboxes.forEach(checkbox => {
-        const cartId = checkbox.value;
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'selected[]'; // Nama input untuk menerima array
-        hiddenInput.value = cartId; // Set nilai input dengan ID produk yang dipilih
-        selectedItemsWrapper.appendChild(hiddenInput); // Tambahkan ke wrapper
-    });
-}
+        selectedCheckboxes.forEach(checkbox => {
+            const cartId = checkbox.value;
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'selected[]'; // Nama input untuk menerima array
+            hiddenInput.value = cartId; // Set nilai input dengan ID produk yang dipilih
+            selectedItemsWrapper.appendChild(hiddenInput); // Tambahkan ke wrapper
+        });
+    }
 
     // Submit form ketika button WhatsApp diklik
     document.getElementById('waButton').addEventListener('click', function () {
