@@ -14,7 +14,7 @@ use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\Cart;
-use Gloudemans\Shoppingcart\Facades\Cart;
+
 
 class CustomLoginController extends Controller
 {
