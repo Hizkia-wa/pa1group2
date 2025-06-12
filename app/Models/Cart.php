@@ -18,8 +18,8 @@ class Cart extends Model
         'Size',
     ];
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class, 'ProductId');
-    }
+public function product()
+{
+    return $this->belongsTo(Product::class, 'ProductId')->whereNull('deleted_at');
+}
 }
