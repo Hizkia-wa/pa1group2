@@ -23,9 +23,6 @@ public function index()
         ->where('UserId', $userId)
         ->get();
 
-    // Debugging untuk memastikan data yang dikirimkan
-    dd($cartItems);
-
     return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
 }
 
