@@ -23,6 +23,7 @@ class CustomLoginController extends Controller
 
 public function login(Request $request)
 {
+    // Validasi input login
     $request->validate([
         'Email' => 'required|email',
         'Password' => 'required',
@@ -35,32 +36,38 @@ public function login(Request $request)
     $email = $request->Email;
     $password = $request->Password;
 
-    // Cek login Admin
+    // Cek login sebagai Admin
     $admin = Admin::where('Email', $email)->first();
     if ($admin && Hash::check($password, $admin->Password)) {
+        // Login Admin
         Auth::guard('admin')->login($admin);
         return redirect()->route('admin.homepage');
     }
 
-    // Cek login Customer
+    // Cek login sebagai Customer
     $customer = Customer::where('Email', $email)->first();
     if ($customer && Hash::check($password, $customer->Password)) {
+        // Login Customer
         Auth::guard('customer')->login($customer);
 
-        // ✅ Tambahkan ke keranjang jika ada session pending_cart
+        // Cek apakah ada produk yang tersimpan di session (pending_cart)
         if (session()->has('pending_cart')) {
+            // Ambil data produk dari session
             $pending = session()->get('pending_cart');
             $userId = $customer->id;
 
+            // Cek apakah produk sudah ada di keranjang
             $cartItem = Cart::where('UserId', $userId)
                 ->where('ProductId', $pending['ProductId'])
                 ->where('Size', $pending['Size'])
                 ->first();
 
+            // Jika produk sudah ada di keranjang, update jumlah
             if ($cartItem) {
                 $cartItem->Quantity += $pending['Quantity'];
                 $cartItem->save();
             } else {
+                // Jika produk belum ada di keranjang, buat entri baru
                 Cart::create([
                     'UserId' => $userId,
                     'ProductId' => $pending['ProductId'],
@@ -69,13 +76,16 @@ public function login(Request $request)
                 ]);
             }
 
-            session()->forget('pending_cart'); // Hapus setelah digunakan
+            // Hapus data pending_cart setelah ditambahkan ke keranjang
+            session()->forget('pending_cart');
             return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
         }
 
+        // Jika tidak ada produk pending, redirect ke halaman home customer
         return redirect()->route('homeCustomer');
     }
 
+    // Jika login gagal, tampilkan pesan error
     return back()->with('error', 'Email dan password tidak ditemukan, harap registrasi terlebih dahulu.');
 }
 
