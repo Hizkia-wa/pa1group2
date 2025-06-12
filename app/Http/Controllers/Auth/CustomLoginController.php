@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Customer;
-use App\Models\Cart;
 
 class CustomLoginController extends Controller
 {
@@ -24,72 +23,60 @@ class CustomLoginController extends Controller
 
 public function login(Request $request)
 {
-    // Validasi input
     $request->validate([
         'Email' => 'required|email',
         'Password' => 'required',
     ], [
         'Email.required' => 'Email wajib diisi.',
-        'Email.email' => 'Format email tidak valid. Pastikan menggunakan "@" dan domain yang benar.',
+        'Email.email' => 'Format email tidak valid.',
         'Password.required' => 'Password wajib diisi.',
     ]);
 
     $email = $request->Email;
     $password = $request->Password;
 
-    // Cek login sebagai Admin
+    // Cek login Admin
     $admin = Admin::where('Email', $email)->first();
-    if ($admin) {
-        if (Hash::check($password, $admin->Password)) {
-            Auth::guard('admin')->login($admin);
-            return redirect()->route('admin.homepage');
-        } else {
-            return back()->with('error', 'Email atau password salah. Harap coba lagi.');
-        }
+    if ($admin && Hash::check($password, $admin->Password)) {
+        Auth::guard('admin')->login($admin);
+        return redirect()->route('admin.homepage');
     }
 
-    // Cek login sebagai Customer
+    // Cek login Customer
     $customer = Customer::where('Email', $email)->first();
-    if ($customer) {
-        if (Hash::check($password, $customer->Password)) {
-            Auth::guard('customer')->login($customer);
+    if ($customer && Hash::check($password, $customer->Password)) {
+        Auth::guard('customer')->login($customer);
 
-            // Setelah login, cek apakah ada produk yang disimpan dalam sesi
-            if (session()->has('product_to_add')) {
-                $product = session('product_to_add');
+        // ✅ Tambahkan ke keranjang jika ada session pending_cart
+        if (session()->has('pending_cart')) {
+            $pending = session()->get('pending_cart');
+            $userId = $customer->id;
 
-                // Cek apakah produk sudah ada di keranjang
-                $cartItem = Cart::where('UserId', $customer->id)
-                    ->where('ProductId', $product['ProductId'])
-                    ->where('Size', $product['Size'])
-                    ->first();
+            $cartItem = Cart::where('UserId', $userId)
+                ->where('ProductId', $pending['ProductId'])
+                ->where('Size', $pending['Size'])
+                ->first();
 
-                if ($cartItem) {
-                    // Jika sudah ada, update quantity
-                    $cartItem->Quantity += $product['Quantity'];
-                    $cartItem->save();
-                } else {
-                    // Jika belum ada, buat entri baru
-                    Cart::create([
-                        'UserId' => $customer->id,
-                        'ProductId' => $product['ProductId'],
-                        'Quantity' => $product['Quantity'],
-                        'Size' => $product['Size'],
-                    ]);
-                }
-
-                // Hapus data produk dari sesi setelah ditambahkan ke keranjang
-                session()->forget('product_to_add');
+            if ($cartItem) {
+                $cartItem->Quantity += $pending['Quantity'];
+                $cartItem->save();
+            } else {
+                Cart::create([
+                    'UserId' => $userId,
+                    'ProductId' => $pending['ProductId'],
+                    'Quantity' => $pending['Quantity'],
+                    'Size' => $pending['Size'],
+                ]);
             }
 
-            return redirect()->route('homeCustomer');
-        } else {
-            return back()->with('error', 'Email atau password salah. Harap coba lagi.');
+            session()->forget('pending_cart'); // Hapus setelah digunakan
+            return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
         }
+
+        return redirect()->route('homeCustomer');
     }
 
-    // Jika tidak ditemukan Admin atau Customer dengan email yang dimasukkan
-    return back()->with('error', 'Email dan password tidak ditemukan, harap lakukan registrasi terlebih dahulu.');
+    return back()->with('error', 'Email dan password tidak ditemukan, harap registrasi terlebih dahulu.');
 }
 
 

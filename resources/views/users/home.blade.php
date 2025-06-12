@@ -51,7 +51,7 @@
                                 <p class="fw-bold text-danger mb-2">Rp {{ number_format($product->Price, 0, ',', '.') }}</p>
                                 <div class="d-flex product-buttons">
                                     <a href="{{ route('login') }}" class="btn btn-primary flex-grow-1 me-2">Beli</a>
-                                    <form action="{{ route('addToCartBeforeLogin') }}" method="POST" class="form-cart">
+                                    <form action="{{ route('cart.temp') }}" method="POST" class="form-cart">
                                         @csrf
                                         <input type="hidden" name="ProductId" value="{{ $product->id }}">
                                         <input type="hidden" name="Quantity" value="1">

@@ -16,15 +16,16 @@ class CartController extends Controller
         return auth('customer')->check() ? auth('customer')->id() : auth('web')->id();
     }
 
-public function index()
-{
-    $userId = $this->getCurrentUserId();
-    $cartItems = Cart::with('product')
-        ->where('UserId', $userId)
-        ->get();
+    public function index()
+    {
+        $userId = $this->getCurrentUserId();
 
-    return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
-}
+        $cartItems = Cart::with('product')
+            ->where('UserId', $userId)
+            ->get();
+
+        return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
+    }
 
     public function addToCart(Request $request)
     {
@@ -59,28 +60,24 @@ public function index()
         return redirect()->route('customer.cart')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
-    public function addToCartBeforeLogin(Request $request)
+public function addToCartTemp(Request $request)
 {
-    // Validasi input
     $request->validate([
         'ProductId' => 'required|exists:products,id',
         'Quantity' => 'required|integer|min:1',
         'Size' => 'required|string',
     ]);
 
-    // Simpan data produk ke dalam sesi
-    session([
-        'product_to_add' => [
-            'ProductId' => $request->ProductId,
-            'Quantity' => $request->Quantity,
-            'Size' => $request->Size,
-        ]
+    // Simpan ke dalam session
+    session()->put('pending_cart', [
+        'ProductId' => $request->ProductId,
+        'Quantity' => $request->Quantity,
+        'Size' => $request->Size,
     ]);
 
-    // Redirect ke halaman login
-    return redirect()->route('login');
+    // Redirect ke login
+    return redirect()->route('login')->with('info', 'Silakan login untuk menambahkan produk ke keranjang.');
 }
-
 
     public function removeFromCart($id)
     {
