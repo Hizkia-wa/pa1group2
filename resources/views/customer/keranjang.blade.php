@@ -6,13 +6,15 @@
     <div class="w-50 me-4">
         <h3 class="mb-4 fw-bold">Keranjang</h3>
 
-@foreach($cartWithProduct as $item)
-    @if($item->product)  <!-- Memastikan product tidak null -->
-        <p>{{ $item->product->CustomerName }}</p>
-    @else
-        <p>Produk tidak ditemukan</p>
-    @endif
+<!-- Looping untuk menampilkan item keranjang -->
+@foreach($cartItems as $item)
+    <div class="cart-item">
+        <p>Produk: {{ $item->product->name }}</p>
+        <p>Jumlah: {{ $item->quantity }}</p>
+        <p>Ukuran: {{ $item->size }}</p>
+    </div>
 @endforeach
+
 
         <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
             
