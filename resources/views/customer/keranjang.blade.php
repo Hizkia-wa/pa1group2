@@ -6,12 +6,13 @@
     <div class="w-50 me-4">
         <h3 class="mb-4 fw-bold">Keranjang</h3>
 
-        @foreach ($cartWithProduct as $item)
-        @php
-            $product = $item->product;
-            $images = json_decode($product->Images, true);
-            $imagePath = isset($images[0]) ? asset('storage/app/public/' . $images[0]) : asset('images/default.png');
-        @endphp
+@foreach($cartWithProduct as $item)
+    @if($item->product)  <!-- Memastikan product tidak null -->
+        <p>{{ $item->product->CustomerName }}</p>
+    @else
+        <p>Produk tidak ditemukan</p>
+    @endif
+@endforeach
 
         <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
             

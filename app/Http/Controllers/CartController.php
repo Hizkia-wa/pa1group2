@@ -16,16 +16,18 @@ class CartController extends Controller
         return auth('customer')->check() ? auth('customer')->id() : auth('web')->id();
     }
 
-    public function index()
-    {
-        $userId = $this->getCurrentUserId();
+public function index()
+{
+    $userId = $this->getCurrentUserId();
+    $cartItems = Cart::with('product')
+        ->where('UserId', $userId)
+        ->get();
 
-        $cartItems = Cart::with('product')
-            ->where('UserId', $userId)
-            ->get();
+    // Debugging untuk memastikan data yang dikirimkan
+    dd($cartItems);
 
-        return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
-    }
+    return view('customer.keranjang', ['cartWithProduct' => $cartItems]);
+}
 
     public function addToCart(Request $request)
     {
