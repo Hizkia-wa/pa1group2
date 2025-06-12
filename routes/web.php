@@ -71,7 +71,6 @@ Route::prefix('user')->group(function () {
     Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('user.cart.checkout');
     Route::put('/keranjang/update/{id}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
     Route::get('/best-products', [ProductController::class, 'showUserBestSellers'])->name('user.bestproductpage');
-    Route::post('/cart/temp', [CartController::class, 'addToCartTemp'])->name('cart.temp');
 });
 
 // ==================== Customer Routes ====================
