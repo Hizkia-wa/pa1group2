@@ -8,6 +8,13 @@
 
         <!-- Looping untuk menampilkan item keranjang -->
         @foreach($cartItems as $item)
+        @php
+            $product = $item->product;
+            // Memastikan gambar diambil dari folder storage
+            $images = json_decode($product->Images, true);
+            $imagePath = isset($images[0]) ? asset('storage/' . $images[0]) : asset('images/default.png');
+        @endphp
+
         <div class="card mb-3 p-3 d-flex flex-row align-items-center" style="border: 1px solid #ddd; border-radius: 10px;">
 
             <!-- Checkbox -->
@@ -17,29 +24,29 @@
                     name="selected[]" 
                     value="{{ $item->id }}" 
                     class="form-check-input cart-checkbox"
-                    data-quantity="{{ $item->quantity }}" 
-                    data-product-name="{{ $item->product->name }}"
-                    data-product-price="{{ $item->product->price }}">
+                    data-quantity="{{ $item->Quantity }}" 
+                    data-product-name="{{ $product->ProductName }}"
+                    data-product-price="{{ $product->Price }}">
             </div>
 
             <!-- Gambar Produk -->
-            <div class="me-3" style="width: 100px; height: 100px; overflow: hidden;">
-                <img src="{{ $item->product->image_path }}" alt="{{ $item->product->name }}" class="w-100 h-100 object-fit-cover">
+            <div style="width: 100px; height: 100px; overflow: hidden;" class="me-3">
+                <img src="{{ $imagePath }}" alt="{{ $product->ProductName }}" class="w-100 h-100 object-fit-cover">
             </div>
 
             <!-- Detail Produk -->
             <div class="flex-grow-1">
-                <h5 class="fw-bold mb-1">{{ $item->product->name }}</h5>
-                <div class="text-danger fw-bold mb-1">Rp.{{ number_format($item->product->price, 0, ',', '.') }}</div>
-                <div class="mb-2">Jumlah: {{ $item->quantity }}</div>
+                <h5 class="fw-bold mb-1">{{ $product->ProductName }}</h5>
+                <div class="text-danger fw-bold mb-1">Rp.{{ number_format($product->Price, 0, ',', '.') }}</div>
+                <div class="mb-2">Jumlah: {{ $item->Quantity }}</div>
 
                 <!-- Kontrol Jumlah -->
                 <form action="{{ route('user.cart.update', $item->id) }}" method="POST" class="d-flex align-items-center">
                     @csrf
                     @method('PUT')
                     <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary btn-sm me-2">−</button>
-                    <span class="fw-bold quantity-value">{{ $item->quantity }}</span>
-                    <input type="hidden" name="quantity" value="{{ $item->quantity }}">
+                    <span class="fw-bold quantity-value">{{ $item->Quantity }}</span>
+                    <input type="hidden" name="quantity" value="{{ $item->Quantity }}">
                     <button type="submit" name="action" value="increase" class="btn btn-outline-secondary btn-sm ms-2">+</button>
                 </form>
             </div>
