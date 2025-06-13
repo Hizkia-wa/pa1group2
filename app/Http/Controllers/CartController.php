@@ -19,13 +19,13 @@ class CartController extends Controller
 public function index()
 {
     $userId = $this->getCurrentUserId();
+    $cartItems = Cart::with('product')->where('UserId', $userId)->get();
+    $customer = auth('customer')->user();
 
-    // Mendapatkan data produk yang ada di keranjang pengguna
-    $cartItems = Cart::with('product')
-        ->where('UserId', $userId)
-        ->get();
-
-    return view('customer.keranjang', ['cartItems' => $cartItems]);
+    return view('customer.keranjang', [
+        'cartItems' => $cartItems,
+        'customer' => $customer,
+    ]);
 }
 
     public function addToCart(Request $request)

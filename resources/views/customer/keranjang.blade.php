@@ -66,11 +66,12 @@
                 @csrf
                 <h6 class="fw-bold">Informasi Pembeli</h6>
                 <div class="mb-3">
-                    <input type="text" name="CustomerName" value="{{ Auth::user()->CustomerName }}" class="form-control" placeholder="Nama" required>
+                    <input type="text" name="CustomerName" value="{{ $customer?->CustomerName }}" class="form-control" placeholder="Nama" required>
                 </div>
                 <div class="mb-3">
-                    <input type="email" name="Email" value="{{ Auth::user()->Email }}" class="form-control" placeholder="Email" required>
+                    <input type="email" name="Email" value="{{ $customer?->Email }}" class="form-control" placeholder="Email" required>
                 </div>
+
                 <div class="mb-3">
                     <input type="text" name="Phone" class="form-control" placeholder="Telepon" required>
                 </div>
