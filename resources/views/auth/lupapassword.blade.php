@@ -19,7 +19,7 @@
     font-family: 'Poppins', sans-serif;
     background-color: #F3E9DC;
     overflow-x: hidden;
-    /* HAPUS overflow: hidden agar bisa scroll */
+    
   }
 
   .container {
